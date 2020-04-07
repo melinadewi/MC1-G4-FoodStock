@@ -99,11 +99,28 @@
                     <navigationItem key="navigationItem" title="Food Stock" id="2VT-sd-Tv7"/>
                     <connections>
                         <outlet property="tableView" destination="yc9-pe-5Md" id="D2i-hw-VQW"/>
+                        <segue destination="XEL-Qd-zMY" kind="show" id="NV1-2t-tCQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1957.9710144927537" y="137.94642857142856"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="lT7-Sy-qdW">
+            <objects>
+                <viewController id="XEL-Qd-zMY" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="htv-qg-4qy">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="dlP-vU-e3E"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="vxg-bN-SwO"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JpR-r1-qyt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2780" y="70"/>
         </scene>
         <!--Food Stock-->
         <scene sceneID="oux-E8-0Rp">
