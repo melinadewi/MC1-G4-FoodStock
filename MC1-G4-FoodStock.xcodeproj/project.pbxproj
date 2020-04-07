@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		571F6C212438B20300AB411E /* FoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6C202438B20300AB411E /* FoodModel.swift */; };
+		571F6C252438B37100AB411E /* FoodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6C242438B37100AB411E /* FoodCell.swift */; };
 		741A24442437412C0005C00E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741A24432437412C0005C00E /* AppDelegate.swift */; };
 		741A24462437412C0005C00E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741A24452437412C0005C00E /* SceneDelegate.swift */; };
 		741A24482437412C0005C00E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741A24472437412C0005C00E /* ViewController.swift */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		571F6C202438B20300AB411E /* FoodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodModel.swift; sourceTree = "<group>"; };
+		571F6C242438B37100AB411E /* FoodCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodCell.swift; sourceTree = "<group>"; };
 		741A24402437412C0005C00E /* MC1-G4-FoodStock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MC1-G4-FoodStock.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		741A24432437412C0005C00E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		741A24452437412C0005C00E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -39,6 +43,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		571F6C1D2438B19E00AB411E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				571F6C202438B20300AB411E /* FoodModel.swift */,
+				571F6C242438B37100AB411E /* FoodCell.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		571F6C1E2438B1A400AB411E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				741A24492437412C0005C00E /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		571F6C1F2438B1AF00AB411E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				741A24472437412C0005C00E /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		741A24372437412C0005C00E = {
 			isa = PBXGroup;
 			children = (
@@ -58,10 +87,11 @@
 		741A24422437412C0005C00E /* MC1-G4-FoodStock */ = {
 			isa = PBXGroup;
 			children = (
+				571F6C1D2438B19E00AB411E /* Model */,
+				571F6C1E2438B1A400AB411E /* View */,
+				571F6C1F2438B1AF00AB411E /* Controller */,
 				741A24432437412C0005C00E /* AppDelegate.swift */,
 				741A24452437412C0005C00E /* SceneDelegate.swift */,
-				741A24472437412C0005C00E /* ViewController.swift */,
-				741A24492437412C0005C00E /* Main.storyboard */,
 				741A244F2437412E0005C00E /* Assets.xcassets */,
 				741A24512437412E0005C00E /* LaunchScreen.storyboard */,
 				741A24542437412E0005C00E /* Info.plist */,
@@ -141,6 +171,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				571F6C212438B20300AB411E /* FoodModel.swift in Sources */,
+				571F6C252438B37100AB411E /* FoodCell.swift in Sources */,
 				741A24482437412C0005C00E /* ViewController.swift in Sources */,
 				741A24442437412C0005C00E /* AppDelegate.swift in Sources */,
 				741A24462437412C0005C00E /* SceneDelegate.swift in Sources */,
@@ -220,7 +252,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -274,7 +306,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
