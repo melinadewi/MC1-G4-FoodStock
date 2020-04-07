@@ -7,6 +7,22 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--View Controller-->
+        <scene sceneID="qYq-aH-I9C">
+            <objects>
+                <viewController id="Jel-ke-vQk" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Pxs-IS-fWu">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="3lU-iq-rBu"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="fb8-df-17N"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8dm-p3-6uJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1958" y="-520"/>
+        </scene>
         <!--Food Stock-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -136,22 +152,30 @@
                     </tabBar>
                     <connections>
                         <segue destination="MUj-10-PbQ" kind="relationship" relationship="viewControllers" id="QZe-QI-BDx"/>
-                        <segue destination="9wm-KV-B0k" kind="relationship" relationship="viewControllers" id="NU0-9N-R42"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ubh-G1-nR6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="137.94642857142856"/>
         </scene>
-        <!--ShoppingList-->
-        <scene sceneID="QeR-IG-E2g">
+        <!--Item-->
+        <scene sceneID="cHi-Ri-aIs">
             <objects>
-                <viewControllerPlaceholder storyboardName="ShoppingList" id="9wm-KV-B0k" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="iaM-Fo-ypu"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7cK-BZ-UQA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="SJN-ni-EXh" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="fH1-Z2-3Di"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="cm2-ko-ASK">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Jel-ke-vQk" kind="relationship" relationship="rootViewController" id="opj-hn-Ud9"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W4c-xb-uLa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="767" y="-423"/>
+            <point key="canvasLocation" x="1074" y="-520"/>
         </scene>
     </scenes>
 </document>
