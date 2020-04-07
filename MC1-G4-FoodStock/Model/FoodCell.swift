@@ -41,7 +41,7 @@ class FoodCell: UITableViewCell {
         stockLevel.text = obj.stockLevel
         
         switch stockLevel.text {
-            case "High": colorIndicator.backgroundColor = UIColor.systemGreen
+            case "Plenty": colorIndicator.backgroundColor = UIColor.systemGreen
             case "Half": colorIndicator.backgroundColor = UIColor.systemOrange
             case "Low": colorIndicator.backgroundColor = UIColor.systemRed
             default: colorIndicator.backgroundColor = UIColor.systemGray

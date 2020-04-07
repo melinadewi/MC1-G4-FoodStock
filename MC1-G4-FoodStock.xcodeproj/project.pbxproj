@@ -11,7 +11,7 @@
 		571F6C252438B37100AB411E /* FoodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571F6C242438B37100AB411E /* FoodCell.swift */; };
 		741A24442437412C0005C00E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741A24432437412C0005C00E /* AppDelegate.swift */; };
 		741A24462437412C0005C00E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741A24452437412C0005C00E /* SceneDelegate.swift */; };
-		741A24482437412C0005C00E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741A24472437412C0005C00E /* ViewController.swift */; };
+		741A24482437412C0005C00E /* FoodStockVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741A24472437412C0005C00E /* FoodStockVC.swift */; };
 		741A244B2437412C0005C00E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 741A24492437412C0005C00E /* Main.storyboard */; };
 		741A244E2437412C0005C00E /* MC1_G4_FoodStock.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 741A244C2437412C0005C00E /* MC1_G4_FoodStock.xcdatamodeld */; };
 		741A24502437412E0005C00E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 741A244F2437412E0005C00E /* Assets.xcassets */; };
@@ -26,7 +26,7 @@
 		741A24402437412C0005C00E /* MC1-G4-FoodStock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MC1-G4-FoodStock.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		741A24432437412C0005C00E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		741A24452437412C0005C00E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		741A24472437412C0005C00E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		741A24472437412C0005C00E /* FoodStockVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodStockVC.swift; sourceTree = "<group>"; };
 		741A244A2437412C0005C00E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		741A244D2437412C0005C00E /* MC1_G4_FoodStock.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MC1_G4_FoodStock.xcdatamodel; sourceTree = "<group>"; };
 		741A244F2437412E0005C00E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -69,7 +69,7 @@
 		571F6C1F2438B1AF00AB411E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				741A24472437412C0005C00E /* ViewController.swift */,
+				741A24472437412C0005C00E /* FoodStockVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -181,7 +181,7 @@
 			files = (
 				571F6C212438B20300AB411E /* FoodModel.swift in Sources */,
 				571F6C252438B37100AB411E /* FoodCell.swift in Sources */,
-				741A24482437412C0005C00E /* ViewController.swift in Sources */,
+				741A24482437412C0005C00E /* FoodStockVC.swift in Sources */,
 				741A24442437412C0005C00E /* AppDelegate.swift in Sources */,
 				741A24462437412C0005C00E /* SceneDelegate.swift in Sources */,
 				741A244E2437412C0005C00E /* MC1_G4_FoodStock.xcdatamodeld in Sources */,

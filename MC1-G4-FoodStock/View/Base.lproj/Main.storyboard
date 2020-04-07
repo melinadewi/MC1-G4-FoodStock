@@ -33,7 +33,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GBX-u2-iEg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="967" y="-230"/>
+            <point key="canvasLocation" x="-143" y="560"/>
         </scene>
         <!--ShoppingList-->
         <scene sceneID="QeR-IG-E2g">
@@ -43,7 +43,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7cK-BZ-UQA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="977" y="347"/>
+            <point key="canvasLocation" x="410" y="560"/>
         </scene>
     </scenes>
     <resources>
