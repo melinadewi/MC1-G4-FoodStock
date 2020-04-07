@@ -23,11 +23,11 @@
             </objects>
             <point key="canvasLocation" x="1958" y="-520"/>
         </scene>
-        <!--Item-->
+        <!--Shopping List-->
         <scene sceneID="cHi-Ri-aIs">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="SJN-ni-EXh" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="fH1-Z2-3Di"/>
+                    <tabBarItem key="tabBarItem" title="Shopping List" image="cart.fill" catalog="system" id="fH1-Z2-3Di"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="cm2-ko-ASK">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -43,4 +43,7 @@
             <point key="canvasLocation" x="1074" y="-520"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="cart.fill" catalog="system" width="128" height="102"/>
+    </resources>
 </document>

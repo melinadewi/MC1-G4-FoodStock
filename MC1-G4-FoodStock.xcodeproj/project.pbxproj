@@ -17,6 +17,7 @@
 		741A24502437412E0005C00E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 741A244F2437412E0005C00E /* Assets.xcassets */; };
 		741A24532437412E0005C00E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 741A24512437412E0005C00E /* LaunchScreen.storyboard */; };
 		74DA8563243C842C00749E48 /* ShoppingList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74DA8561243C842C00749E48 /* ShoppingList.storyboard */; };
+		74DA8565243C862F00749E48 /* FoodStock.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74DA8564243C862F00749E48 /* FoodStock.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		741A24522437412E0005C00E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		741A24542437412E0005C00E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		74DA8562243C842C00749E48 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "MC1-G4-FoodStock/View/Base.lproj/ShoppingList.storyboard"; sourceTree = "<group>"; };
+		74DA8564243C862F00749E48 /* FoodStock.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FoodStock.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				74DA8561243C842C00749E48 /* ShoppingList.storyboard */,
+				74DA8564243C862F00749E48 /* FoodStock.storyboard */,
 				741A24492437412C0005C00E /* Main.storyboard */,
 			);
 			path = View;
@@ -162,6 +165,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				741A24532437412E0005C00E /* LaunchScreen.storyboard in Resources */,
+				74DA8565243C862F00749E48 /* FoodStock.storyboard in Resources */,
 				741A24502437412E0005C00E /* Assets.xcassets in Resources */,
 				74DA8563243C842C00749E48 /* ShoppingList.storyboard in Resources */,
 				741A244B2437412C0005C00E /* Main.storyboard in Resources */,
