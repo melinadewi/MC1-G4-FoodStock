@@ -16,6 +16,8 @@
 		741A244E2437412C0005C00E /* MC1_G4_FoodStock.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 741A244C2437412C0005C00E /* MC1_G4_FoodStock.xcdatamodeld */; };
 		741A24502437412E0005C00E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 741A244F2437412E0005C00E /* Assets.xcassets */; };
 		741A24532437412E0005C00E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 741A24512437412E0005C00E /* LaunchScreen.storyboard */; };
+		74B32E36243DE45200C5B229 /* AddItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B32E35243DE45200C5B229 /* AddItemVC.swift */; };
+		74B32E38243DE4D400C5B229 /* AddItem.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74B32E37243DE4D400C5B229 /* AddItem.storyboard */; };
 		74DA8563243C842C00749E48 /* ShoppingList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74DA8561243C842C00749E48 /* ShoppingList.storyboard */; };
 		74DA8565243C862F00749E48 /* FoodStock.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74DA8564243C862F00749E48 /* FoodStock.storyboard */; };
 /* End PBXBuildFile section */
@@ -32,6 +34,8 @@
 		741A244F2437412E0005C00E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		741A24522437412E0005C00E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		741A24542437412E0005C00E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		74B32E35243DE45200C5B229 /* AddItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddItemVC.swift; path = "/Users/melina/Desktop/AppleDev/MC1-G4-FoodStock/MC1-G4-FoodStock/Controller/AddItemVC.swift"; sourceTree = "<absolute>"; };
+		74B32E37243DE4D400C5B229 /* AddItem.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AddItem.storyboard; sourceTree = "<group>"; };
 		74DA8562243C842C00749E48 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "MC1-G4-FoodStock/View/Base.lproj/ShoppingList.storyboard"; sourceTree = "<group>"; };
 		74DA8564243C862F00749E48 /* FoodStock.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FoodStock.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -59,6 +63,7 @@
 		571F6C1E2438B1A400AB411E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				74B32E37243DE4D400C5B229 /* AddItem.storyboard */,
 				74DA8561243C842C00749E48 /* ShoppingList.storyboard */,
 				74DA8564243C862F00749E48 /* FoodStock.storyboard */,
 				741A24492437412C0005C00E /* Main.storyboard */,
@@ -69,6 +74,7 @@
 		571F6C1F2438B1AF00AB411E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				74B32E35243DE45200C5B229 /* AddItemVC.swift */,
 				741A24472437412C0005C00E /* FoodStockVC.swift */,
 			);
 			path = Controller;
@@ -165,6 +171,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				741A24532437412E0005C00E /* LaunchScreen.storyboard in Resources */,
+				74B32E38243DE4D400C5B229 /* AddItem.storyboard in Resources */,
 				74DA8565243C862F00749E48 /* FoodStock.storyboard in Resources */,
 				741A24502437412E0005C00E /* Assets.xcassets in Resources */,
 				74DA8563243C842C00749E48 /* ShoppingList.storyboard in Resources */,
@@ -185,6 +192,7 @@
 				741A24442437412C0005C00E /* AppDelegate.swift in Sources */,
 				741A24462437412C0005C00E /* SceneDelegate.swift in Sources */,
 				741A244E2437412C0005C00E /* MC1_G4_FoodStock.xcdatamodeld in Sources */,
+				74B32E36243DE45200C5B229 /* AddItemVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
