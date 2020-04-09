@@ -16,6 +16,8 @@ class FoodStockVC: UIViewController {
     
     var listOfFoods: [FoodModel] = []       // food data
     var filteredFoods: [FoodModel] = []     // this will hold the foods that the user searches for
+    
+    var isFiltering: Bool = false   // bool to determine wether it is filtering or not
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +34,7 @@ class FoodStockVC: UIViewController {
         // create search controller
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self    // this will inform this class of any text changes within the UISearchBar
+        searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search foods"
         
         // adding the search controller to the nav bar
@@ -75,8 +78,14 @@ class FoodStockVC: UIViewController {
             print("Sort by lowest stock")
         }
         
+        let expDate = UIAlertAction(title: "Expiration Date", style: .default) { (action) in
+            // implement code
+            print("Sort by expiration date")
+        }
+        
         actionSheet.addAction(dateEdited)
         actionSheet.addAction(lowestStock)
+        actionSheet.addAction(expDate)
         actionSheet.addAction(cancel)
         
         present(actionSheet, animated: true, completion: nil)
@@ -92,20 +101,36 @@ class FoodStockVC: UIViewController {
         print("Add button did tap")
     }
     
+    func filterContent(searchText: String) {
+        filteredFoods = listOfFoods.filter { (food: FoodModel) -> Bool in       // loops over all the element and calls the closure.
+            return food.foodName.lowercased().contains(searchText.lowercased())     // return true if foodname contains searched text
+        }
+    }
+    
 }
 
 extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
     
     // number of rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        listOfFoods.count
+        
+        if isFiltering {    // if is filtering, return filtered foods count
+            return filteredFoods.count
+        }
+        
+        // else return original food count
+        return listOfFoods.count
     }
     
     // set cell
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: foodCell, for: indexPath) as! FoodCell
         
-        cell.foodModel = listOfFoods[indexPath.row]     // sets foodModel variable in FoodCell, this will trigger didSet in FoodCell
+        if isFiltering {
+            cell.foodModel = filteredFoods[indexPath.row]   // if is filtering, set cell using filtered foods else use the original data
+        } else {
+            cell.foodModel = listOfFoods[indexPath.row]     // sets foodModel variable in FoodCell, this will trigger didSet in FoodCell
+        }
         
         return cell
     }
@@ -114,28 +139,42 @@ extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // do something
-        print("\(listOfFoods[indexPath.row].foodName) selected!")
+        
+        if isFiltering {
+            print("\(filteredFoods[indexPath.row].foodName) selected!")
+        } else {
+            print("\(listOfFoods[indexPath.row].foodName) selected!")
+        }
     }
     
     // configure swipe action
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        if isFiltering {
+            return UISwipeActionsConfiguration()
+        }
+        
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
-            print("Deleting row")
+            print("Deleting \(self.listOfFoods[indexPath.row].foodName)")
             
             // delete data from array
             self.listOfFoods.remove(at: indexPath.row)
             
             // delete data from table view
             tableView.deleteRows(at: [indexPath], with: .fade)
-            
         }
         
         let addToList = UIContextualAction(style: .normal, title: "Add to List") { (action, view, nil) in
-            print("Adding to list")
+            print("Adding to \(self.listOfFoods[indexPath.row].foodName) list")
         }
         addToList.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
         
         return UISwipeActionsConfiguration(actions: [delete, addToList])
+    }
+    
+    // called everytime user starts scrolling
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        navigationItem.searchController?.searchBar.resignFirstResponder()       // close keyboard when scrolling
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -148,7 +187,20 @@ extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension FoodStockVC: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {    // gets called everytime searchbar text changed
         // do something
+        let searchBar = searchController.searchBar
+        
+        if let text = searchBar.text {      // check if search bar text is nil
+            if text != "" {     // if search bar text is NOT EMPTY, do this
+                isFiltering = true
+                filterContent(searchText: text)
+            } else {        // else (EMPTY) do this
+                isFiltering = false
+            }
+        }
+        
+        // reload tableview data
+        tableView.reloadData()
     }
 }
