@@ -23,13 +23,7 @@ class ItemDetailVC: UIViewController {
     }
     @IBOutlet weak var itemName: UILabel!
     @IBOutlet weak var stockLabel: UILabel!
-    @IBOutlet weak var stockCondition: UIButton! {
-        didSet {
-            stockCondition.layer.cornerRadius = 5.0
-            stockCondition.backgroundColor = .systemGray
-            stockCondition.layer.masksToBounds = true
-        }
-    }
+    @IBOutlet weak var stockCondition: UILabel!
     @IBOutlet weak var expLabel: UILabel!
     @IBOutlet weak var expDate: UILabel!
     @IBOutlet weak var notesLabel: UILabel!
