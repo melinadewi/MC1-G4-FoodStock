@@ -98,7 +98,7 @@ class FoodStockVC: UIViewController {
     
     @objc func addFood() {
         // do something when add button is tapped
-        print("Add button did tap")
+        performSegue(withIdentifier: "toAddItem", sender: self)
     }
     
     func filterContent(searchText: String) {

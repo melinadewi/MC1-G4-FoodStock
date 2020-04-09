@@ -119,7 +119,7 @@
                     <connections>
                         <outlet property="tableView" destination="yc9-pe-5Md" id="D2i-hw-VQW"/>
                         <segue destination="XEL-Qd-zMY" kind="show" id="NV1-2t-tCQ"/>
-                        <segue destination="wxH-s6-UdV" kind="presentation" id="KyT-cr-pWO"/>
+                        <segue destination="wxH-s6-UdV" kind="presentation" identifier="toAddItem" id="KyT-cr-pWO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
