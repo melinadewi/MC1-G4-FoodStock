@@ -18,6 +18,8 @@ class FoodStockVC: UIViewController {
     var filteredFoods: [FoodModel] = []     // this will hold the foods that the user searches for
     
     var isFiltering: Bool = false   // bool to determine wether it is filtering or not
+    
+    var selectedSort:String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,16 +73,30 @@ class FoodStockVC: UIViewController {
         let dateEdited = UIAlertAction(title: "Default (Date Edited)", style: .default) { (action) in
             // implement code
             print("Sort by date edited")
+            self.selectedSort = "dateEdited"
         }
         
         let lowestStock = UIAlertAction(title: "Lowest Stock", style: .default) { (action) in
             // implement code
             print("Sort by lowest stock")
+            self.selectedSort = "lowestStock"
         }
         
         let expDate = UIAlertAction(title: "Expiration Date", style: .default) { (action) in
             // implement code
             print("Sort by expiration date")
+            self.selectedSort = "expDate"
+        }
+        
+        switch selectedSort {
+        case "dateEdited":
+            dateEdited.setValue(true, forKey: "checked")
+        case "lowestStock":
+            lowestStock.setValue(true, forKey: "checked")
+        case "expDate":
+            expDate.setValue(true, forKey: "checked")
+        default:
+            dateEdited.setValue(true, forKey: "checked")
         }
         
         actionSheet.addAction(dateEdited)

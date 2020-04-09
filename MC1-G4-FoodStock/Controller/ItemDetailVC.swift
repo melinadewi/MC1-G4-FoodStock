@@ -13,9 +13,9 @@ class ItemDetailVC: UITableViewController {
     
     @IBOutlet weak var itemImage: UIImageView! {
         didSet {
-            itemImage.layer.borderWidth = 1
+            //itemImage.layer.borderWidth = 1
             itemImage.layer.masksToBounds = false
-            itemImage.layer.borderColor = UIColor.black.cgColor
+            //itemImage.layer.borderColor = UIColor.black.cgColor
             itemImage.layer.cornerRadius = itemImage.frame.height / 2
             itemImage.clipsToBounds = true
         }
