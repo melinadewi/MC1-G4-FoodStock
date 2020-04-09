@@ -126,10 +126,10 @@
             </objects>
             <point key="canvasLocation" x="1957.9710144927537" y="137.94642857142856"/>
         </scene>
-        <!--View Controller-->
+        <!--Item DetailVC-->
         <scene sceneID="lT7-Sy-qdW">
             <objects>
-                <viewController id="XEL-Qd-zMY" sceneMemberID="viewController">
+                <viewController id="XEL-Qd-zMY" customClass="ItemDetailVC" customModule="MC1_G4_FoodStock" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="htv-qg-4qy">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -185,11 +185,20 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Delete Item"/>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lng-8F-QVm">
-                                <rect key="frame" x="27" y="401" width="30" height="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Plenty" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ttM-Y0-dHA">
+                                <rect key="frame" x="36" y="401" width="48" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Half"/>
-                            </button>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hvC-4C-XFK">
+                                <rect key="frame" x="57" y="530" width="36" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="dlP-vU-e3E"/>
@@ -203,6 +212,18 @@
                             </button>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="deleteButton" destination="hTz-ya-j0l" id="jiA-AE-tZ2"/>
+                        <outlet property="editButton" destination="qGE-eb-SZa" id="b8z-j9-Zpm"/>
+                        <outlet property="expDate" destination="hvC-4C-XFK" id="Wis-Jm-n92"/>
+                        <outlet property="expLabel" destination="3el-Dc-1as" id="F9r-rp-10p"/>
+                        <outlet property="itemImage" destination="Lji-TC-0fl" id="wu6-m6-yHq"/>
+                        <outlet property="itemName" destination="1eJ-rF-Ziq" id="bQh-oV-DQ8"/>
+                        <outlet property="notesBox" destination="WJS-55-b2C" id="QL1-YN-lFc"/>
+                        <outlet property="notesLabel" destination="VFC-ah-KCW" id="Eh7-ld-1Y0"/>
+                        <outlet property="stockCondition" destination="ttM-Y0-dHA" id="hqN-Vv-zkS"/>
+                        <outlet property="stockLabel" destination="hpe-85-R5z" id="6in-Oe-vtx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JpR-r1-qyt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
