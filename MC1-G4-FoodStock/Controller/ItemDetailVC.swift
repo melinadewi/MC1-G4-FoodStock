@@ -30,16 +30,17 @@ class ItemDetailVC: UITableViewController {
         super.viewDidLoad()
         
         setUpNavBar()
+        self.tabBarController?.tabBar.isHidden = true
 
         // Do any additional setup after loading the view.
     }
     
     func setUpNavBar() {
         // create edit and delete button
-        let editButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
-        let deleteButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+        let editButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: nil)
+        let deleteButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: nil)
         
-        navigationItem.rightBarButtonItem = editButton
+        navigationItem.rightBarButtonItems = [deleteButton, editButton]
     }
     
     
