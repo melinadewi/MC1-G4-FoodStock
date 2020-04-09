@@ -166,15 +166,24 @@ extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
     // configure swipe action
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        if isFiltering {
-            return UISwipeActionsConfiguration()
-        }
+//        if isFiltering {
+//            return UISwipeActionsConfiguration()
+//        }
         
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
             print("Deleting \(self.listOfFoods[indexPath.row].foodName)")
             
-            // delete data from array
-            self.listOfFoods.remove(at: indexPath.row)
+            if self.isFiltering {
+                let foodId = self.filteredFoods[indexPath.row].id   // get the food id
+                
+                if let index = self.listOfFoods.firstIndex(where: { $0.id == foodId } ) { // get the index from the original list
+                    self.listOfFoods.remove(at: index)  // remove food from original list
+                }
+                
+                self.filteredFoods.remove(at: indexPath.row)    // remove food from filtered list
+            } else {
+                self.listOfFoods.remove(at: indexPath.row)      // if not filtering then remove from original array
+            }
             
             // delete data from table view
             tableView.deleteRows(at: [indexPath], with: .fade)
