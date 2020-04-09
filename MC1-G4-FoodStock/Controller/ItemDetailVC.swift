@@ -39,7 +39,7 @@ class ItemDetailVC: UITableViewController {
         let editButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
         let deleteButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
         
-        navigationItem.rightBarButtonItem = addButton
+        navigationItem.rightBarButtonItem = editButton
     }
     
     
