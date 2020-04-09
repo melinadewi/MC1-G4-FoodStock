@@ -118,7 +118,7 @@
                     <navigationItem key="navigationItem" title="Food Stock" id="2VT-sd-Tv7"/>
                     <connections>
                         <outlet property="tableView" destination="yc9-pe-5Md" id="D2i-hw-VQW"/>
-                        <segue destination="XEL-Qd-zMY" kind="show" id="NV1-2t-tCQ"/>
+                        <segue destination="XEL-Qd-zMY" kind="show" identifier="toItemDetail" id="NV1-2t-tCQ"/>
                         <segue destination="wxH-s6-UdV" kind="presentation" identifier="toAddItem" id="KyT-cr-pWO"/>
                     </connections>
                 </viewController>
