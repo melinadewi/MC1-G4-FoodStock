@@ -139,7 +139,7 @@ extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         performSegue(withIdentifier: "toItemDetail", sender: self)
-        self.tabBarController?.tabBar.isHidden = true
+      //  self.tabBarController?.tabBar.isHidden = true
         
         if isFiltering {
             print("\(filteredFoods[indexPath.row].foodName) selected!")

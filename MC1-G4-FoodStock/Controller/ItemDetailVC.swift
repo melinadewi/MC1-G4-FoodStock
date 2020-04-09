@@ -8,10 +8,9 @@
 
 import UIKit
 
-class ItemDetailVC: UIViewController {
+class ItemDetailVC: UITableViewController {
     
     
-    @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var itemImage: UIImageView! {
         didSet {
             itemImage.layer.borderWidth = 1
@@ -22,28 +21,26 @@ class ItemDetailVC: UIViewController {
         }
     }
     @IBOutlet weak var itemName: UILabel!
-    @IBOutlet weak var stockLabel: UILabel!
     @IBOutlet weak var stockCondition: UILabel!
-    @IBOutlet weak var expLabel: UILabel!
     @IBOutlet weak var expDate: UILabel!
-    @IBOutlet weak var notesLabel: UILabel!
     @IBOutlet weak var notesBox: UITextView!
-    @IBOutlet weak var deleteButton: UIButton! {
-        didSet {
-            deleteButton.layer.cornerRadius = 5.0
-            deleteButton.backgroundColor = .systemRed
-            deleteButton.layer.masksToBounds = true
-        }
-    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setUpNavBar()
 
         // Do any additional setup after loading the view.
     }
     
-
+    func setUpNavBar() {
+        // create edit and delete button
+        let editButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+        let deleteButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+        
+        navigationItem.rightBarButtonItem = addButton
+    }
     
     
     
