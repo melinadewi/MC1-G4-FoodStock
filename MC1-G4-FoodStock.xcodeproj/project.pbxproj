@@ -17,7 +17,10 @@
 		741A244E2437412C0005C00E /* MC1_G4_FoodStock.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 741A244C2437412C0005C00E /* MC1_G4_FoodStock.xcdatamodeld */; };
 		741A24502437412E0005C00E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 741A244F2437412E0005C00E /* Assets.xcassets */; };
 		741A24532437412E0005C00E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 741A24512437412E0005C00E /* LaunchScreen.storyboard */; };
-		74B32E38243DE4D400C5B229 /* AddItem.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74B32E37243DE4D400C5B229 /* AddItem.storyboard */; };
+		742764A0243EFF0800980973 /* ItemDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7427649F243EFF0800980973 /* ItemDetailVC.swift */; };
+		742764A2243EFF1E00980973 /* ShoppingListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742764A1243EFF1E00980973 /* ShoppingListVC.swift */; };
+		742764A4243EFF3400980973 /* ShoppingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742764A3243EFF3400980973 /* ShoppingModel.swift */; };
+		742764A6243EFF4400980973 /* ShoppingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742764A5243EFF4400980973 /* ShoppingCell.swift */; };
 		74DA8563243C842C00749E48 /* ShoppingList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74DA8561243C842C00749E48 /* ShoppingList.storyboard */; };
 		74DA8565243C862F00749E48 /* FoodStock.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74DA8564243C862F00749E48 /* FoodStock.storyboard */; };
 /* End PBXBuildFile section */
@@ -35,7 +38,10 @@
 		741A244F2437412E0005C00E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		741A24522437412E0005C00E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		741A24542437412E0005C00E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		74B32E37243DE4D400C5B229 /* AddItem.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AddItem.storyboard; sourceTree = "<group>"; };
+		7427649F243EFF0800980973 /* ItemDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailVC.swift; sourceTree = "<group>"; };
+		742764A1243EFF1E00980973 /* ShoppingListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListVC.swift; sourceTree = "<group>"; };
+		742764A3243EFF3400980973 /* ShoppingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingModel.swift; sourceTree = "<group>"; };
+		742764A5243EFF4400980973 /* ShoppingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCell.swift; sourceTree = "<group>"; };
 		74DA8562243C842C00749E48 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "MC1-G4-FoodStock/View/Base.lproj/ShoppingList.storyboard"; sourceTree = "<group>"; };
 		74DA8564243C862F00749E48 /* FoodStock.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FoodStock.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -56,6 +62,8 @@
 			children = (
 				571F6C202438B20300AB411E /* FoodModel.swift */,
 				571F6C242438B37100AB411E /* FoodCell.swift */,
+				742764A3243EFF3400980973 /* ShoppingModel.swift */,
+				742764A5243EFF4400980973 /* ShoppingCell.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -63,7 +71,6 @@
 		571F6C1E2438B1A400AB411E /* View */ = {
 			isa = PBXGroup;
 			children = (
-				74B32E37243DE4D400C5B229 /* AddItem.storyboard */,
 				74DA8561243C842C00749E48 /* ShoppingList.storyboard */,
 				74DA8564243C862F00749E48 /* FoodStock.storyboard */,
 				741A24492437412C0005C00E /* Main.storyboard */,
@@ -76,6 +83,8 @@
 			children = (
 				53AF3EE1243DE6330034A49B /* AddItemVC.swift */,
 				741A24472437412C0005C00E /* FoodStockVC.swift */,
+				7427649F243EFF0800980973 /* ItemDetailVC.swift */,
+				742764A1243EFF1E00980973 /* ShoppingListVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -171,7 +180,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				741A24532437412E0005C00E /* LaunchScreen.storyboard in Resources */,
-				74B32E38243DE4D400C5B229 /* AddItem.storyboard in Resources */,
 				74DA8565243C862F00749E48 /* FoodStock.storyboard in Resources */,
 				741A24502437412E0005C00E /* Assets.xcassets in Resources */,
 				74DA8563243C842C00749E48 /* ShoppingList.storyboard in Resources */,
@@ -186,6 +194,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				742764A2243EFF1E00980973 /* ShoppingListVC.swift in Sources */,
+				742764A4243EFF3400980973 /* ShoppingModel.swift in Sources */,
+				742764A6243EFF4400980973 /* ShoppingCell.swift in Sources */,
+				742764A0243EFF0800980973 /* ItemDetailVC.swift in Sources */,
 				571F6C212438B20300AB411E /* FoodModel.swift in Sources */,
 				571F6C252438B37100AB411E /* FoodCell.swift in Sources */,
 				741A24482437412C0005C00E /* FoodStockVC.swift in Sources */,
