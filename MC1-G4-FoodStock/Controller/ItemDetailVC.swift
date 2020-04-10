@@ -74,7 +74,7 @@ class ItemDetailVC: UITableViewController {
     
     // go to edit vc when edit button tapped
     @objc func editItem() {
-       // performSegue(withIdentifier: "", sender: self)
+        performSegue(withIdentifier: "toEditItem", sender: self)
     }
     
     // delete item when trash button tapped with confirmation
@@ -97,9 +97,11 @@ class ItemDetailVC: UITableViewController {
     
     // pass item id back to FoodStockVC for deletion
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? FoodStockVC {
-            destination.removeItem = selectedItem?.id
-        } 
+        if segue.identifier == "unwindBack" {
+            if let destination = segue.destination as? FoodStockVC {
+                destination.removeItem = selectedItem?.id
+            }
+        }
     }
 
 }
