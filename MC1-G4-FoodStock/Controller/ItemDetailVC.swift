@@ -46,6 +46,9 @@ class ItemDetailVC: UITableViewController {
        
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = false
+    }
     
     func setUpNavBar() {
         // create edit and delete button
@@ -57,17 +60,17 @@ class ItemDetailVC: UITableViewController {
     
     // populate the item data
     func populateDetail() {
-        itemName.text = selectedItem?.foodName
-        stockCondition.text = selectedItem?.stockLevel
-        expDate.text = selectedItem?.expDate
-        
-        // stock level color
-        switch stockCondition.text {
-            case "Plenty": stockCondition.backgroundColor = UIColor.systemGreen
-            case "Half": stockCondition.backgroundColor = UIColor.systemOrange
-            case "Low": stockCondition.backgroundColor = UIColor.systemRed
-            default: stockCondition.backgroundColor = UIColor.systemGray
-        }
+//        itemName.text = selectedItem?.foodName
+//        stockCondition.text = selectedItem?.stockLevel
+//        expDate.text = selectedItem?.expDate
+//        
+//        // stock level color
+//        switch stockCondition.text {
+//            case "Plenty": stockCondition.backgroundColor = UIColor.systemGreen
+//            case "Half": stockCondition.backgroundColor = UIColor.systemOrange
+//            case "Low": stockCondition.backgroundColor = UIColor.systemRed
+//            default: stockCondition.backgroundColor = UIColor.systemGray
+//        }
 
     }
     

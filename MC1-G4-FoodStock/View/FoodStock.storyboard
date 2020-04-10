@@ -241,6 +241,9 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Updated At" id="OGo-Kd-HSX">
+                                <cells/>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="HDb-wQ-mmA" id="nCA-up-XwU"/>
