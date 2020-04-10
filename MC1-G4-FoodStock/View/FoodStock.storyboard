@@ -253,6 +253,7 @@
                         <outlet property="itemName" destination="nHC-4R-ftw" id="bZQ-gh-4Fi"/>
                         <outlet property="notesBox" destination="g4g-NZ-jxT" id="hfu-vz-Pl5"/>
                         <outlet property="stockCondition" destination="57y-lp-gAd" id="wfo-M4-AMc"/>
+                        <segue destination="ykt-BJ-Mnw" kind="presentation" id="EFJ-VS-JBA"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NLE-kg-roQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -403,12 +404,12 @@
             </objects>
             <point key="canvasLocation" x="2848" y="-186"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Edit ItemVC-->
         <scene sceneID="gHL-Kz-0aL">
             <objects>
-                <tableViewController id="ykt-BJ-Mnw" sceneMemberID="viewController">
+                <tableViewController id="ykt-BJ-Mnw" customClass="EditItemVC" customModule="MC1_G4_FoodStock" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="uJY-w9-MeF">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <sections>
@@ -421,8 +422,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="New Item" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I0K-X1-423">
-                                                    <rect key="frame" x="146" y="4" width="123" height="34"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Edit Item" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I0K-X1-423">
+                                                    <rect key="frame" x="146" y="4" width="116" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
                                                     <nil key="textColor"/>
@@ -528,15 +529,15 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Notes" id="VXJ-mM-uSu">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="181" id="9VQ-Ap-eNa">
-                                        <rect key="frame" x="0.0" y="603.5" width="414" height="181"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="121" id="9VQ-Ap-eNa">
+                                        <rect key="frame" x="0.0" y="603.5" width="414" height="121"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="9VQ-Ap-eNa" id="Zt4-kA-xzb">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="181"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="121"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uAr-2a-H9a">
-                                                    <rect key="frame" x="20" y="11" width="374" height="123"/>
+                                                    <rect key="frame" x="20" y="11" width="374" height="102"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no"/>
@@ -546,16 +547,26 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Updated At" id="ZcJ-bE-LFC">
+                                <cells/>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="ykt-BJ-Mnw" id="7Uf-fw-H3l"/>
                             <outlet property="delegate" destination="ykt-BJ-Mnw" id="yt5-Dg-p9G"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="choosePhotoButton" destination="Ifl-KI-rYq" id="bRv-6U-QWS"/>
+                        <outlet property="expDateField" destination="frj-cY-YgF" id="p0y-4i-5o6"/>
+                        <outlet property="itemNameField" destination="kfs-jW-Ebx" id="Qtn-bi-odf"/>
+                        <outlet property="notesField" destination="uAr-2a-H9a" id="vwY-fH-bdd"/>
+                        <outlet property="stockSC" destination="MrS-5g-jtl" id="snl-8I-GhX"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aht-2S-STz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3549" y="-186"/>
+            <point key="canvasLocation" x="3800.0000000000005" y="495.53571428571428"/>
         </scene>
     </scenes>
     <resources>
