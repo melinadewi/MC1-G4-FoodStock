@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddItemVC: UIViewController {
+class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     //MARK: Outlets
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var doneButton: UIButton!
@@ -17,6 +17,7 @@ class AddItemVC: UIViewController {
     @IBOutlet weak var itemStockSegmentedControl: UISegmentedControl!
     @IBOutlet weak var itemNotesTextField: UITextField!
     @IBOutlet weak var itemExpiryDateTextField: UITextField!
+    @IBOutlet weak var addItemButton: UIButton!
     
     /*
     // MARK: - Navigation
@@ -57,9 +58,9 @@ class AddItemVC: UIViewController {
     //MARK: Functions
     
     func makeImageCircle(){
-        itemImageView.layer.borderWidth = 1
+//        itemImageView.layer.borderWidth = 1
         itemImageView.layer.masksToBounds = false
-        itemImageView.layer.borderColor = UIColor.black.cgColor
+//        itemImageView.layer.borderColor = UIColor.black.cgColor
         itemImageView.layer.cornerRadius = itemImageView.frame.height / 2
         itemImageView.clipsToBounds = true
     }
@@ -89,6 +90,16 @@ class AddItemVC: UIViewController {
     
     @objc func dismissDatePicker(){
         view.endEditing(true)
+    }
+    
+    //Allow user to choose image from the device photos app
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[.originalImage] as? UIImage {
+            itemImageView.image = selectedImage
+            print("Image inserted name : \(String(describing: itemImageView.image?.description))")
+        }
+        
+        dismiss(animated: true, completion: nil)
     }
     
     //Store image after its added from the photos gallery
@@ -166,7 +177,13 @@ class AddItemVC: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-
+    @IBAction func addPhotoButton_Click(_ sender: Any) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
 }
 
 extension AddItemVC : UITextFieldDelegate {
