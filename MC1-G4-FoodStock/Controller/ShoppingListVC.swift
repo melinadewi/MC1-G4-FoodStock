@@ -22,15 +22,21 @@ class ShoppingListVC: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        tableView.delegate = self
+        tableView.dataSource = self
         setUpNavBar()
     }
     
     func setUpNavBar() {
         // creates a search controller and add button
-        let addButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+        let addButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addShopItem))
         
         // adding the search controller to the nav bar
         navigationItem.rightBarButtonItem = addButton
+    }
+    
+    @objc func addShopItem(){
+       performSegue(withIdentifier: "toAddShopItem", sender: self)
     }
 
     // MARK: - Table view data source
