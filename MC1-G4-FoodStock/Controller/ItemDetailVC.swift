@@ -60,17 +60,30 @@ class ItemDetailVC: UITableViewController {
     
     // populate the item data
     func populateDetail() {
-//        itemName.text = selectedItem?.foodName
-//        stockCondition.text = selectedItem?.stockLevel
-//        expDate.text = selectedItem?.expDate
-//        
-//        // stock level color
-//        switch stockCondition.text {
-//            case "Plenty": stockCondition.backgroundColor = UIColor.systemGreen
-//            case "Half": stockCondition.backgroundColor = UIColor.systemOrange
-//            case "Low": stockCondition.backgroundColor = UIColor.systemRed
-//            default: stockCondition.backgroundColor = UIColor.systemGray
-//        }
+        itemName.text = selectedItem?.foodName
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM yyyy"
+        
+        if let date = selectedItem?.expDate {
+            expDate.text = formatter.string(from: date)
+        }
+        
+        // stock level color
+        switch selectedItem?.stockLevel {
+        case .plenty:
+            stockCondition.backgroundColor = UIColor.systemGreen
+            stockCondition.text = "Plenty"
+        case .half:
+            stockCondition.backgroundColor = UIColor.systemOrange
+            stockCondition.text = "Half"
+        case .low:
+            stockCondition.backgroundColor = UIColor.systemRed
+            stockCondition.text = "Low"
+        default:
+            stockCondition.backgroundColor = UIColor.systemGray
+            stockCondition.text = "Empty"
+        }
 
     }
     

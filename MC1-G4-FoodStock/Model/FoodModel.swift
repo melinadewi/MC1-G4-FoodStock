@@ -18,16 +18,18 @@ enum StockLevel: Int {
 class FoodModel: NSObject {
     
     var foodName = ""
-    var expDate:Date
+    var expDate: Date
     var stockLevel:StockLevel
     var foodImage: UIImage?
     var id = ""
+    var updatedDate: Date
     
-    init(foodName: String, expDate: Date, stockLevel: StockLevel, foodImage: UIImage?, id: String = UUID().uuidString) {
+    init(foodName: String, expDate: Date, stockLevel: StockLevel, foodImage: UIImage?, id: String = UUID().uuidString, updatedDate: Date = Date()) {
         self.foodName = foodName
         self.expDate = expDate
         self.stockLevel = stockLevel
         self.foodImage = foodImage
         self.id = id
+        self.updatedDate = updatedDate
     }
 }

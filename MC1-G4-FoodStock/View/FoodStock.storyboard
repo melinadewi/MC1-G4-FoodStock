@@ -419,7 +419,10 @@
                             <outlet property="delegate" destination="ykt-BJ-Mnw" id="yt5-Dg-p9G"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Edit Item" id="yVc-Qd-jC8"/>
+                    <navigationItem key="navigationItem" title="Edit Item" id="yVc-Qd-jC8">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Z0l-Wa-MFg"/>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="5IR-tw-rZc"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="choosePhotoButton" destination="Ifl-KI-rYq" id="bRv-6U-QWS"/>
                         <outlet property="expDateField" destination="b8H-Z8-waK" id="3Iq-Eu-lu8"/>
@@ -487,7 +490,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter item name..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lxu-JS-iUZ">
+                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter item name..." textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="lxu-JS-iUZ">
                                                     <rect key="frame" x="20" y="4" width="374" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -534,7 +537,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="41"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Pick expiry date" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vhh-wG-pyj">
+                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Pick expiry date" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Vhh-wG-pyj">
                                                     <rect key="frame" x="20" y="4" width="374" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -555,7 +558,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VOm-KL-05y">
-                                                    <rect key="frame" x="20" y="11" width="374" height="102"/>
+                                                    <rect key="frame" x="20" y="11" width="374" height="99"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no"/>
@@ -572,7 +575,12 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="New Item" id="a8B-QI-Vxm">
-                        <barButtonItem key="backBarButtonItem" title="Cancel" id="s3s-PL-vIa"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="hmF-Sh-85Z">
+                            <connections>
+                                <action selector="backButton_Action:" destination="uSW-gI-4SI" id="Bxh-5V-82V"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="MrD-do-svX"/>
                     </navigationItem>
                     <connections>
                         <outlet property="addItemButton" destination="mI2-Cr-CRO" id="sB3-mC-mAA"/>
@@ -585,7 +593,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tfc-VJ-khP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3800" y="-188"/>
+            <point key="canvasLocation" x="3800.0000000000005" y="-188.16964285714286"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pHY-sD-P2W">

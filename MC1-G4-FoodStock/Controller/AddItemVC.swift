@@ -8,6 +8,11 @@
 
 import UIKit
 
+//protocol AddItemVCDelegate {
+//    // yang wajib diimplement oleh delegate lu
+//    func addToList(pesan: String)
+//}
+
 class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     //MARK: Outlets
     @IBOutlet weak var backButton: UIButton!
@@ -19,6 +24,7 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
     @IBOutlet weak var itemExpiryDateTextField: UITextField!
     @IBOutlet weak var addItemButton: UIButton!
     
+//    var delegate: AddItemVCDelegate?
     /*
     // MARK: - Navigation
 
@@ -28,6 +34,12 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
         // Pass the selected object to the new view controller.
     }
     */
+//    func save() {
+//        //create model
+//
+//        // save
+//        delegate?.addToList(pesan: "hai delegate")
+//    }
     
     //MARK: Variables
     var newItemName = ""
@@ -47,12 +59,15 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
         itemNotesTextField.delegate = self
         
         //Move view up when keyboard appear
-        NotificationCenter.default.addObserver(self, selector: #selector(AddItemVC.keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(AddItemVC.keyboardWillHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(AddItemVC.keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+//
+//        NotificationCenter.default.addObserver(self, selector: #selector(AddItemVC.keyboardWillHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
         
         //Hide keyboard when an area is tapped
         hideKeyboardWhenTapped()
+        
+//        print("aa")
+//        delegate?.addToList(pesan: "hai delegate")
     }
     
     //MARK: Functions
@@ -121,18 +136,18 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
         return nil
     }
     
-    //Move view up when keyboard appear
-    @objc func keyboardWillShow(notification: NSNotification) {
-        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
-            return
-        }
-        
-        self.view.frame.origin.y = 0 - keyboardSize.height
-    }
-    
-    @objc func keyboardWillHide(notification: NSNotification) {
-        self.view.frame.origin.y = 0
-    }
+//    //Move view up when keyboard appear
+//    @objc func keyboardWillShow(notification: NSNotification) {
+////        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+////            return
+////        }
+////
+////        self.view.frame.origin.y = 0 - keyboardSize.height
+//    }
+//
+//    @objc func keyboardWillHide(notification: NSNotification) {
+//        self.view.frame.origin.y = 0
+//    }
     
     //Hide keyboard when an area is tapped
     func hideKeyboardWhenTapped(){

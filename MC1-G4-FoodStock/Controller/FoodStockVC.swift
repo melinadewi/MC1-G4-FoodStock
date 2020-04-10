@@ -23,6 +23,8 @@ class FoodStockVC: UIViewController {
     var selectedSort: String = ""
     
     var removeItem: String? = ""
+    
+    var isDeleting: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +34,9 @@ class FoodStockVC: UIViewController {
         populateList()
         
         tableView.tableFooterView = UIView()    // remove empty cell separator
+        
+//        let addVC = AddItemVC()
+//        addVC.delegate = self
     }
     
     func setUpNavBar() {
@@ -72,7 +77,8 @@ class FoodStockVC: UIViewController {
         listOfFoods.append(FoodModel(foodName: "Spaghetti", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .low, foodImage: nil))
         listOfFoods.append(FoodModel(foodName: "Cheese", expDate: formatter.date(from: "04-06-2020")!, stockLevel: .low, foodImage: nil))
         listOfFoods.append(FoodModel(foodName: "Tomatoes", expDate: formatter.date(from: "14-05-2020")!, stockLevel: .half, foodImage: nil))
-
+        
+        self.listOfFoods.sort(by: { $0.updatedDate > $1.updatedDate })
     }
     
     // sort button tapped
@@ -87,6 +93,11 @@ class FoodStockVC: UIViewController {
             self.sortButton.setTitle("Sort by Date Edited (Default) ", for: .normal)
             
             self.selectedSort = "dateEdited"
+            
+            self.filteredFoods.sort(by: { $0.updatedDate > $1.updatedDate })
+            self.listOfFoods.sort(by: { $0.updatedDate > $1.updatedDate })
+            
+            self.tableView.reloadData()
         }
         
         let lowestStock = UIAlertAction(title: "Lowest Stock", style: .default) { (action) in
@@ -173,7 +184,13 @@ extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
         
         if isFiltering && filteredFoods.count == 0 {    // if search not found
             setMessage(message: "No Result")
-            return 0
+            
+            sortButton.isHidden = false
+            sortButton.isEnabled = false
+            tableView.isUserInteractionEnabled = false
+            sortButton.tintColor = .lightGray
+            sortButton.setTitleColor(.lightGray, for: .disabled)
+            return 1
         }
         
         if listOfFoods.count == 0 {
@@ -237,6 +254,7 @@ extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
+            self.isDeleting = true
             
             if self.isFiltering {
                 let foodId = self.filteredFoods[indexPath.row].id   // get the food id
@@ -318,3 +336,9 @@ extension FoodStockVC {
         navigationItem.largeTitleDisplayMode = .automatic
     }
 }
+
+//extension FoodStockVC: AddItemVCDelegate {
+//    func addToList(pesan: String) {
+//        print(pesan)
+//    }
+//}
