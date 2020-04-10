@@ -23,6 +23,7 @@
 		742764A6243EFF4400980973 /* ShoppingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742764A5243EFF4400980973 /* ShoppingCell.swift */; };
 		74DA8563243C842C00749E48 /* ShoppingList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74DA8561243C842C00749E48 /* ShoppingList.storyboard */; };
 		74DA8565243C862F00749E48 /* FoodStock.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74DA8564243C862F00749E48 /* FoodStock.storyboard */; };
+		ADBCF6DF2440B348003080D6 /* AddShopItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBCF6DE2440B348003080D6 /* AddShopItemVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		742764A5243EFF4400980973 /* ShoppingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCell.swift; sourceTree = "<group>"; };
 		74DA8562243C842C00749E48 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "MC1-G4-FoodStock/View/Base.lproj/ShoppingList.storyboard"; sourceTree = "<group>"; };
 		74DA8564243C862F00749E48 /* FoodStock.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FoodStock.storyboard; sourceTree = "<group>"; };
+		ADBCF6DE2440B348003080D6 /* AddShopItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddShopItemVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 				741A24472437412C0005C00E /* FoodStockVC.swift */,
 				7427649F243EFF0800980973 /* ItemDetailVC.swift */,
 				742764A1243EFF1E00980973 /* ShoppingListVC.swift */,
+				ADBCF6DE2440B348003080D6 /* AddShopItemVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -199,6 +202,7 @@
 				742764A6243EFF4400980973 /* ShoppingCell.swift in Sources */,
 				742764A0243EFF0800980973 /* ItemDetailVC.swift in Sources */,
 				571F6C212438B20300AB411E /* FoodModel.swift in Sources */,
+				ADBCF6DF2440B348003080D6 /* AddShopItemVC.swift in Sources */,
 				571F6C252438B37100AB411E /* FoodCell.swift in Sources */,
 				741A24482437412C0005C00E /* FoodStockVC.swift in Sources */,
 				741A24442437412C0005C00E /* AppDelegate.swift in Sources */,
