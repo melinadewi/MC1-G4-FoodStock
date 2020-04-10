@@ -18,6 +18,10 @@ class FoodStockVC: UIViewController {
     var filteredFoods: [FoodModel] = []     // this will hold the foods that the user searches for
     
     var isFiltering: Bool = false   // bool to determine wether it is filtering or not
+    
+    var selectedSort: String = ""
+    
+    var removeItem: String? = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,16 +75,30 @@ class FoodStockVC: UIViewController {
         let dateEdited = UIAlertAction(title: "Default (Date Edited)", style: .default) { (action) in
             // implement code
             print("Sort by date edited")
+            self.selectedSort = "dateEdited"
         }
         
         let lowestStock = UIAlertAction(title: "Lowest Stock", style: .default) { (action) in
             // implement code
             print("Sort by lowest stock")
+            self.selectedSort = "lowestStock"
         }
         
         let expDate = UIAlertAction(title: "Expiration Date", style: .default) { (action) in
             // implement code
             print("Sort by expiration date")
+            self.selectedSort = "expDate"
+        }
+        
+        switch selectedSort {
+        case "dateEdited":
+            dateEdited.setValue(true, forKey: "checked")
+        case "lowestStock":
+            lowestStock.setValue(true, forKey: "checked")
+        case "expDate":
+            expDate.setValue(true, forKey: "checked")
+        default:
+            dateEdited.setValue(true, forKey: "checked")
         }
         
         actionSheet.addAction(dateEdited)
@@ -106,7 +124,6 @@ class FoodStockVC: UIViewController {
             return food.foodName.lowercased().contains(searchText.lowercased())     // return true if foodname contains searched text
         }
     }
-    
 }
 
 extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
@@ -137,28 +154,49 @@ extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
     
     // did tap cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         performSegue(withIdentifier: "toItemDetail", sender: self)
-        
-        if isFiltering {
-            print("\(filteredFoods[indexPath.row].foodName) selected!")
-        } else {
-            print("\(listOfFoods[indexPath.row].foodName) selected!")
+    }
+    
+    // pass cell data to ItemDetailVC
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? ItemDetailVC {
+            if isFiltering {
+                destination.selectedItem = filteredFoods[tableView.indexPathForSelectedRow!.row]
+            } else {
+                destination.selectedItem = listOfFoods[tableView.indexPathForSelectedRow!.row]
+            }
         }
+    }
+    
+    // unwind back from ItemDetailVC after delete
+    @IBAction func unwindBackToFoodStock(sender: UIStoryboardSegue)
+    {
+        // find the index of the item deleted from ItemDetailVC
+        if let itemIndex = listOfFoods.firstIndex(where: {$0.id == removeItem}) {
+            listOfFoods.remove(at: itemIndex)
+        }
+        
+        // reload tableview
+        tableView.reloadData()
+        
     }
     
     // configure swipe action
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        
-        if isFiltering {
-            return UISwipeActionsConfiguration()
-        }
-        
+
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
-            print("Deleting \(self.listOfFoods[indexPath.row].foodName)")
             
-            // delete data from array
-            self.listOfFoods.remove(at: indexPath.row)
+            if self.isFiltering {
+                let foodId = self.filteredFoods[indexPath.row].id   // get the food id
+                
+                if let index = self.listOfFoods.firstIndex(where: { $0.id == foodId } ) { // get the index from the original list
+                    self.listOfFoods.remove(at: index)  // remove food from original list
+                }
+                
+                self.filteredFoods.remove(at: indexPath.row)    // remove food from filtered list
+            } else {
+                self.listOfFoods.remove(at: indexPath.row)      // if not filtering then remove from original array
+            }
             
             // delete data from table view
             tableView.deleteRows(at: [indexPath], with: .fade)
@@ -204,3 +242,5 @@ extension FoodStockVC: UISearchResultsUpdating {
         tableView.reloadData()
     }
 }
+
+
