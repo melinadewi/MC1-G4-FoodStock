@@ -139,13 +139,13 @@ class FoodStockVC: UIViewController {
     
     @objc func addFood() {
         // do something when add button is tapped
-        //performSegue(withIdentifier: "toAddItem", sender: self)
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd-MM-yyyy"
-        formatter.timeZone = TimeZone(abbreviation: "PST")
-        
-        listOfFoods.append(FoodModel(foodName: "Apple yang sangat enak skali", expDate: formatter.date(from: "24-06-2020")!, stockLevel: .plenty, foodImage: nil))
-        tableView.reloadData()
+        performSegue(withIdentifier: "toAddItem", sender: self)
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "dd-MM-yyyy"
+//        formatter.timeZone = TimeZone(abbreviation: "PST")
+//
+//        listOfFoods.append(FoodModel(foodName: "Apple yang sangat enak skali", expDate: formatter.date(from: "24-06-2020")!, stockLevel: .plenty, foodImage: nil))
+//        tableView.reloadData()
     }
     
     func filterContent(searchText: String) {

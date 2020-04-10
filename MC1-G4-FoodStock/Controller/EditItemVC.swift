@@ -21,6 +21,7 @@ class EditItemVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController?.tabBar.isHidden = true
+        setupExpiryDatePicker()
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -48,7 +49,7 @@ class EditItemVC: UITableViewController {
     func setupExpiryDatePicker(){
         expiryDatePicker.datePickerMode = .date
         expiryDatePicker.minimumDate = Date()
-        expiryDatePicker.addTarget(self, action: #selector(AddItemVC.datePickerValueChanged(sender:)), for: .valueChanged)
+        expiryDatePicker.addTarget(self, action: #selector(datePickerValueChanged(sender:)), for: .valueChanged)
         expDateField.inputView = expiryDatePicker
         
         let toolbar = UIToolbar()
@@ -67,7 +68,7 @@ class EditItemVC: UITableViewController {
         dateFormatter.dateFormat = "dd-MM-yyyy"
         expDateField.text = dateFormatter.string(from: sender.date)
     }
-    
+
     @objc func dismissDatePicker(){
         view.endEditing(true)
     }
