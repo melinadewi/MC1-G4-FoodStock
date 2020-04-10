@@ -44,6 +44,14 @@ class AddItemVC: UIViewController {
         
         itemNameTextField.delegate = self
         itemNotesTextField.delegate = self
+        
+        //Move view up when keyboard appear
+        NotificationCenter.default.addObserver(self, selector: #selector(AddItemVC.keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(AddItemVC.keyboardWillHide(notification:)), name: UIResponder.keyboardDidHideNotification, object: nil)
+        
+        //Hide keyboard when an area is tapped
+        hideKeyboardWhenTapped()
     }
     
     //MARK: Functions
@@ -82,6 +90,59 @@ class AddItemVC: UIViewController {
     @objc func dismissDatePicker(){
         view.endEditing(true)
     }
+    
+    //Store image after its added from the photos gallery
+    func storeImage(image: UIImage, forKey key: String){
+        if let pngRepresentation = image.pngData() {
+            UserDefaults.standard.set(pngRepresentation, forKey: key)
+        }
+    }
+    
+    //Retrieve saved image
+    func retrieveImage(forKey key: String) -> UIImage? {
+        
+        if let imageData = UserDefaults.standard.object(forKey: key) as? Data,
+            let image = UIImage(data: imageData) {
+            UserDefaults.standard.removeObject(forKey: key)
+            return image
+        }
+        
+        return nil
+    }
+    
+    //Move view up when keyboard appear
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+        
+        self.view.frame.origin.y = 0 - keyboardSize.height
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        self.view.frame.origin.y = 0
+    }
+    
+    //Hide keyboard when an area is tapped
+    func hideKeyboardWhenTapped(){
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    func showAlert() {
+        let alert = UIAlertController(title: "New Item Info", message: "Name: \(newItemName)\nStock: \(newItemStockLevel)\nExp Date: \(newItemExpiryDate)\nNotes: \(newItemNotes)", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
+    }
+
     
     //MARK: Actions
     
