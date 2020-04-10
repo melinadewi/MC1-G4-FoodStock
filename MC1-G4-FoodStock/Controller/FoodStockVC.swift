@@ -11,6 +11,7 @@ import UIKit
 class FoodStockVC: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var sortButton: UIButton!
     
     let foodCell = "FoodCell"   // cell identifier
     
@@ -26,7 +27,9 @@ class FoodStockVC: UIViewController {
         // Do any additional setup after loading the view.
         
         setUpNavBar()
-        populateList()
+        //populateList()
+        
+        tableView.tableFooterView = UIView()    // remove empty cell separator
     }
     
     func setUpNavBar() {
@@ -42,50 +45,70 @@ class FoodStockVC: UIViewController {
         // adding the search controller to the nav bar
         navigationItem.searchController = searchController
         navigationItem.rightBarButtonItem = addButton
+        
+        navigationItem.largeTitleDisplayMode = .automatic
     }
     
     func populateList() {
-        listOfFoods.append(FoodModel(foodName: "Apple yang sangat enak skali", expDate: "24-06-2020", stockLevel: "Plenty", foodImage: nil))
-        listOfFoods.append(FoodModel(foodName: "Kiwi", expDate: "21-06-2020", stockLevel: "Low", foodImage: nil))
-        listOfFoods.append(FoodModel(foodName: "Orange", expDate: "04-06-2020", stockLevel: "Empty", foodImage: nil))
-        listOfFoods.append(FoodModel(foodName: "Peach", expDate: "14-08-2020", stockLevel: "Half", foodImage: nil))
-        listOfFoods.append(FoodModel(foodName: "Ovomaltine", expDate: "21-06-2020", stockLevel: "Plenty", foodImage: nil))
-        listOfFoods.append(FoodModel(foodName: "Nutella", expDate: "21-06-2020", stockLevel: "Low", foodImage: nil))
-        listOfFoods.append(FoodModel(foodName: "Bread", expDate: "04-06-2020", stockLevel: "Half", foodImage: nil))
-        listOfFoods.append(FoodModel(foodName: "Oreo", expDate: "14-08-2020", stockLevel: "Empty", foodImage: nil))
-        listOfFoods.append(FoodModel(foodName: "Dragon Fruit", expDate: "08-04-2020", stockLevel: "Plenty", foodImage: nil))
-        listOfFoods.append(FoodModel(foodName: "Watermelon", expDate: "21-06-2020", stockLevel: "Low", foodImage: nil))
-        listOfFoods.append(FoodModel(foodName: "Milk", expDate: "13-12-2020", stockLevel: "Half", foodImage: nil))
-        listOfFoods.append(FoodModel(foodName: "Eggs", expDate: "13-08-2020", stockLevel: "Empty", foodImage: nil))
-        listOfFoods.append(FoodModel(foodName: "Tofu", expDate: "24-12-2020", stockLevel: "Plenty", foodImage: nil))
-        listOfFoods.append(FoodModel(foodName: "Spaghetti", expDate: "21-06-2020", stockLevel: "Low", foodImage: nil))
-        listOfFoods.append(FoodModel(foodName: "Cheese", expDate: "04-06-2020", stockLevel: "Half", foodImage: nil))
-        listOfFoods.append(FoodModel(foodName: "Tomatoes", expDate: "14-05-2020", stockLevel: "Half", foodImage: nil))
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy"
+        formatter.timeZone = TimeZone(abbreviation: "PST")
+        
+        listOfFoods.append(FoodModel(foodName: "Apple yang sangat enak skali", expDate: formatter.date(from: "24-06-2020")!, stockLevel: .plenty, foodImage: nil))
+        listOfFoods.append(FoodModel(foodName: "Kiwi", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .low, foodImage: nil))
+        listOfFoods.append(FoodModel(foodName: "Orange", expDate: formatter.date(from: "04-06-2020")!, stockLevel: .empty, foodImage: nil))
+        listOfFoods.append(FoodModel(foodName: "Peach", expDate: formatter.date(from: "14-08-2020")!, stockLevel: .half, foodImage: nil))
+        listOfFoods.append(FoodModel(foodName: "Ovomaltine", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .plenty, foodImage: nil))
+        listOfFoods.append(FoodModel(foodName: "Nutella", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .low, foodImage: nil))
+        listOfFoods.append(FoodModel(foodName: "Bread", expDate: formatter.date(from: "04-06-2020")!, stockLevel: .half, foodImage: nil))
+        listOfFoods.append(FoodModel(foodName: "Oreo", expDate: formatter.date(from: "14-08-2020")!, stockLevel: .empty, foodImage: nil))
+        listOfFoods.append(FoodModel(foodName: "Dragon Fruit", expDate: formatter.date(from: "08-04-2020")!, stockLevel: .plenty, foodImage: nil))
+        listOfFoods.append(FoodModel(foodName: "Watermelon", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .low, foodImage: nil))
+        listOfFoods.append(FoodModel(foodName: "Milk", expDate: formatter.date(from: "13-12-2020")!, stockLevel: .half, foodImage: nil))
+        listOfFoods.append(FoodModel(foodName: "Eggs", expDate: formatter.date(from: "13-08-2020")!, stockLevel: .empty, foodImage: nil))
+        listOfFoods.append(FoodModel(foodName: "Tofu", expDate: formatter.date(from: "24-12-2020")!, stockLevel: .plenty, foodImage: nil))
+        listOfFoods.append(FoodModel(foodName: "Spaghetti", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .low, foodImage: nil))
+        listOfFoods.append(FoodModel(foodName: "Cheese", expDate: formatter.date(from: "04-06-2020")!, stockLevel: .low, foodImage: nil))
+        listOfFoods.append(FoodModel(foodName: "Tomatoes", expDate: formatter.date(from: "14-05-2020")!, stockLevel: .half, foodImage: nil))
+
     }
     
-    
+    // sort button tapped
     @IBAction func didTapSort(_ sender: UIButton) {
         // do something when sort button is tapped
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
+
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         let dateEdited = UIAlertAction(title: "Default (Date Edited)", style: .default) { (action) in
             // implement code
-            print("Sort by date edited")
+            self.sortButton.setTitle("Sort by Date Edited (Default) ", for: .normal)
+            
             self.selectedSort = "dateEdited"
         }
         
         let lowestStock = UIAlertAction(title: "Lowest Stock", style: .default) { (action) in
             // implement code
-            print("Sort by lowest stock")
+            self.sortButton.setTitle("Sort by Lowest Stock ", for: .normal)
+            
             self.selectedSort = "lowestStock"
+
+            self.filteredFoods.sort(by: { $0.stockLevel.rawValue < $1.stockLevel.rawValue })
+            self.listOfFoods.sort(by: { $0.stockLevel.rawValue < $1.stockLevel.rawValue })
+
+            self.tableView.reloadData()
         }
         
         let expDate = UIAlertAction(title: "Expiration Date", style: .default) { (action) in
             // implement code
-            print("Sort by expiration date")
+            self.sortButton.setTitle("Sort by Expiration Date ", for: .normal)
+            
             self.selectedSort = "expDate"
+            
+            self.filteredFoods.sort(by: { $0.expDate < $1.expDate })
+            self.listOfFoods.sort(by: { $0.expDate < $1.expDate })
+            
+            self.tableView.reloadData()
         }
         
         switch selectedSort {
@@ -114,7 +137,13 @@ class FoodStockVC: UIViewController {
     
     @objc func addFood() {
         // do something when add button is tapped
-        performSegue(withIdentifier: "toAddItem", sender: self)
+        //performSegue(withIdentifier: "toAddItem", sender: self)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy"
+        formatter.timeZone = TimeZone(abbreviation: "PST")
+        
+        listOfFoods.append(FoodModel(foodName: "Apple yang sangat enak skali", expDate: formatter.date(from: "24-06-2020")!, stockLevel: .plenty, foodImage: nil))
+        tableView.reloadData()
     }
     
     func filterContent(searchText: String) {
@@ -136,6 +165,29 @@ extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
         
         // else return original food count
         return listOfFoods.count
+    }
+    
+    // number of sections
+    func numberOfSections(in tableView: UITableView) -> Int {
+        
+        if isFiltering && filteredFoods.count == 0 {    // if search not found
+            setMessage(message: "No Result")
+            return 0
+        }
+        
+        if listOfFoods.count == 0 {
+            setMessage(message: "Food stocks is empty")
+            navigationItem.largeTitleDisplayMode = .never
+            tableView.isUserInteractionEnabled = false
+            sortButton.isHidden = false
+            sortButton.isEnabled = false
+            sortButton.tintColor = .lightGray
+            sortButton.setTitleColor(.lightGray, for: .disabled)
+            return 1
+        }
+        
+        restore()   // else restore
+        return 1
     }
     
     // set cell
@@ -211,7 +263,7 @@ extension FoodStockVC: UISearchResultsUpdating {
         // do something
         let searchBar = searchController.searchBar
         
-        if let text = searchBar.text {      // check if search bar text is nil
+        if let text = searchBar.text {      // check if search bar text is not nil
             if text != "" {     // if search bar text is NOT EMPTY, do this
                 isFiltering = true
                 filterContent(searchText: text)
@@ -222,5 +274,29 @@ extension FoodStockVC: UISearchResultsUpdating {
         
         // reload tableview data
         tableView.reloadData()
+    }
+}
+
+extension FoodStockVC {
+    func setMessage(message: String) {
+        let rect = CGRect(origin: CGPoint(x: 0,y :0), size: CGSize(width: self.view.bounds.size.width, height: self.view.bounds.size.height))
+        let messageLabel = UILabel(frame: rect)
+        messageLabel.text = message
+        messageLabel.textColor = .lightGray
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center;
+
+        tableView.backgroundView = messageLabel;
+        sortButton.isHidden = true
+    }
+    
+    func restore() {
+        tableView.backgroundView = nil
+        tableView.isUserInteractionEnabled = true
+        sortButton.isHidden = false
+        sortButton.isEnabled = true
+        sortButton.tintColor = .systemBlue
+        
+        navigationItem.largeTitleDisplayMode = .automatic
     }
 }

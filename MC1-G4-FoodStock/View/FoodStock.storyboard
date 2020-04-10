@@ -117,6 +117,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Food Stock" id="2VT-sd-Tv7"/>
                     <connections>
+                        <outlet property="sortButton" destination="UOE-og-9Ai" id="TIN-eb-omi"/>
                         <outlet property="tableView" destination="yc9-pe-5Md" id="D2i-hw-VQW"/>
                         <segue destination="wxH-s6-UdV" kind="presentation" identifier="toAddItem" id="KyT-cr-pWO"/>
                         <segue destination="HDb-wQ-mmA" kind="show" identifier="toItemDetail" id="6FG-ak-lCt"/>

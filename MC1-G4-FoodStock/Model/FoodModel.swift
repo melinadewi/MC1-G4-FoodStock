@@ -8,14 +8,22 @@
 
 import UIKit
 
+enum StockLevel: Int {
+    case empty = 0
+    case low = 1
+    case half = 2
+    case plenty = 3
+}
+
 class FoodModel: NSObject {
+    
     var foodName = ""
-    var expDate = ""
-    var stockLevel = ""
+    var expDate:Date
+    var stockLevel:StockLevel
     var foodImage: UIImage?
     var id = ""
     
-    init(foodName: String, expDate: String, stockLevel: String, foodImage: UIImage?, id: String = UUID().uuidString) {
+    init(foodName: String, expDate: Date, stockLevel: StockLevel, foodImage: UIImage?, id: String = UUID().uuidString) {
         self.foodName = foodName
         self.expDate = expDate
         self.stockLevel = stockLevel

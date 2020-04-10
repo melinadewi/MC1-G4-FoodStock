@@ -36,15 +36,27 @@ class FoodCell: UITableViewCell {
     func cellConfig() {
         guard let obj = foodModel else { return }   // if foodModel is nil, then return immediately
         
-        foodName.text = obj.foodName
-        expDate.text = "Exp: \(obj.expDate)"
-        stockLevel.text = obj.stockLevel
+        let date = obj.expDate
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM yyyy"
+        let formattedDate = formatter.string(from: date)
         
-        switch stockLevel.text {
-            case "Plenty": colorIndicator.backgroundColor = UIColor.systemGreen
-            case "Half": colorIndicator.backgroundColor = UIColor.systemOrange
-            case "Low": colorIndicator.backgroundColor = UIColor.systemRed
-            default: colorIndicator.backgroundColor = UIColor.systemGray
+        foodName.text = obj.foodName
+        expDate.text = "Exp: \(formattedDate)"
+        
+        switch obj.stockLevel {
+        case .plenty:
+            stockLevel.text = "Plenty"
+            colorIndicator.backgroundColor = UIColor.systemGreen
+        case .half:
+            stockLevel.text = "Half"
+            colorIndicator.backgroundColor = UIColor.systemOrange
+        case .low:
+            stockLevel.text = "Low"
+            colorIndicator.backgroundColor = UIColor.systemRed
+        case .empty:
+            stockLevel.text = "Empty"
+            colorIndicator.backgroundColor = UIColor.systemGray
         }
     }
 }
