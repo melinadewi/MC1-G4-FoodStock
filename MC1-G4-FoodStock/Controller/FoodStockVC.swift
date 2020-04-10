@@ -19,7 +19,9 @@ class FoodStockVC: UIViewController {
     
     var isFiltering: Bool = false   // bool to determine wether it is filtering or not
     
-    var selectedSort:String = ""
+    var selectedSort: String = ""
+    
+    var removeItem: String? = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -122,7 +124,6 @@ class FoodStockVC: UIViewController {
             return food.foodName.lowercased().contains(searchText.lowercased())     // return true if foodname contains searched text
         }
     }
-    
 }
 
 extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
@@ -153,14 +154,31 @@ extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
     
     // did tap cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         performSegue(withIdentifier: "toItemDetail", sender: self)
-        
-        if isFiltering {
-            print("\(filteredFoods[indexPath.row].foodName) selected!")
-        } else {
-            print("\(listOfFoods[indexPath.row].foodName) selected!")
+    }
+    
+    // pass cell data to ItemDetailVC
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? ItemDetailVC {
+            if isFiltering {
+                destination.selectedItem = filteredFoods[tableView.indexPathForSelectedRow!.row]
+            } else {
+                destination.selectedItem = listOfFoods[tableView.indexPathForSelectedRow!.row]
+            }
         }
+    }
+    
+    // unwind back from ItemDetailVC after delete
+    @IBAction func unwindBackToFoodStock(sender: UIStoryboardSegue)
+    {
+        // find the index of the item deleted from ItemDetailVC
+        if let itemIndex = listOfFoods.firstIndex(where: {$0.id == removeItem}) {
+            listOfFoods.remove(at: itemIndex)
+        }
+        
+        // reload tableview
+        tableView.reloadData()
+        
     }
     
     // configure swipe action
@@ -224,3 +242,5 @@ extension FoodStockVC: UISearchResultsUpdating {
         tableView.reloadData()
     }
 }
+
+
