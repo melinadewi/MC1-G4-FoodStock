@@ -45,8 +45,18 @@ class FoodStockVC: UIViewController {
         tabBarController?.tabBar.isHidden = false
 //        let addVC = AddItemVC()
 //        addVC.delegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(doSomething(notification:)), name: NSNotification.Name(rawValue: notificationKey), object: nil)
     }
-    
+
+    @objc func doSomething(notification: Notification) -> Void{
+        // do something
+        guard let pesan = notification.userInfo!["pesan"] as? FoodModel else { return }
+        
+        print("ini di print dari FoodStockVC, \(pesan.foodName)")
+        print("ini di print dari FoodStockVC, \(pesan.id)")
+        print("ini di print dari FoodStockVC, \(pesan.expDate)")
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
     }

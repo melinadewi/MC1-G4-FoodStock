@@ -8,6 +8,8 @@
 
 import UIKit
 
+let notificationKey = "com.mc1-g4-foodstock.notificationKey"
+
 class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
@@ -193,6 +195,11 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
             itemName = txt
         }
         save(key: itemName)
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationKey), object: nil, userInfo: ["pesan": selectedItem])
+        
+        NotificationCenter.default.removeObserver(self)
+        
         dismiss(animated: true, completion: nil)
     }
     

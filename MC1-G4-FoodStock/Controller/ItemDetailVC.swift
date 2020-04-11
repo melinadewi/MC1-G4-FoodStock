@@ -55,11 +55,22 @@ class ItemDetailVC: UITableViewController {
         self.tabBarController?.tabBar.isHidden = true
 
         populateDetail()
-       
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(doSomething(notification:)), name: NSNotification.Name(rawValue: notificationKey), object: nil)
+    }
+    
+    @objc func doSomething(notification: Notification) {
+        guard let pesan = notification.userInfo!["pesan"] as? FoodModel else { return } // if let
+        
+        print("ini di print dari ItemDetailVC, \(pesan.foodName)")
+        print("ini di print dari ItemDetailVC, \(pesan.id)")
+        print("ini di print dari ItemDetailVC, \(pesan.expDate)")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
+        print(NotificationCenter.default.self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     func setUpNavBar() {
