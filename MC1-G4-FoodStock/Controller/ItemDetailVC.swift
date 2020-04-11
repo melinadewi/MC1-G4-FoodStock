@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ItemDetailVCDelegate: class {
+    func deleteItem(id: String)
+}
+
 class ItemDetailVC: UITableViewController {
         
     @IBOutlet weak var itemImage: UIImageView! {
@@ -33,6 +37,7 @@ class ItemDetailVC: UITableViewController {
     
     var selectedItem: FoodModel?
     
+    weak var delegate: ItemDetailVCDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,10 +103,10 @@ class ItemDetailVC: UITableViewController {
         let alert = UIAlertController(title: nil, message: "Are you sure you want to delete this item?", preferredStyle: .alert)
 
         // yes action
-        let yesAction = UIAlertAction(title: "Yes", style: .default) { _ in
-            self.performSegue(withIdentifier: "unwindBack", sender: self)
-            print("delete")
-        }
+        let yesAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
+//            self.performSegue(withIdentifier: "unwindBack", sender: self)
+            self.delegate?.deleteItem(id: self.selectedItem!.id)
+            self.navigationController?.popViewController(animated: true)        }
 
         alert.addAction(yesAction)
 

@@ -10,12 +10,12 @@
         <!--Food Stock-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="FoodStockVC" customModule="MC1_G4_FoodStock" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="BYZ-38-t0r" customClass="FoodStockVC" customModule="MC1_G4_FoodStock" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="62" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="yc9-pe-5Md">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="62" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="yc9-pe-5Md">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="Cuh-g3-suA">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -115,8 +115,25 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Food Stock" id="2VT-sd-Tv7"/>
+                    <toolbarItems>
+                        <barButtonItem enabled="NO" title="Delete" id="zL4-s8-fu5">
+                            <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="deleteButtonDidTap:" destination="BYZ-38-t0r" id="GdD-gz-zud"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Food Stock" id="2VT-sd-Tv7">
+                        <barButtonItem key="leftBarButtonItem" title="Edit" id="2YT-ch-2Dr">
+                            <connections>
+                                <action selector="editButtonDidTap:" destination="BYZ-38-t0r" id="PfK-2V-iKF"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="deleteButton" destination="zL4-s8-fu5" id="Zrn-tT-bzf"/>
+                        <outlet property="editButton" destination="2YT-ch-2Dr" id="ul0-kx-gD4"/>
                         <outlet property="sortButton" destination="UOE-og-9Ai" id="TIN-eb-omi"/>
                         <outlet property="tableView" destination="yc9-pe-5Md" id="D2i-hw-VQW"/>
                         <segue destination="HDb-wQ-mmA" kind="show" identifier="toItemDetail" id="6FG-ak-lCt"/>
@@ -267,7 +284,7 @@
         <!--Food Stock-->
         <scene sceneID="oux-E8-0Rp">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MUj-10-PbQ" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="MUj-10-PbQ" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Food Stock" image="list.dash" catalog="system" id="gi8-pJ-ByE"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="o0F-25-fGC">
@@ -275,6 +292,10 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ejG-T0-yWf">
+                        <rect key="frame" x="0.0" y="813" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="6hG-fO-teD"/>
                     </connections>
