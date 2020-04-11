@@ -12,6 +12,10 @@ class FoodStockVC: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var sortButton: UIButton!
+    @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet weak var deleteButton: UIBarButtonItem!
+    
+    var addButton: UIBarButtonItem? = nil
     
     let foodCell = "FoodCell"   // cell identifier
     
@@ -24,7 +28,9 @@ class FoodStockVC: UIViewController {
     
     var removeItem: String? = ""
     
-    var isDeleting: Bool = false
+    var selectedItems: [Int] = []
+    
+    var isEnableMultipleSelection: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,14 +40,91 @@ class FoodStockVC: UIViewController {
         populateList()
         
         tableView.tableFooterView = UIView()    // remove empty cell separator
+        tableView.allowsMultipleSelectionDuringEditing = true
         
+        tabBarController?.tabBar.isHidden = false
 //        let addVC = AddItemVC()
 //        addVC.delegate = self
     }
     
+    override func viewWillLayoutSubviews() {
+        tabBarController?.tabBar.isHidden = false
+    }
+    
+    @IBAction func editButtonDidTap(_ sender: Any) {
+        selectedItems.removeAll()       // reset selected item everytime edit tapped
+        deleteButton.isEnabled = false  // disable delete button until there is selected item
+        
+        if !isEnableMultipleSelection { // if not in editing mode do this
+            tableView.setEditing(true, animated: true)
+            
+            navigationController?.toolbar.isHidden = false
+            tabBarController?.tabBar.isHidden = true
+            
+            isEnableMultipleSelection = true
+            addButton?.isEnabled = false
+            sortButton.isEnabled = false
+            sortButton.tintColor = .lightGray
+            sortButton.setTitleColor(.lightGray, for: .disabled)
+            editButton.title = "Done"
+            
+            navigationItem.searchController?.searchBar.isUserInteractionEnabled = false
+            
+        } else {
+            tableView.setEditing(false, animated: true)
+            
+            navigationController?.toolbar.isHidden = true
+            tabBarController?.tabBar.isHidden = false
+            
+            isEnableMultipleSelection = false
+            addButton?.isEnabled = true
+            sortButton.isEnabled = true
+            sortButton.tintColor = .systemBlue
+            editButton.title = "Edit"
+        }
+    }
+    
+    @IBAction func deleteButtonDidTap(_ sender: Any) {
+        
+        if selectedItems.count != 0 {   // if there is selected item
+            
+            // show alert
+            let alert = UIAlertController(title: nil, message: "Are you sure you want to delete this item?", preferredStyle: .alert)
+            
+            // yes action
+            let yesAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
+                
+                // delete all the selected items from list of foods
+                self.listOfFoods = self.listOfFoods.enumerated().filter {!self.selectedItems.contains($0.offset) }.map {$0.element}
+                
+                
+                var indexPath: [IndexPath] = []
+                for index in self.selectedItems {
+                    indexPath.append(IndexPath(row: index, section: 0))
+                }
+                
+                self.tableView.deleteRows(at: indexPath, with: .left)
+                
+                // dismis editing
+                self.tableView.setEditing(false, animated: true)
+                self.editButtonDidTap(self)
+            }
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+                self.tableView.setEditing(false, animated: true)
+                self.editButtonDidTap(self)
+            }
+            
+            alert.addAction(yesAction)
+            alert.addAction(cancelAction)
+            
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
     func setUpNavBar() {
         // create add button
-        let addButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addFood))
+        addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addFood))
         
         // create search controller
         let searchController = UISearchController(searchResultsController: nil)
@@ -185,22 +268,29 @@ extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
         if isFiltering && filteredFoods.count == 0 {    // if search not found
             setMessage(message: "No Result")
             
+            tableView.isUserInteractionEnabled = false
+            
             sortButton.isHidden = false
             sortButton.isEnabled = false
-            tableView.isUserInteractionEnabled = false
             sortButton.tintColor = .lightGray
             sortButton.setTitleColor(.lightGray, for: .disabled)
+            
             return 1
         }
         
         if listOfFoods.count == 0 {
             setMessage(message: "Food stocks is empty")
             navigationItem.largeTitleDisplayMode = .never
+            
             tableView.isUserInteractionEnabled = false
+            
             sortButton.isHidden = false
             sortButton.isEnabled = false
             sortButton.tintColor = .lightGray
             sortButton.setTitleColor(.lightGray, for: .disabled)
+            
+            editButton.isEnabled = false
+            
             return 1
         }
         
@@ -223,12 +313,38 @@ extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
     
     // did tap cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "toItemDetail", sender: self)
+        selectedItems.append(indexPath.row) // append selected row to selected items
+        
+        // disable or enable delete button
+        if selectedItems.count == 0 {
+            deleteButton.isEnabled = false
+        } else {
+            deleteButton.isEnabled = true
+        }
+        
+        // if not in editing style, segue to detail VC
+        if !isEnableMultipleSelection {
+            performSegue(withIdentifier: "toItemDetail", sender: self)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        // remove selected item
+        selectedItems.remove(at: selectedItems.firstIndex(where: { $0 == indexPath.row })!)
+        
+        if selectedItems.count == 0 {
+            deleteButton.isEnabled = false
+        } else {
+            deleteButton.isEnabled = true
+        }
     }
     
     // pass cell data to ItemDetailVC
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? ItemDetailVC {
+            
+            destination.delegate = self
+            
             if isFiltering {
                 destination.selectedItem = filteredFoods[tableView.indexPathForSelectedRow!.row]
             } else {
@@ -254,26 +370,45 @@ extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
-            self.isDeleting = true
             
-            if self.isFiltering {
-                let foodId = self.filteredFoods[indexPath.row].id   // get the food id
-                
-                if let index = self.listOfFoods.firstIndex(where: { $0.id == foodId } ) { // get the index from the original list
-                    self.listOfFoods.remove(at: index)  // remove food from original list
+            let alert = UIAlertController(title: nil, message: "Are you sure you want to delete this item?", preferredStyle: .alert)
+            
+            // yes action
+            let yesAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
+                if self.isFiltering {
+                    let foodId = self.filteredFoods[indexPath.row].id   // get the food id
+                    
+                    if let index = self.listOfFoods.firstIndex(where: { $0.id == foodId } ) { // get the index from the original list
+                        self.listOfFoods.remove(at: index)  // remove food from original list
+                    }
+                    
+                    self.filteredFoods.remove(at: indexPath.row)    // remove food from filtered list
+                } else {
+                    self.listOfFoods.remove(at: indexPath.row)      // if not filtering then remove from original array
                 }
                 
-                self.filteredFoods.remove(at: indexPath.row)    // remove food from filtered list
-            } else {
-                self.listOfFoods.remove(at: indexPath.row)      // if not filtering then remove from original array
+                // delete data from table view
+                tableView.deleteRows(at: [indexPath], with: .fade)
             }
             
-            // delete data from table view
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+                // do something
+            }
+            
+            alert.addAction(yesAction)
+            alert.addAction(cancelAction)
+            
+            self.present(alert, animated: true, completion: nil)
         }
         
         let addToList = UIContextualAction(style: .normal, title: "Add to List") { (action, view, nil) in
-            print("Adding to \(self.listOfFoods[indexPath.row].foodName) list")
+            if self.isFiltering {
+                print("Adding to \(self.filteredFoods[indexPath.row].foodName) list")
+            } else {
+                print("Adding to \(self.listOfFoods[indexPath.row].foodName) list")
+            }
+            
+            tableView.setEditing(false, animated: true)
         }
         addToList.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
         
@@ -296,6 +431,13 @@ extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
 
 extension FoodStockVC: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {    // gets called everytime searchbar text changed
+        
+        // end editing
+        tableView.setEditing(false, animated: true)
+        isEnableMultipleSelection = false
+        addButton?.isEnabled = true
+        editButton.title = "Edit"
+        
         // do something
         let searchBar = searchController.searchBar
         
@@ -342,3 +484,12 @@ extension FoodStockVC {
 //        print(pesan)
 //    }
 //}
+
+extension FoodStockVC: ItemDetailVCDelegate {
+    func deleteItem(id: String) {
+        if let index = listOfFoods.firstIndex(where: { $0.id == id}) {
+            listOfFoods.remove(at: index)
+            tableView.reloadData()
+        }
+    }
+}
