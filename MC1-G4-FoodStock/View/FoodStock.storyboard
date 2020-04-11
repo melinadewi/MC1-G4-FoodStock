@@ -389,7 +389,6 @@
                                                         <segment title="Half"/>
                                                         <segment title="Plenty"/>
                                                     </segments>
-                                                    <color key="selectedSegmentTintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="stockAction:" destination="ykt-BJ-Mnw" eventType="valueChanged" id="2Jq-zn-rOu"/>
                                                     </connections>
@@ -408,7 +407,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="41"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Pick expiry date" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b8H-Z8-waK">
+                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Pick expiry date" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b8H-Z8-waK">
                                                     <rect key="frame" x="20" y="4" width="374" height="34"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
