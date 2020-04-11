@@ -320,6 +320,9 @@
                                                     <rect key="frame" x="159" y="7" width="97" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" title="Choose Photo"/>
+                                                    <connections>
+                                                        <action selector="choosePhoto:" destination="ykt-BJ-Mnw" eventType="touchUpInside" id="6Zx-lJ-ZGI"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -420,12 +423,21 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Edit Item" id="yVc-Qd-jC8">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Z0l-Wa-MFg"/>
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="5IR-tw-rZc"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Z0l-Wa-MFg">
+                            <connections>
+                                <action selector="cancelButton:" destination="ykt-BJ-Mnw" id="rAb-eS-alC"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="5IR-tw-rZc">
+                            <connections>
+                                <action selector="doneButton:" destination="ykt-BJ-Mnw" id="OiM-29-fui"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="choosePhotoButton" destination="Ifl-KI-rYq" id="bRv-6U-QWS"/>
                         <outlet property="expDateField" destination="b8H-Z8-waK" id="3Iq-Eu-lu8"/>
+                        <outlet property="imageView" destination="Ial-5a-Pul" id="BFA-sR-auw"/>
                         <outlet property="itemNameField" destination="kfs-jW-Ebx" id="Qtn-bi-odf"/>
                         <outlet property="notesField" destination="uAr-2a-H9a" id="vwY-fH-bdd"/>
                         <outlet property="stockSC" destination="MrS-5g-jtl" id="snl-8I-GhX"/>
