@@ -45,16 +45,23 @@ class FoodStockVC: UIViewController {
         tabBarController?.tabBar.isHidden = false
 //        let addVC = AddItemVC()
 //        addVC.delegate = self
-        NotificationCenter.default.addObserver(self, selector: #selector(doSomething(notification:)), name: NSNotification.Name(rawValue: notificationKey), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(editListOfItems(notification:)), name: NSNotification.Name(rawValue: notificationKey), object: nil)
     }
 
-    @objc func doSomething(notification: Notification) -> Void{
+    @objc func editListOfItems(notification: Notification) -> Void{
         // do something
-        guard let pesan = notification.userInfo!["pesan"] as? FoodModel else { return }
+        guard let foodItem = notification.userInfo!["pesan"] as? FoodModel else { return }
         
-        print("ini di print dari FoodStockVC, \(pesan.foodName)")
-        print("ini di print dari FoodStockVC, \(pesan.id)")
-        print("ini di print dari FoodStockVC, \(pesan.expDate)")
+        // get the id
+        let foodId = foodItem.id
+        
+        print(foodId)
+        
+        if let index = listOfFoods.firstIndex(where: { $0.id == foodId } ) { // get the index from the original list
+            listOfFoods[index] = FoodModel(foodName: "Edited", expDate: Date(), stockLevel: .empty, foodImage: nil)      // replace food with new edited food
+            print(index)
+            tableView.reloadData()
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
