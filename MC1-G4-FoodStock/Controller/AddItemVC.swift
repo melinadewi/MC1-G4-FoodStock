@@ -43,7 +43,7 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
     
     //MARK: Variables
     var newItemName = ""
-    var newItemStockLevel: StockLevel = .empty
+    var newItemStockLevel: StockLevel = .plenty
     var newItemExpiryDate: Date?
     var newItemFoodImage = ""
     var newItemNotes = ""
@@ -60,6 +60,7 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
         makeImageCircle()
         disableDoneButton()
         setupExpiryDatePicker()
+        itemStockSegmentedControl.selectedSegmentIndex = 3
         
         itemNameTextField.delegate = self
         itemNotesTextField.delegate = self
@@ -109,9 +110,6 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
         if newItemExpiryDate != nil{
             itemExpiryDateIsFilled = true
             checkDoneButtonEligibility()
-        }
-        else{
-            itemExpiryDateIsFilled = false
         }
         
     }
@@ -213,7 +211,7 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
         case 3:
             newItemStockLevel = .plenty
         default:
-            newItemStockLevel = .empty
+            newItemStockLevel = .plenty
         }
         print(String(describing: newItemStockLevel))
     }

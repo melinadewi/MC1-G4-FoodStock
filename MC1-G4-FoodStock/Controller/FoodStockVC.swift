@@ -353,6 +353,12 @@ extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
                 destination.selectedItem = listOfFoods[tableView.indexPathForSelectedRow!.row]
             }
         }
+        
+        if segue.identifier == "toAddItem" {
+            let nc = segue.destination as? UINavigationController
+            let vc = nc?.topViewController as? AddItemVC
+            vc?.delegate = self
+        }
     }
     
     // unwind back from ItemDetailVC after trash button pushed
@@ -493,5 +499,12 @@ extension FoodStockVC: ItemDetailVCDelegate {
             listOfFoods.remove(at: index)
             tableView.reloadData()
         }
+    }
+}
+
+extension FoodStockVC: AddItemVCDelegate {
+    func addToList(newModel: FoodModel) {
+        listOfFoods.append(newModel)
+        tableView.reloadData()
     }
 }

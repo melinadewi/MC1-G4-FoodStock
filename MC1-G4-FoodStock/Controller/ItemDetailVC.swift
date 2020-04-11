@@ -100,6 +100,8 @@ class ItemDetailVC: UITableViewController {
             stockCondition.backgroundColor = UIColor.systemGray
             stockCondition.text = "Empty"
         }
+        
+        itemImage.image = selectedItem?.foodImage
 
     }
     
