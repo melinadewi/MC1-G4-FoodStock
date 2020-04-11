@@ -42,6 +42,7 @@ class FoodStockVC: UIViewController {
         tableView.tableFooterView = UIView()    // remove empty cell separator
         tableView.allowsMultipleSelectionDuringEditing = true
         
+        tabBarController?.tabBar.isHidden = false
 //        let addVC = AddItemVC()
 //        addVC.delegate = self
     }
@@ -62,7 +63,12 @@ class FoodStockVC: UIViewController {
             
             isEnableMultipleSelection = true
             addButton?.isEnabled = false
+            sortButton.isEnabled = false
+            sortButton.tintColor = .lightGray
+            sortButton.setTitleColor(.lightGray, for: .disabled)
             editButton.title = "Done"
+            
+            navigationItem.searchController?.searchBar.isUserInteractionEnabled = false
             
         } else {
             tableView.setEditing(false, animated: true)
@@ -72,6 +78,8 @@ class FoodStockVC: UIViewController {
             
             isEnableMultipleSelection = false
             addButton?.isEnabled = true
+            sortButton.isEnabled = true
+            sortButton.tintColor = .systemBlue
             editButton.title = "Edit"
         }
     }
@@ -426,13 +434,9 @@ extension FoodStockVC: UISearchResultsUpdating {
         
         // end editing
         tableView.setEditing(false, animated: true)
-        
-        // if canceled
-        if !searchController.isActive {
-            isEnableMultipleSelection = false
-            addButton?.isEnabled = true
-            editButton.title = "Edit"
-        }
+        isEnableMultipleSelection = false
+        addButton?.isEnabled = true
+        editButton.title = "Edit"
         
         // do something
         let searchBar = searchController.searchBar
