@@ -45,6 +45,20 @@ class FoodStockVC: UIViewController {
         tabBarController?.tabBar.isHidden = false
 //        let addVC = AddItemVC()
 //        addVC.delegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(doSomething(notification:)), name: NSNotification.Name(rawValue: notificationKey), object: nil)
+    }
+
+    @objc func doSomething(notification: Notification) -> Void{
+        // do something
+        guard let pesan = notification.userInfo!["pesan"] as? FoodModel else { return }
+        
+        print("ini di print dari FoodStockVC, \(pesan.foodName)")
+        print("ini di print dari FoodStockVC, \(pesan.id)")
+        print("ini di print dari FoodStockVC, \(pesan.expDate)")
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = false
     }
     
     @IBAction func editButtonDidTap(_ sender: Any) {
@@ -349,6 +363,12 @@ extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
                 destination.selectedItem = listOfFoods[tableView.indexPathForSelectedRow!.row]
             }
         }
+        
+        if segue.identifier == "toAddItem" {
+            let nc = segue.destination as? UINavigationController
+            let vc = nc?.topViewController as? AddItemVC
+            vc?.delegate = self
+        }
     }
     
     // unwind back from ItemDetailVC after trash button pushed
@@ -489,5 +509,12 @@ extension FoodStockVC: ItemDetailVCDelegate {
             listOfFoods.remove(at: index)
             tableView.reloadData()
         }
+    }
+}
+
+extension FoodStockVC: AddItemVCDelegate {
+    func addToList(newModel: FoodModel) {
+        listOfFoods.append(newModel)
+        tableView.reloadData()
     }
 }

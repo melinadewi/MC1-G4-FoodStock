@@ -55,11 +55,22 @@ class ItemDetailVC: UITableViewController {
         self.tabBarController?.tabBar.isHidden = true
 
         populateDetail()
-       
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(doSomething(notification:)), name: NSNotification.Name(rawValue: notificationKey), object: nil)
+    }
+    
+    @objc func doSomething(notification: Notification) {
+        guard let pesan = notification.userInfo!["pesan"] as? FoodModel else { return } // if let
+        
+        print("ini di print dari ItemDetailVC, \(pesan.foodName)")
+        print("ini di print dari ItemDetailVC, \(pesan.id)")
+        print("ini di print dari ItemDetailVC, \(pesan.expDate)")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
+        print(NotificationCenter.default.self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     func setUpNavBar() {
@@ -73,7 +84,7 @@ class ItemDetailVC: UITableViewController {
     // to format date into intended string
     func dateFormat(date : Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd MMM yyyy"
+        formatter.dateFormat = "dd MMM yyyy HH:mm"
         return formatter.string(from: date)
     }
     
@@ -100,6 +111,8 @@ class ItemDetailVC: UITableViewController {
             stockCondition.backgroundColor = UIColor.systemGray
             stockCondition.text = "Empty"
         }
+        
+        itemImage.image = selectedItem?.foodImage
 
     }
     
@@ -119,7 +132,7 @@ class ItemDetailVC: UITableViewController {
             guard let date = selectedItem?.updatedDate else {
                 return nil
             }
-            return "Updated at \(dateFormat(date: date))"
+            return "Last Edited at \(dateFormat(date: date))"
         default:
             return nil
         }
@@ -155,7 +168,11 @@ class ItemDetailVC: UITableViewController {
                 destination.removeItem = selectedItem?.id
             }
         }
+        if segue.identifier == "toEditItem" {
+            let nc = segue.destination as? UINavigationController
+            let vc = nc?.topViewController as? EditItemVC
+            vc?.selectedItem = selectedItem
+        }
     }
-
 }
 
