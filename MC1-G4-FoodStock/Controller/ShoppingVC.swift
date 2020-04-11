@@ -43,7 +43,6 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         let vc = segue.destination as! AddShopItemVC
         vc.delegate = self
     }
-    
     func addItem(itemName: String) {
         listOfShopItems.append(ShoppingModel(itemName: itemName))
         tableView.reloadData()
