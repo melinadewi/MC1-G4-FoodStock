@@ -56,6 +56,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="shopItemLabel" destination="d5O-7x-Ikt" id="3TV-3X-fAy"/>
+                                            <segue destination="Dpp-rY-r1c" kind="presentation" trigger="accessoryAction" id="HAz-Hh-QvC"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -73,6 +74,7 @@
                     <navigationItem key="navigationItem" title="ShoppingList" id="Xex-Su-HgW">
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="add" id="waO-56-pDQ">
                             <connections>
+                                <action selector="toAdd:" destination="Wx5-5v-we0" id="VZc-Vd-L3C"/>
                                 <segue destination="e5s-2S-0Yt" kind="show" id="aAd-Xe-Q2o"/>
                             </connections>
                         </barButtonItem>
@@ -85,7 +87,7 @@
             </objects>
             <point key="canvasLocation" x="1873.913043478261" y="-522.32142857142856"/>
         </scene>
-        <!--Add Shop ItemVC-->
+        <!--Add Shop Item-->
         <scene sceneID="WQg-0l-VTN">
             <objects>
                 <viewController id="e5s-2S-0Yt" customClass="AddShopItemVC" customModule="MC1_G4_FoodStock" customModuleProvider="target" sceneMemberID="viewController">
@@ -93,24 +95,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RTZ-9W-53Y">
-                                <rect key="frame" x="20" y="142" width="374" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="og3-9P-kos"/>
-                                </constraints>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RTZ-9W-53Y">
+                                <rect key="frame" x="24" y="140" width="367" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="RTZ-9W-53Y" firstAttribute="top" secondItem="Xai-rO-bUf" secondAttribute="top" constant="2" id="AKU-Zh-TXq"/>
-                            <constraint firstItem="RTZ-9W-53Y" firstAttribute="leading" secondItem="Xai-rO-bUf" secondAttribute="leading" constant="2" id="gNm-7O-UBU"/>
-                            <constraint firstItem="Xai-rO-bUf" firstAttribute="trailing" secondItem="RTZ-9W-53Y" secondAttribute="trailing" constant="2" id="t1S-cr-ezg"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Xai-rO-bUf"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Vw8-cT-P9q">
+                    <navigationItem key="navigationItem" title="Add Shop Item" id="Vw8-cT-P9q">
                         <barButtonItem key="leftBarButtonItem" style="plain" systemItem="cancel" id="EnE-ih-Cam">
                             <connections>
                                 <action selector="cancel:" destination="e5s-2S-0Yt" id="cSA-Is-vyi"/>
@@ -135,7 +130,7 @@
             <objects>
                 <tableViewController id="Dpp-rY-r1c" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="klR-gN-hw7">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <sections>
