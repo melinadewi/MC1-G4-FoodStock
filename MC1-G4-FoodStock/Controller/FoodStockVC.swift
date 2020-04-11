@@ -77,6 +77,8 @@ class FoodStockVC: UIViewController {
             sortButton.isEnabled = true
             sortButton.tintColor = .systemBlue
             editButton.title = "Edit"
+            
+            navigationItem.searchController?.searchBar.isUserInteractionEnabled = true
         }
     }
     
