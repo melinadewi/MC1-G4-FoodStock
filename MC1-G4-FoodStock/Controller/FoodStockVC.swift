@@ -281,6 +281,8 @@ extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
             sortButton.tintColor = .lightGray
             sortButton.setTitleColor(.lightGray, for: .disabled)
             
+            editButton.isEnabled = false
+            
             return 1
         }
         
