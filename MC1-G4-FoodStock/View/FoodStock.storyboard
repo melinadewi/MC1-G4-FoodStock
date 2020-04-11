@@ -342,6 +342,9 @@
                                                     <rect key="frame" x="159" y="7" width="97" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" title="Choose Photo"/>
+                                                    <connections>
+                                                        <action selector="choosePhoto:" destination="ykt-BJ-Mnw" eventType="touchUpInside" id="UVR-th-VoW"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -386,6 +389,10 @@
                                                         <segment title="Half"/>
                                                         <segment title="Plenty"/>
                                                     </segments>
+                                                    <color key="selectedSegmentTintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <connections>
+                                                        <action selector="stockAction:" destination="ykt-BJ-Mnw" eventType="valueChanged" id="2Jq-zn-rOu"/>
+                                                    </connections>
                                                 </segmentedControl>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -442,12 +449,21 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Edit Item" id="yVc-Qd-jC8">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Z0l-Wa-MFg"/>
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="5IR-tw-rZc"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Z0l-Wa-MFg">
+                            <connections>
+                                <action selector="cancelButton:" destination="ykt-BJ-Mnw" id="dkr-hE-Kpt"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="5IR-tw-rZc">
+                            <connections>
+                                <action selector="doneButton:" destination="ykt-BJ-Mnw" id="3GM-B5-B8a"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="choosePhotoButton" destination="Ifl-KI-rYq" id="bRv-6U-QWS"/>
                         <outlet property="expDateField" destination="b8H-Z8-waK" id="3Iq-Eu-lu8"/>
+                        <outlet property="imageView" destination="Ial-5a-Pul" id="cyH-Bh-77z"/>
                         <outlet property="itemNameField" destination="kfs-jW-Ebx" id="Qtn-bi-odf"/>
                         <outlet property="notesField" destination="uAr-2a-H9a" id="vwY-fH-bdd"/>
                         <outlet property="stockSC" destination="MrS-5g-jtl" id="snl-8I-GhX"/>
@@ -532,7 +548,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="r8q-yX-Lyl">
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="3" translatesAutoresizingMaskIntoConstraints="NO" id="r8q-yX-Lyl">
                                                     <rect key="frame" x="20" y="6" width="374" height="32"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <segments>
@@ -541,6 +557,7 @@
                                                         <segment title="Half"/>
                                                         <segment title="Plenty"/>
                                                     </segments>
+                                                    <color key="selectedSegmentTintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <connections>
                                                         <action selector="itemStock_Action:" destination="uSW-gI-4SI" eventType="valueChanged" id="0fx-am-S1h"/>
                                                     </connections>

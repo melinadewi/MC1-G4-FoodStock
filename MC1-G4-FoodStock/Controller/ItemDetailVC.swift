@@ -73,7 +73,7 @@ class ItemDetailVC: UITableViewController {
     // to format date into intended string
     func dateFormat(date : Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd MMM yyyy"
+        formatter.dateFormat = "dd MMM yyyy HH:mm"
         return formatter.string(from: date)
     }
     
@@ -121,7 +121,7 @@ class ItemDetailVC: UITableViewController {
             guard let date = selectedItem?.updatedDate else {
                 return nil
             }
-            return "Updated at \(dateFormat(date: date))"
+            return "Last Edited at \(dateFormat(date: date))"
         default:
             return nil
         }
@@ -157,7 +157,11 @@ class ItemDetailVC: UITableViewController {
                 destination.removeItem = selectedItem?.id
             }
         }
+        if segue.identifier == "toEditItem" {
+            let nc = segue.destination as? UINavigationController
+            let vc = nc?.topViewController as? EditItemVC
+            vc?.selectedItem = selectedItem
+        }
     }
-
 }
 

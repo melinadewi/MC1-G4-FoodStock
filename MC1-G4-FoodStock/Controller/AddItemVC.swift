@@ -204,14 +204,19 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
         switch sender.selectedSegmentIndex{
         case 0:
             newItemStockLevel = .empty
+            itemStockSegmentedControl.selectedSegmentTintColor = UIColor.systemGray4
         case 1:
             newItemStockLevel = .low
+            itemStockSegmentedControl.selectedSegmentTintColor = UIColor.systemRed
         case 2:
             newItemStockLevel = .half
+            itemStockSegmentedControl.selectedSegmentTintColor = UIColor.systemOrange
         case 3:
             newItemStockLevel = .plenty
+            itemStockSegmentedControl.selectedSegmentTintColor = UIColor.systemGreen
         default:
             newItemStockLevel = .plenty
+            itemStockSegmentedControl.selectedSegmentTintColor = UIColor.systemGreen
         }
         print(String(describing: newItemStockLevel))
     }
