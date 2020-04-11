@@ -8,23 +8,45 @@
 
 import UIKit
 
-class AddShopItemVC: UIViewController {
+class AddShopItemVC: UIViewController, UITextFieldDelegate {
 
+    @IBOutlet var field: UITextField!
+    var update: (()-> Void)?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        field.delegate = self
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        saveAddItems()
+        
+        return true
     }
-    */
-
+    
+    @IBAction func saveAddItems(){
+        
+        //check if the text is empty
+        guard let text = field.text, !text.isEmpty else{
+            return
+        }
+        
+        guard let count = UserDefaults().value(forKey: "count") as? Int else{
+            return
+        }
+        
+        let newCount = count + 1
+        
+        UserDefaults().set(newCount, forKey: "count")
+        
+        //save items, each item will be unique
+        UserDefaults().set(text, forKey: "item_\(newCount)")
+        
+        //if this function exist, call it
+        update?()
+        
+        navigationController?.popViewController(animated: true)
+    }
 }

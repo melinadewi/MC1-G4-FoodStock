@@ -1,111 +1,98 @@
 //
-//  ShoppingListVC.swift
+//  ViewController.swift
 //  MC1-G4-FoodStock
 //
-//  Created by Diana Ambarwati Febriani on 08/04/20.
+//  Created by Diana Ambarwati Febriani on 11/04/20.
 //  Copyright © 2020 Melina Dewi. All rights reserved.
 //
 
 import UIKit
 
-class ShoppingListVC: UITableViewController {
+class ShoppingListVC: UIViewController {
+    
+    var shopItems = [String]()
+    
+    @IBOutlet var tableView: UITableView!
 
-    let identifier:String = "ShoppingCell"
-    
-    var listOfShopItems = ShoppingModel.createShopItem()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
         tableView.delegate = self
         tableView.dataSource = self
-        setUpNavBar()
-    }
-    
-    func setUpNavBar() {
-        // creates a search controller and add button
-        let addButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addShopItem))
+        // Do any additional setup after loading the view.
         
-        // adding the search controller to the nav bar
-        navigationItem.rightBarButtonItem = addButton
-    }
-    
-    @objc func addShopItem(){
-       performSegue(withIdentifier: "toAddShopItem", sender: self)
-    }
-
-    // MARK: - Table view data source
-}
-
-extension ShoppingListVC{
-    override func tableView( _ tableview: UITableView, numberOfRowsInSection section: Int) -> Int{
-    return listOfShopItems.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? ShoppingCell {
-            cell.configureTheCell(shopItem: listOfShopItems[indexPath.row])
-            return cell
+        //setup initial saving
+        if !UserDefaults().bool(forKey: "setup"){
+            UserDefaults().set(true, forKey: "setup")
+            UserDefaults().set(0, forKey: "count") // number of item
         }
-        return UITableViewCell()
+        
+        //get all current saved items
+        updateItems()
+    }
+    
+    func updateItems(){
+        
+        shopItems.removeAll()
+        
+        guard let count = UserDefaults().value(forKey: "count") as? Int else{
+            return
+        }
+        
+        //iterate to add each item to array
+        for i in 0..<count{
+            if let item = UserDefaults().value(forKey: "item_\(i + 1)") as? String{
+                shopItems.append(item)
+            }
+        }
+        tableView.reloadData()
+    }
+    
+    @IBAction func addShopItem(){
+        let vc = storyboard?.instantiateViewController(identifier: "add") as! AddShopItemVC
+        vc.title = "New Item"
+        vc.update = {
+            DispatchQueue.main.async {
+                self.updateItems()
+            }
+        }
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
-
- 
-    
-//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//           let cell =  tableView.dequeueReusableCell(withIdentifier: "ShoppingCell", for: IndexPath)
-//
-//            let shop = listOfShopItems[indexPath.row]
-//
-//            cell.shopItemLabel?.text = "\(shop.shopItem)"
-//            return cell
-//        }
+extension ShoppingListVC: UITableViewDelegate{
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //hilangin tanda yg udah ke klik
+        tableView.deselectRow(at: indexPath, animated: true)
         
-
-    
-    
-
-    
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+//        let vc = storyboard?.instantiateViewController(identifier: "save") as! SaveShopItemVC
+//        vc.item = shopItems[indexPath.row]
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let delete = UIContextualAction(style: .destructive, title: "Delete"){ (action, view, nil) in
+            
+            self.shopItems.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+            
+//            UserDefaults.sndard.removeObject(forKey: "item_\(indexPath.row)")ta
         }
+        
+        
+        return UISwipeActionsConfiguration(actions: [delete])
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+    
+}
+extension ShoppingListVC: UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return shopItems.count
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+        cell.textLabel?.text = shopItems[indexPath.row]
+        return cell
     }
-    */
-
+}
