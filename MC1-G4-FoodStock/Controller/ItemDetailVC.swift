@@ -29,7 +29,14 @@ class ItemDetailVC: UITableViewController {
         }
     }
     @IBOutlet weak var expDate: UILabel!
-    @IBOutlet weak var notesBox: UITextView!
+    @IBOutlet weak var notesBox: UITextView! {
+        didSet {
+            notesBox.layer.cornerRadius = 8
+            notesBox.layer.masksToBounds = true
+            notesBox.layer.borderColor = UIColor.lightGray.cgColor
+            notesBox.layer.borderWidth = 1.0
+        }
+    }
     
     var selectedItem: FoodModel?
     
@@ -58,15 +65,19 @@ class ItemDetailVC: UITableViewController {
         navigationItem.rightBarButtonItems = [deleteButton, editButton]
     }
     
+    // to format date into intended string
+    func dateFormat(date : Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM yyyy"
+        return formatter.string(from: date)
+    }
+    
     // populate the item data
     func populateDetail() {
         itemName.text = selectedItem?.foodName
         
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd MMM yyyy"
-        
         if let date = selectedItem?.expDate {
-            expDate.text = formatter.string(from: date)
+            expDate.text = dateFormat(date: date)
         }
         
         // stock level color
@@ -87,6 +98,27 @@ class ItemDetailVC: UITableViewController {
 
     }
     
+    // update "created at" in table view
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        switch section {
+        case 0:
+            return ""
+        case 1:
+            return "Stock"
+        case 2:
+            return "Expiration Date"
+        case 3:
+            return "Notes"
+        case 4:
+            guard let date = selectedItem?.updatedDate else {
+                return nil
+            }
+            return "Updated at \(dateFormat(date: date))"
+        default:
+            return nil
+        }
+    }
     
     // go to edit vc when edit button tapped
     @objc func editItem() {
