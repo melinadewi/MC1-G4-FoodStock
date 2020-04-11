@@ -23,13 +23,15 @@ class FoodModel: NSObject {
     var foodImage: UIImage?
     var id = ""
     var updatedDate: Date
+    var itemNote: String?
     
-    init(foodName: String, expDate: Date, stockLevel: StockLevel, foodImage: UIImage?, id: String = UUID().uuidString, updatedDate: Date = Date()) {
+    init(foodName: String, expDate: Date, stockLevel: StockLevel, foodImage: UIImage?, id: String = UUID().uuidString, updatedDate: Date = Date(), itemNote: String?) {
         self.foodName = foodName
         self.expDate = expDate
         self.stockLevel = stockLevel
         self.foodImage = foodImage
         self.id = id
         self.updatedDate = updatedDate
+        self.itemNote = "itemNote"
     }
 }

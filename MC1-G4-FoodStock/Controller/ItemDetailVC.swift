@@ -13,7 +13,7 @@ protocol ItemDetailVCDelegate: class {
 }
 
 class ItemDetailVC: UITableViewController {
-        
+    
     @IBOutlet weak var itemImage: UIImageView! {
         didSet {
             //itemImage.layer.borderWidth = 1
@@ -56,15 +56,24 @@ class ItemDetailVC: UITableViewController {
 
         populateDetail()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(doSomething(notification:)), name: NSNotification.Name(rawValue: notificationKey), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateChanges(notification:)), name: NSNotification.Name(rawValue: notificationKey), object: nil)
     }
     
-    @objc func doSomething(notification: Notification) {
-        guard let pesan = notification.userInfo!["pesan"] as? FoodModel else { return } // if let
+    @objc func updateChanges(notification: Notification) {
+        guard let changes = notification.userInfo!["editedItem"] as? FoodModel else { return } // if let
+    
+        itemName.text = "\(changes.foodName)"
+        expDate.text = "\(changes.expDate)"
         
-        print("ini di print dari ItemDetailVC, \(pesan.foodName)")
-        print("ini di print dari ItemDetailVC, \(pesan.id)")
-        print("ini di print dari ItemDetailVC, \(pesan.expDate)")
+        stockCategory(item: changes)
+        notesBox.text = "\(changes.itemNote ?? "")"
+//        stockCondition.text = "\(changes.stockLevel)"
+        
+        
+        
+//        print("ini di print dari ItemDetailVC, \(pesan.foodName)")
+//        print("ini di print dari ItemDetailVC, \(pesan.id)")
+//        print("ini di print dari ItemDetailVC, \(pesan.expDate)")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -84,7 +93,7 @@ class ItemDetailVC: UITableViewController {
     // to format date into intended string
     func dateFormat(date : Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd MMM yyyy HH:mm"
+        formatter.dateFormat = "dd MMM yyyy HH:mm:ss"
         return formatter.string(from: date)
     }
     
@@ -97,7 +106,14 @@ class ItemDetailVC: UITableViewController {
         }
         
         // stock level color
-        switch selectedItem?.stockLevel {
+        stockCategory(item: selectedItem!)
+        itemImage.image = selectedItem?.foodImage
+
+    }
+    
+    func stockCategory(item: FoodModel){
+        // stock level color
+        switch item.stockLevel {
         case .plenty:
             stockCondition.backgroundColor = UIColor.systemGreen
             stockCondition.text = "Plenty"
@@ -111,9 +127,6 @@ class ItemDetailVC: UITableViewController {
             stockCondition.backgroundColor = UIColor.systemGray
             stockCondition.text = "Empty"
         }
-        
-        itemImage.image = selectedItem?.foodImage
-
     }
     
     // update "created at" in table view
