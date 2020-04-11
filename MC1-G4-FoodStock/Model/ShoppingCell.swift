@@ -11,14 +11,7 @@ import UIKit
 class ShoppingCell: UITableViewCell{
     
     @IBOutlet weak var shopItemLabel: UILabel!
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        shopItemLabel.text = nil
-    }
-    
-    func configureTheCell(shopItem : ShoppingModel){
-        shopItemLabel.text = shopItem.itemName
-    }
+    var listOfShopItems: [ShoppingModel]?
+
     
 }

@@ -8,15 +8,11 @@
 
 import UIKit
 
-struct ShoppingModel{
+class ShoppingModel{
     var itemName: String
-}
-
-extension ShoppingModel {
-    static func createShopItem() -> [ShoppingModel]{
-        return [ShoppingModel(itemName: "Minyak Goreng"),
-            ShoppingModel(itemName: "Gula Pasir"),
-            ShoppingModel(itemName: "Kopi")
-        ]
+    
+    init(itemName: String) {
+        self.itemName = itemName
     }
+
 }

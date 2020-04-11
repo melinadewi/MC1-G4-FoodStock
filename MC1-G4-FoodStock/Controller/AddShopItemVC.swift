@@ -8,23 +8,30 @@
 
 import UIKit
 
+protocol AddItem {
+    func addItem(itemName: String)
+}
+
 class AddShopItemVC: UIViewController {
 
+    @IBOutlet weak var addItem: UIButton!
+    
+    @IBAction func addAction(_ sender: Any) {
+        if addShopItemTextField.text != "" {
+            delegate?.addItem(itemName: addShopItemTextField.text!)
+            navigationController?.popViewController(animated: true)
+            print("add")
+        }
+    }
+    
+    @IBOutlet weak var addShopItemTextField: UITextField!
+    
+    var delegate: AddItem?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

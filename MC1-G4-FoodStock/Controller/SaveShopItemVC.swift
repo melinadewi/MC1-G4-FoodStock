@@ -1,19 +1,15 @@
 //
-//  ShoppingListVC.swift
+//  SaveShopItemVC.swift
 //  MC1-G4-FoodStock
 //
-//  Created by Diana Ambarwati Febriani on 08/04/20.
+//  Created by Diana Ambarwati Febriani on 11/04/20.
 //  Copyright © 2020 Melina Dewi. All rights reserved.
 //
 
 import UIKit
 
-class ShoppingListVC: UITableViewController {
+class SaveShopItemVC: UITableViewController {
 
-    let identifier:String = "ShoppingCell"
-    
-    var listOfShopItems = ShoppingModel.createShopItem()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,57 +18,29 @@ class ShoppingListVC: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        tableView.delegate = self
-        tableView.dataSource = self
-        setUpNavBar()
-    }
-    
-    func setUpNavBar() {
-        // creates a search controller and add button
-        let addButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addShopItem))
-        
-        // adding the search controller to the nav bar
-        navigationItem.rightBarButtonItem = addButton
-    }
-    
-    @objc func addShopItem(){
-       performSegue(withIdentifier: "toAddShopItem", sender: self)
     }
 
     // MARK: - Table view data source
-}
 
-extension ShoppingListVC{
-    override func tableView( _ tableview: UITableView, numberOfRowsInSection section: Int) -> Int{
-    return listOfShopItems.count
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 0
     }
-    
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return 0
+    }
+
+    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? ShoppingCell {
-            cell.configureTheCell(shopItem: listOfShopItems[indexPath.row])
-            return cell
-        }
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+
+        // Configure the cell...
+
+        return cell
     }
-}
-
-
- 
-    
-//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//           let cell =  tableView.dequeueReusableCell(withIdentifier: "ShoppingCell", for: IndexPath)
-//
-//            let shop = listOfShopItems[indexPath.row]
-//
-//            cell.shopItemLabel?.text = "\(shop.shopItem)"
-//            return cell
-//        }
-        
-
-    
-    
-
-    
+    */
 
     /*
     // Override to support conditional editing of the table view.
@@ -90,7 +58,7 @@ extension ShoppingListVC{
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }
+        }    
     }
     */
 
@@ -109,3 +77,14 @@ extension ShoppingListVC{
     }
     */
 
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
+}
