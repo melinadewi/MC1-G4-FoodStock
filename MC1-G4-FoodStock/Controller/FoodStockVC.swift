@@ -105,6 +105,7 @@ class FoodStockVC: UIViewController {
     
     @IBAction func deleteButtonDidTap(_ sender: Any) {
         
+        
         if selectedItems.count != 0 {   // if there is selected item
             
             // show alert
@@ -138,6 +139,7 @@ class FoodStockVC: UIViewController {
             alert.addAction(cancelAction)
             
             self.present(alert, animated: true, completion: nil)
+            
         }
     }
     
@@ -272,6 +274,14 @@ extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
     
     // number of rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if listOfFoods.count == 0 {
+            sortButton.isEnabled = false
+            sortButton.tintColor = .lightGray
+            sortButton.setTitleColor(.lightGray, for: .disabled)
+        } else {
+            editButton.isEnabled = true
+        }
         
         if isFiltering {    // if is filtering, return filtered foods count
             return filteredFoods.count
