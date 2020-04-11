@@ -248,7 +248,6 @@
                                                     <rect key="frame" x="20" y="4" width="374" height="128"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                     <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -275,9 +274,11 @@
                         <outlet property="notesBox" destination="g4g-NZ-jxT" id="hfu-vz-Pl5"/>
                         <outlet property="stockCondition" destination="57y-lp-gAd" id="wfo-M4-AMc"/>
                         <segue destination="QRt-6c-oNi" kind="presentation" identifier="toEditItem" id="EFJ-VS-JBA"/>
+                        <segue destination="Xkn-ht-vFy" kind="unwind" identifier="unwindBack" unwindAction="unwindBackToFoodStockWithSender:" id="qrX-hI-iJS"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NLE-kg-roQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="Xkn-ht-vFy" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2847.826086956522" y="495.53571428571428"/>
         </scene>
