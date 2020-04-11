@@ -8,21 +8,21 @@
 
 import UIKit
 
-//protocol AddItemVCDelegate {
-//    // yang wajib diimplement oleh delegate lu
-//    func addToList(pesan: String)
-//}
+//Used as the medium to pass data back to FoodStockVC
+protocol AddItemVCDelegate {
+    func addToList(newModel : FoodModel)
+}
 
 class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     //MARK: Outlets
-    @IBOutlet weak var backButton: UIButton!
-    @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var itemImageView: UIImageView!
     @IBOutlet weak var itemNameTextField: UITextField!
     @IBOutlet weak var itemStockSegmentedControl: UISegmentedControl!
     @IBOutlet weak var itemNotesTextField: UITextField!
     @IBOutlet weak var itemExpiryDateTextField: UITextField!
     @IBOutlet weak var addItemButton: UIButton!
+    @IBOutlet weak var doneButton: UIBarButtonItem!
+    
     
 //    var delegate: AddItemVCDelegate?
     /*
@@ -43,16 +43,22 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
     
     //MARK: Variables
     var newItemName = ""
-    var newItemStockLevel = ""
-    var newItemExpiryDate = ""
+    var newItemStockLevel: StockLevel = .empty
+    var newItemExpiryDate: Date?
     var newItemFoodImage = ""
     var newItemNotes = ""
     
     let expiryDatePicker = UIDatePicker()
     
+    var delegate : AddItemVCDelegate?
+    
+    var itemNameIsFilled = false
+    var itemExpiryDateIsFilled = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         makeImageCircle()
+        disableDoneButton()
         setupExpiryDatePicker()
         
         itemNameTextField.delegate = self
@@ -65,9 +71,6 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
         
         //Hide keyboard when an area is tapped
         hideKeyboardWhenTapped()
-        
-//        print("aa")
-//        delegate?.addToList(pesan: "hai delegate")
     }
     
     //MARK: Functions
@@ -101,6 +104,16 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
         itemExpiryDateTextField.text = dateFormatter.string(from: sender.date)
+        newItemExpiryDate = sender.date
+        
+        if newItemExpiryDate != nil{
+            itemExpiryDateIsFilled = true
+            checkDoneButtonEligibility()
+        }
+        else{
+            itemExpiryDateIsFilled = false
+        }
+        
     }
     
     @objc func dismissDatePicker(){
@@ -160,13 +173,30 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
         view.endEditing(true)
     }
     
+    //Show an alert
     func showAlert() {
-        let alert = UIAlertController(title: "New Item Info", message: "Name: \(newItemName)\nStock: \(newItemStockLevel)\nExp Date: \(newItemExpiryDate)\nNotes: \(newItemNotes)", preferredStyle: .alert)
+        let alert = UIAlertController(title: "New Item Info", message: "Name: \(newItemName)\nStock: \(String(describing: newItemStockLevel))\nExp Date: \(String(describing: newItemExpiryDate))\nNotes: \(newItemNotes)", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func checkDoneButtonEligibility(){
+        if itemNameIsFilled && itemExpiryDateIsFilled {
+            enableDoneButton()
+        }
+    }
+    
+    func disableDoneButton(){
+        doneButton.isEnabled = false
+        doneButton.tintColor = .lightGray
+    }
+    
+    func enableDoneButton(){
+        doneButton.isEnabled = true
+        doneButton.tintColor = .link
     }
 
     
@@ -175,27 +205,40 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
     @IBAction func itemStock_Action(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex{
         case 0:
-            newItemStockLevel = "Empty"
+            newItemStockLevel = .empty
         case 1:
-            newItemStockLevel = "Low"
+            newItemStockLevel = .low
         case 2:
-            newItemStockLevel = "Half"
+            newItemStockLevel = .half
         case 3:
-            newItemStockLevel = "Plenty"
+            newItemStockLevel = .plenty
         default:
-            newItemStockLevel = "Nothing chosen"
+            newItemStockLevel = .empty
         }
-        print(newItemStockLevel)
+        print(String(describing: newItemStockLevel))
     }
     
     @IBAction func backButton_Action(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func DoneButton_onClick(_ sender: Any) {
+        //Make new model that will be sent back to the list page
+        let newFood = FoodModel(foodName: newItemName, expDate: newItemExpiryDate!, stockLevel: newItemStockLevel, foodImage: itemImageView.image, id: UUID().uuidString, updatedDate: Date())
+        
+//        print("--New Food--\nName: \(newFood.foodName)\nStockLevel: \(newFood.stockLevel)\nExpDate: \(newFood.expDate)\nNotes: \(newItemNotes)\n")
+        
+        //Send the new model to the list page
+        delegate?.addToList(newModel: newFood)
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
     @IBAction func addPhotoButton_Click(_ sender: Any) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
+        imagePicker.allowsEditing = true
         present(imagePicker, animated: true, completion: nil)
     }
     
@@ -213,6 +256,13 @@ extension AddItemVC : UITextFieldDelegate {
             newItemNotes = textField.text!
             print("Item notes: \(newItemNotes)")
         }
+        
+        //Setup for done button eligibility check
+        if newItemName != "" {
+            itemNameIsFilled = true
+        }
+        
+        checkDoneButtonEligibility()
         
         return true
     }
