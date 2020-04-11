@@ -227,7 +227,7 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
     
     @IBAction func DoneButton_onClick(_ sender: Any) {
         //Make new model that will be sent back to the list page
-        let newFood = FoodModel(foodName: newItemName, expDate: newItemExpiryDate!, stockLevel: newItemStockLevel, foodImage: itemImageView.image, id: UUID().uuidString, updatedDate: Date(), itemNote: "")
+        let newFood = FoodModel(foodName: newItemName, expDate: newItemExpiryDate!, stockLevel: newItemStockLevel, foodImage: itemImageView.image, id: UUID().uuidString, updatedDate: Date(), itemNote: itemNotesTextField.text)
         
 //        print("--New Food--\nName: \(newFood.foodName)\nStockLevel: \(newFood.stockLevel)\nExpDate: \(newFood.expDate)\nNotes: \(newItemNotes)\n")
         

@@ -64,10 +64,14 @@ class ItemDetailVC: UITableViewController {
     
         itemName.text = "\(changes.foodName)"
         expDate.text = dateFormat(date: changes.expDate)
+        itemImage.image = changes.foodImage
         
         stockCategory(item: changes)
+        print(changes.itemNote)
         notesBox.text = "\(changes.itemNote ?? "")"
 //        stockCondition.text = "\(changes.stockLevel)"
+        
+        selectedItem = changes
         
         
         
@@ -93,7 +97,7 @@ class ItemDetailVC: UITableViewController {
     // to format date into intended string
     func dateFormat(date : Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd MMM yyyy HH:mm:ss"
+        formatter.dateFormat = "dd MMM yyyy"
         return formatter.string(from: date)
     }
     
@@ -108,6 +112,7 @@ class ItemDetailVC: UITableViewController {
         // stock level color
         stockCategory(item: selectedItem!)
         itemImage.image = selectedItem?.foodImage
+        notesBox.text = selectedItem?.itemNote
 
     }
     

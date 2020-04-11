@@ -50,7 +50,7 @@ class FoodStockVC: UIViewController {
 
     @objc func editListOfItems(notification: Notification) -> Void{
         // do something
-        guard let foodItem = notification.userInfo!["pesan"] as? FoodModel else { return }
+        guard let foodItem = notification.userInfo!["editedItem"] as? FoodModel else { return }
         
         // get the id
         let foodId = foodItem.id
@@ -58,7 +58,7 @@ class FoodStockVC: UIViewController {
         print(foodId)
         
         if let index = listOfFoods.firstIndex(where: { $0.id == foodId } ) { // get the index from the original list
-            listOfFoods[index] = FoodModel(foodName: "Edited", expDate: Date(), stockLevel: .empty, foodImage: nil)      // replace food with new edited food
+            listOfFoods[index] = foodItem      // replace food with new edited food
             print(index)
             tableView.reloadData()
         }
@@ -522,6 +522,18 @@ extension FoodStockVC: ItemDetailVCDelegate {
 extension FoodStockVC: AddItemVCDelegate {
     func addToList(newModel: FoodModel) {
         listOfFoods.append(newModel)
+        
+        switch selectedSort {
+        case "dateEdited" :
+            listOfFoods.sort(by: { $0.updatedDate > $1.updatedDate })
+        case "lowestStock":
+            listOfFoods.sort(by: { $0.stockLevel.rawValue < $1.stockLevel.rawValue })
+        case "expDate":
+            listOfFoods.sort(by: { $0.expDate < $1.expDate })
+        default:
+            listOfFoods.sort(by: { $0.updatedDate > $1.updatedDate })
+        }
+        
         tableView.reloadData()
     }
 }
