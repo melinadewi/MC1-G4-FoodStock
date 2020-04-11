@@ -237,7 +237,7 @@ extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    // unwind back from ItemDetailVC after delete
+    // unwind back from ItemDetailVC after trash button pushed
     @IBAction func unwindBackToFoodStock(sender: UIStoryboardSegue)
     {
         // find the index of the item deleted from ItemDetailVC
