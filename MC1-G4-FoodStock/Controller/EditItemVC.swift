@@ -23,12 +23,8 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
     let imagePicker = UIImagePickerController()
     
     var itemId = ""
-    var itemName = ""
     var stockLevel: StockLevel?
     var expiryDate: Date?
-    var itemNotes = ""
-    var itemImage: UIImage?
-    var lastEdited: Date?
     var selectedItem: FoodModel?
     
     override func viewDidLoad() {
@@ -43,17 +39,13 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
     }
     
     func populateItem(item: FoodModel) {
-        itemId = item.id
-        itemName = item.foodName
+        itemNameField.text = item.foodName
+//        notesField.text = item.notes
+        imageView.image = item.foodImage
         stockLevel = item.stockLevel
         expiryDate = item.expDate
-//        itemNotes = item.notes
-        itemImage = item.foodImage
-        lastEdited = item.updatedDate
         
-        itemNameField.text = itemName
-        imageView.image = itemImage
-        switch stockLevel {
+        switch item.stockLevel {
         case .empty:
             stockSC.selectedSegmentIndex = 0
             stockSC.selectedSegmentTintColor = UIColor.systemGray4
@@ -66,12 +58,14 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
         case .plenty:
             stockSC.selectedSegmentIndex = 3
             stockSC.selectedSegmentTintColor = UIColor.systemGreen
-        default:
-            stockSC.selectedSegmentIndex = 0
-            stockSC.selectedSegmentTintColor = UIColor.systemGray4
         }
         expDateField.text = dateFieldFormatter(date: expiryDate!)
-//        notesField.text = itemNotes
+    }
+    
+    func dateFieldFormatter(date : Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        return dateFormatter.string(from: date)
     }
     
     func makeImageCircle() {
@@ -111,7 +105,7 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
     func setupExpiryDatePicker(){
         expiryDatePicker.datePickerMode = .date
         expiryDatePicker.minimumDate = Date()
-        expiryDatePicker.addTarget(self, action: #selector(datePickerFormatter), for: .valueChanged)
+        expiryDatePicker.addTarget(self, action: #selector(datePickerChanger), for: .valueChanged)
         expDateField.inputView = expiryDatePicker
         
         let toolbar = UIToolbar()
@@ -125,16 +119,11 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
         expDateField.inputAccessoryView = toolbar
     }
     
-    @objc func datePickerFormatter(sender : UIDatePicker) {
+    @objc func datePickerChanger(sender : UIDatePicker) {
+        expiryDate = sender.date
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
         expDateField.text = dateFormatter.string(from: sender.date)
-    }
-    
-    @objc func dateFieldFormatter(date : Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        return dateFormatter.string(from: date)
     }
 
     @objc func dismissDatePicker(){
@@ -167,21 +156,6 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
         dismiss(animated: true, completion: nil)
     }
     
-    private func store(image: UIImage, forKey key: String) {
-        if let newImg = image.jpegData(compressionQuality: 1.0) {
-                UserDefaults.standard.set(newImg, forKey: key)
-        }
-    }
-    
-    @objc
-    private func save(key: String) {
-        if let newImg = UIImage(named: key) {
-            DispatchQueue.global(qos: .background).async {
-                self.store(image: newImg, forKey: key)
-            }
-        }
-    }
-    
     func hideKeyboardWhenTapped(){
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
         tap.cancelsTouchesInView = false
@@ -193,12 +167,10 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
     }
     
     @IBAction func doneButton(_ sender: UIBarButtonItem) {
-        if let txt = itemNameField.text {
-            itemName = txt
-        }
-        save(key: itemName)
+        let editedItem = FoodModel(foodName: itemNameField.text!, expDate: expiryDate!, stockLevel: stockLevel!, foodImage: imageView.image, id: selectedItem!.id, updatedDate: Date())
+//        let editedItem = FoodModel(foodName: itemNameField.text!, expDate: expiryDate!, stockLevel: stockLevel!, foodImage: imageView.image, id: selectedItem!.id, updatedDate: Date(), notes: notesField.text)
         
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationKey), object: nil, userInfo: ["pesan": selectedItem])
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationKey), object: nil, userInfo: ["editedItem": editedItem])
         
         NotificationCenter.default.removeObserver(self)
         
