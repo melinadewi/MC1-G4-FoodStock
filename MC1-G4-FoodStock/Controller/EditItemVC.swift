@@ -20,6 +20,7 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
     let expiryDatePicker = UIDatePicker()
     let imagePicker = UIImagePickerController()
     
+    var itemId = ""
     var itemName = ""
     var stockLevel: StockLevel?
     var expiryDate: Date?
@@ -40,6 +41,7 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
     }
     
     func populateItem(item: FoodModel) {
+        itemId = item.id
         itemName = item.foodName
         stockLevel = item.stockLevel
         expiryDate = item.expDate
@@ -147,7 +149,7 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
         }))
 
         alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: {(button) in
-            self.imagePicker.sourceType = .camera
+            self.imagePicker.sourceType = UIImagePickerController.SourceType.camera
             self.present(self.imagePicker, animated: true, completion: nil)
         }))
 
