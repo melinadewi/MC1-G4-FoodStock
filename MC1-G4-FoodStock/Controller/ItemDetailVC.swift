@@ -63,7 +63,7 @@ class ItemDetailVC: UITableViewController {
         guard let changes = notification.userInfo!["editedItem"] as? FoodModel else { return } // if let
     
         itemName.text = "\(changes.foodName)"
-        expDate.text = "\(changes.expDate)"
+        expDate.text = dateFormat(date: changes.expDate)
         
         stockCategory(item: changes)
         notesBox.text = "\(changes.itemNote ?? "")"

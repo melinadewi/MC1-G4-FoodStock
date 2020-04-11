@@ -40,7 +40,7 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
     
     func populateItem(item: FoodModel) {
         itemNameField.text = item.foodName
-//        notesField.text = item.notes
+        notesField.text = item.itemNote
         imageView.image = item.foodImage
         stockLevel = item.stockLevel
         expiryDate = item.expDate
@@ -167,8 +167,7 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
     }
     
     @IBAction func doneButton(_ sender: UIBarButtonItem) {
-        let editedItem = FoodModel(foodName: itemNameField.text!, expDate: expiryDate!, stockLevel: stockLevel!, foodImage: imageView.image, id: selectedItem!.id, updatedDate: Date())
-//        let editedItem = FoodModel(foodName: itemNameField.text!, expDate: expiryDate!, stockLevel: stockLevel!, foodImage: imageView.image, id: selectedItem!.id, updatedDate: Date(), notes: notesField.text)
+        let editedItem = FoodModel(foodName: itemNameField.text!, expDate: expiryDate!, stockLevel: stockLevel!, foodImage: imageView.image, id: selectedItem!.id, updatedDate: Date(), itemNote: notesField.text)
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationKey), object: nil, userInfo: ["editedItem": editedItem])
         
