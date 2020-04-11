@@ -13,8 +13,6 @@ protocol AddItem {
 }
 
 class AddShopItemVC: UIViewController {
-
-    @IBOutlet weak var addItem: UIButton!
     
     @IBAction func addAction(_ sender: Any) {
         if addShopItemTextField.text != "" {
@@ -22,6 +20,9 @@ class AddShopItemVC: UIViewController {
             navigationController?.popViewController(animated: true)
             print("add")
         }
+    }
+    @IBAction func cancel(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
     }
     
     @IBOutlet weak var addShopItemTextField: UITextField!
