@@ -47,6 +47,10 @@ class FoodStockVC: UIViewController {
 //        addVC.delegate = self
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = false
+    }
+    
     @IBAction func editButtonDidTap(_ sender: Any) {
         selectedItems.removeAll()       // reset selected item everytime edit tapped
         deleteButton.isEnabled = false  // disable delete button until there is selected item
