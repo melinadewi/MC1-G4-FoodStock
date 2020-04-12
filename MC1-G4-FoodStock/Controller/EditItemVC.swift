@@ -11,7 +11,7 @@ import UIKit
 let notificationKey = "com.mc1-g4-foodstock.notificationKey"
 
 class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
+    // IBOutlet
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var choosePhotoButton: UIButton!
     @IBOutlet weak var itemNameField: UITextField!
@@ -19,12 +19,12 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
     @IBOutlet weak var expDateField: UITextField!
     @IBOutlet weak var notesField: UITextField!
     
-    let expiryDatePicker = UIDatePicker()
-    let imagePicker = UIImagePickerController()
+    let expiryDatePicker = UIDatePicker() // date picker for expiry date
+    let imagePicker = UIImagePickerController() // image picker to choose image
+    var stockLevel: StockLevel? // variable for stock level
+    var expiryDate: Date? // to keep real expiry date in date type
     
-    var itemId = ""
-    var stockLevel: StockLevel?
-    var expiryDate: Date?
+    // Get these from ItemDetail
     var selectedItem: FoodModel?
     // UserDefault Model
     var selectedImage: UIImage?
@@ -33,22 +33,27 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
         super.viewDidLoad()
         self.tabBarController?.tabBar.isHidden = true
         setupExpiryDatePicker()
+        // image picker
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
         makeImageCircle()
-        hideKeyboardWhenTapped()
-        populateItem(item: selectedItem!)
+
+        hideKeyboardWhenTapped() // improve hide keyboard
+        populateItem(item: selectedItem!) // populate selected item
     }
     
     func populateItem(item: FoodModel) {
         itemNameField.text = item.foodName
         notesField.text = item.itemNote
+
 //        imageView.image = item.foodImage
         // UserDefault Model
         imageView.image = selectedImage
-        stockLevel = item.stockLevel
-        expiryDate = item.expDate
         
+        expiryDate = item.expDate
+        expDateField.text = dateFieldFormatter(date: expiryDate!)
+        
+        stockLevel = item.stockLevel
         switch item.stockLevel {
         case .empty:
             stockSC.selectedSegmentIndex = 0
@@ -63,49 +68,51 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
             stockSC.selectedSegmentIndex = 3
             stockSC.selectedSegmentTintColor = UIColor.systemGreen
         }
-        expDateField.text = dateFieldFormatter(date: expiryDate!)
     }
     
+    // date formatter for date text field
     func dateFieldFormatter(date : Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
         return dateFormatter.string(from: date)
     }
     
+    // make image circle
     func makeImageCircle() {
         imageView.layer.masksToBounds = false
         imageView.layer.cornerRadius = imageView.frame.height / 2
         imageView.clipsToBounds = true
     }
     
+    // override titleForHeaderInSection to get last edited at
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let date = dateEditedFormat(date: selectedItem!.updatedDate)
-        let sectionName: String
         switch section {
             case 0:
-                sectionName = ""
+                return ""
             case 1:
-                sectionName =  NSLocalizedString("Item Name", comment: "item name")
+                return "Item Name"
             case 2:
-                sectionName =  NSLocalizedString("Stock", comment: "stock")
+                return "Stock"
             case 3:
-                sectionName =  NSLocalizedString("Expiration Date", comment: "expiration date")
+                return "Expiration Date"
             case 4:
-                sectionName =  NSLocalizedString("Notes", comment: "notes")
+                return "Notes"
             case 5:
-                sectionName =  NSLocalizedString("Last Edited at \(date)", comment: "edited at")
+                return "Last Edited at \(date)"
             default:
-                sectionName = ""
+                return nil
         }
-        return sectionName
     }
     
+    // date formatter for last edite
     func dateEditedFormat(date : Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd MMM yyyy HH:mm"
         return formatter.string(from: date)
     }
     
+    // date picker
     func setupExpiryDatePicker(){
         expiryDatePicker.datePickerMode = .date
         expiryDatePicker.minimumDate = Date()
@@ -123,6 +130,7 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
         expDateField.inputAccessoryView = toolbar
     }
     
+    // function when date picker's value changed
     @objc func datePickerChanger(sender : UIDatePicker) {
         expiryDate = sender.date
         let dateFormatter = DateFormatter()
@@ -134,6 +142,7 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
         view.endEditing(true)
     }
     
+    // action for choose photo button -> show alert
     @IBAction func choosePhoto(_ sender: Any) {
         NSLayoutConstraint.deactivate(view.constraints)
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -153,6 +162,7 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
         present(alert, animated: true, completion: nil)
     }
     
+    // change image view with picked image
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else { return }
         imageView.image = pickedImage
@@ -170,6 +180,7 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
         view.endEditing(true)
     }
     
+    // done button action -> send notification to FoodStock and ItemDetail
     @IBAction func doneButton(_ sender: UIBarButtonItem) {
 //        let editedItem = FoodModel(foodName: itemNameField.text!, expDate: expiryDate!, stockLevel: stockLevel!, foodImage: imageView.image, id: selectedItem!.id, updatedDate: Date(), itemNote: notesField.text)
         // UserDefault Model
@@ -184,10 +195,12 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
         dismiss(animated: true, completion: nil)
     }
     
+    // cancel button action
     @IBAction func cancelButton(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
     
+    // stock action to update stock level
     @IBAction func stockAction(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex{
         case 0:
