@@ -16,9 +16,7 @@ class ItemDetailVC: UITableViewController {
     
     @IBOutlet weak var itemImage: UIImageView! {
         didSet {
-            //itemImage.layer.borderWidth = 1
             itemImage.layer.masksToBounds = false
-            //itemImage.layer.borderColor = UIColor.black.cgColor
             itemImage.layer.cornerRadius = itemImage.frame.height / 2
             itemImage.clipsToBounds = true
         }
@@ -28,8 +26,6 @@ class ItemDetailVC: UITableViewController {
         didSet {
             stockCondition.layer.cornerRadius = 8
             stockCondition.layer.masksToBounds = true
-       //     stockCondition.layer.borderColor = UIColor.systemGray.cgColor
-       //     stockCondition.layer.borderWidth = 2.0
         }
     }
     @IBOutlet weak var expDate: UILabel!
