@@ -89,7 +89,7 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
             case 4:
                 sectionName =  NSLocalizedString("Notes", comment: "notes")
             case 5:
-                sectionName =  NSLocalizedString("Last Edited at \(date)", comment: "edited at")
+                sectionName =  NSLocalizedString("Last Edited on \(date)", comment: "edited at")
             default:
                 sectionName = ""
         }
@@ -98,7 +98,7 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
     
     func dateEditedFormat(date : Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd MMM yyyy HH:mm"
+        formatter.dateFormat = "dd MMM yyyy HH:mm:ss"
         return formatter.string(from: date)
     }
     

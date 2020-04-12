@@ -39,6 +39,8 @@ class ItemDetailVC: UITableViewController {
     }
     
     var selectedItem: FoodModel?
+    var updated = false
+    var updatedDate = Date()
     
     weak var delegate: ItemDetailVCDelegate?
     
@@ -58,17 +60,20 @@ class ItemDetailVC: UITableViewController {
     @objc func updateChanges(notification: Notification) {
         guard let changes = notification.userInfo!["editedItem"] as? FoodModel else { return } // if let
     
+        updated = true
         itemName.text = "\(changes.foodName)"
         expDate.text = dateFormat(date: changes.expDate)
         itemImage.image = changes.foodImage
+        updatedDate = changes.updatedDate
         
         stockCategory(item: changes)
-        print(changes.itemNote)
+//        print(changes.itemNote)
         notesBox.text = "\(changes.itemNote ?? "")"
 //        stockCondition.text = "\(changes.stockLevel)"
         
         selectedItem = changes
         
+        tableView.reloadData()
         
         
 //        print("ini di print dari ItemDetailVC, \(pesan.foodName)")
@@ -93,7 +98,7 @@ class ItemDetailVC: UITableViewController {
     // to format date into intended string
     func dateFormat(date : Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd MMM yyyy"
+        formatter.dateFormat = "dd MMM yyyy HH:mm:ss"
         return formatter.string(from: date)
     }
     
@@ -132,6 +137,7 @@ class ItemDetailVC: UITableViewController {
     
     // update "created at" in table view
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        var dateSection = ""
         
         switch section {
         case 0:
@@ -143,10 +149,13 @@ class ItemDetailVC: UITableViewController {
         case 3:
             return "Notes"
         case 4:
-            guard let date = selectedItem?.updatedDate else {
-                return nil
+            if updated == false {
+                guard let createdDate = selectedItem?.updatedDate else { return nil }
+                dateSection = "Item added on \(dateFormat(date: createdDate))"
+            } else {
+                dateSection = "Last Edited on \(dateFormat(date: updatedDate))"
             }
-            return "Last Edited at \(dateFormat(date: date))"
+            return dateSection
         default:
             return nil
         }
