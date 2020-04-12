@@ -60,8 +60,20 @@ class FoodStockVC: UIViewController {
         if let index = listOfFoods.firstIndex(where: { $0.id == foodId } ) { // get the index from the original list
             listOfFoods[index] = foodItem      // replace food with new edited food
             print(index)
-            tableView.reloadData()
         }
+        
+        switch selectedSort {
+        case "dateEdited" :
+            listOfFoods.sort(by: { $0.updatedDate > $1.updatedDate })
+        case "lowestStock":
+            listOfFoods.sort(by: { $0.stockLevel.rawValue < $1.stockLevel.rawValue })
+        case "expDate":
+            listOfFoods.sort(by: { $0.expDate < $1.expDate })
+        default:
+            listOfFoods.sort(by: { $0.updatedDate > $1.updatedDate })
+        }
+        tableView.reloadData()
+        
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -386,19 +398,6 @@ extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
             let vc = nc?.topViewController as? AddItemVC
             vc?.delegate = self
         }
-    }
-    
-    // unwind back from ItemDetailVC after trash button pushed
-    @IBAction func unwindBackToFoodStock(sender: UIStoryboardSegue)
-    {
-        // find the index of the item deleted from ItemDetailVC
-        if let itemIndex = listOfFoods.firstIndex(where: {$0.id == removeItem}) {
-            listOfFoods.remove(at: itemIndex)
-        }
-        
-        // reload tableview
-        tableView.reloadData()
-        
     }
     
     // configure swipe action

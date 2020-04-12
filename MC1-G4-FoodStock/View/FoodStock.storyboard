@@ -274,11 +274,9 @@
                         <outlet property="notesBox" destination="g4g-NZ-jxT" id="hfu-vz-Pl5"/>
                         <outlet property="stockCondition" destination="57y-lp-gAd" id="wfo-M4-AMc"/>
                         <segue destination="QRt-6c-oNi" kind="presentation" identifier="toEditItem" id="EFJ-VS-JBA"/>
-                        <segue destination="Xkn-ht-vFy" kind="unwind" identifier="unwindBack" unwindAction="unwindBackToFoodStockWithSender:" id="qrX-hI-iJS"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NLE-kg-roQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="Xkn-ht-vFy" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2847.826086956522" y="495.53571428571428"/>
         </scene>

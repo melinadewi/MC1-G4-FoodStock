@@ -67,18 +67,11 @@ class ItemDetailVC: UITableViewController {
         updatedDate = changes.updatedDate
         
         stockCategory(item: changes)
-//        print(changes.itemNote)
         notesBox.text = "\(changes.itemNote ?? "")"
 //        stockCondition.text = "\(changes.stockLevel)"
         
         selectedItem = changes
-        
         tableView.reloadData()
-        
-        
-//        print("ini di print dari ItemDetailVC, \(pesan.foodName)")
-//        print("ini di print dari ItemDetailVC, \(pesan.id)")
-//        print("ini di print dari ItemDetailVC, \(pesan.expDate)")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -149,6 +142,7 @@ class ItemDetailVC: UITableViewController {
         case 3:
             return "Notes"
         case 4:
+            // check if item has been edited
             if updated == false {
                 guard let createdDate = selectedItem?.updatedDate else { return nil }
                 dateSection = "Item added on \(dateFormat(date: createdDate))"
@@ -186,11 +180,6 @@ class ItemDetailVC: UITableViewController {
     
     // pass item id back to FoodStockVC for deletion
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "unwindBack" {
-            if let destination = segue.destination as? FoodStockVC {
-                destination.removeItem = selectedItem?.id
-            }
-        }
         if segue.identifier == "toEditItem" {
             let nc = segue.destination as? UINavigationController
             let vc = nc?.topViewController as? EditItemVC
