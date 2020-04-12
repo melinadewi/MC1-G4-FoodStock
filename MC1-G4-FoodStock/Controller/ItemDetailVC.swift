@@ -88,8 +88,15 @@ class ItemDetailVC: UITableViewController {
         navigationItem.rightBarButtonItems = [deleteButton, editButton]
     }
     
-    // to format date into intended string
+    // format date without time
     func dateFormat(date : Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM yyyy"
+        return formatter.string(from: date)
+    }
+    
+    // format date with time
+    func dateTimeFormat(date : Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd MMM yyyy HH:mm:ss"
         return formatter.string(from: date)
@@ -145,9 +152,9 @@ class ItemDetailVC: UITableViewController {
             // check if item has been edited
             if updated == false {
                 guard let createdDate = selectedItem?.updatedDate else { return nil }
-                dateSection = "Item added on \(dateFormat(date: createdDate))"
+                dateSection = "Item added on \(dateTimeFormat(date: createdDate))"
             } else {
-                dateSection = "Last Edited on \(dateFormat(date: updatedDate))"
+                dateSection = "Last Edited on \(dateTimeFormat(date: updatedDate))"
             }
             return dateSection
         default:
