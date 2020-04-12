@@ -197,7 +197,7 @@ class FoodStockVC: UIViewController {
                 
                 // Decode Note
                 let keys = try decoder.decode([String].self, from: data)
-                print("isi keys: \(keys)")
+                listOfKeys = keys
                 
                 for key in keys {
                     if let data = UserDefaults.standard.data(forKey: key) {
@@ -208,7 +208,6 @@ class FoodStockVC: UIViewController {
                             // Decode Note
                             let item = try decoder.decode(FoodModel.self, from: data)
                             listOfFoods.append(item)
-                            print(item, "isi item")
 
                         } catch {
                             print("Unable to Decode Notes (\(error))")
@@ -450,6 +449,12 @@ extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
         // find the index of the item deleted from ItemDetailVC
         if let itemIndex = listOfFoods.firstIndex(where: {$0.id == removeItem}) {
             listOfFoods.remove(at: itemIndex)
+            // UserDefault Model
+            listOfKeys = listOfKeys.filter { $0 != removeItem }
+            setKeys()
+            UserDefaults.standard.removeObject(forKey: removeItem!) // delete object in userdefault
+            UserDefaults.standard.removeObject(forKey: "\(removeItem!)-img") // delete image in userdefault
+            print("dari unwindbacktofoodstock")
         }
         
         // reload tableview
@@ -471,10 +476,23 @@ extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
                     
                     if let index = self.listOfFoods.firstIndex(where: { $0.id == foodId } ) { // get the index from the original list
                         self.listOfFoods.remove(at: index)  // remove food from original list
+                        // UserDefault Model
+                        self.listOfKeys = self.listOfKeys.filter { $0 != foodId }
+                        self.setKeys()
+                        UserDefaults.standard.removeObject(forKey: foodId) // delete object in userdefault
+                        UserDefaults.standard.removeObject(forKey: "\(foodId)-img") // delete image in userdefault
+                        print("dari yes action isfiltering")
                     }
                     
                     self.filteredFoods.remove(at: indexPath.row)    // remove food from filtered list
                 } else {
+                    // UserDefault Model
+                    let foodId = self.listOfFoods[indexPath.row].id
+                    self.listOfKeys = self.listOfKeys.filter { $0 != foodId }
+                    self.setKeys()
+                    UserDefaults.standard.removeObject(forKey: foodId) // delete object in userdefault
+                    UserDefaults.standard.removeObject(forKey: "\(foodId)-img") // delete image in userdefault
+                    
                     self.listOfFoods.remove(at: indexPath.row)      // if not filtering then remove from original array
                 }
                 
@@ -615,7 +633,7 @@ extension FoodStockVC: ItemDetailVCDelegate {
             listOfFoods.remove(at: index)
             
             // UserDefault Model
-            listOfKeys.remove(at: index)
+            listOfKeys = listOfKeys.filter { $0 != id }
             setKeys()
             UserDefaults.standard.removeObject(forKey: id) // delete object in userdefault
             UserDefaults.standard.removeObject(forKey: "\(id)-img") // delete image in userdefault
