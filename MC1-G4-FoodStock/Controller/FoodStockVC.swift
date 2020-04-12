@@ -19,8 +19,10 @@ class FoodStockVC: UIViewController {
     
     let foodCell = "FoodCell"   // cell identifier
     
+    let allFoods = FoodData()
     var listOfFoods: [FoodModel] = []       // food data
     var filteredFoods: [FoodModel] = []     // this will hold the foods that the user searches for
+    var listOfShopFoods: [FoodModel] = []   // this will hold the foods that needs to be pushed to shopping list
     
     var isFiltering: Bool = false   // bool to determine wether it is filtering or not
     
@@ -117,7 +119,6 @@ class FoodStockVC: UIViewController {
     
     @IBAction func deleteButtonDidTap(_ sender: Any) {
         
-        
         if selectedItems.count != 0 {   // if there is selected item
             
             // show alert
@@ -173,29 +174,37 @@ class FoodStockVC: UIViewController {
     }
     
     func populateList() {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd-MM-yyyy"
-        formatter.timeZone = TimeZone(abbreviation: "PST")
         
-        listOfFoods.append(FoodModel(foodName: "Apple yang sangat enak skali", expDate: formatter.date(from: "24-06-2020")!, stockLevel: .plenty, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Kiwi", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .low, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Orange", expDate: formatter.date(from: "04-06-2020")!, stockLevel: .empty, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Peach", expDate: formatter.date(from: "14-08-2020")!, stockLevel: .half, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Ovomaltine", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .plenty, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Nutella", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .low, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Bread", expDate: formatter.date(from: "04-06-2020")!, stockLevel: .half, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Oreo", expDate: formatter.date(from: "14-08-2020")!, stockLevel: .empty, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Dragon Fruit", expDate: formatter.date(from: "08-04-2020")!, stockLevel: .plenty, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Watermelon", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .low, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Milk", expDate: formatter.date(from: "13-12-2020")!, stockLevel: .half, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Eggs", expDate: formatter.date(from: "13-08-2020")!, stockLevel: .empty, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Tofu", expDate: formatter.date(from: "24-12-2020")!, stockLevel: .plenty, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Spaghetti", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .low, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Cheese", expDate: formatter.date(from: "04-06-2020")!, stockLevel: .low, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Tomatoes", expDate: formatter.date(from: "14-05-2020")!, stockLevel: .half, foodImage: nil, itemNote: ""))
+        // if stock is not empty, add item to food stock list
+        for item in allFoods.listOfFoods {
+            if item.stockLevel != .empty {
+                listOfFoods.append(item)
+            }
+        }
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "dd-MM-yyyy"
+//        formatter.timeZone = TimeZone(abbreviation: "PST")
         
+//        listOfFoods.append(FoodModel(foodName: "Apple yang sangat enak skali", expDate: formatter.date(from: "24-06-2020")!, stockLevel: .plenty, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Kiwi", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .low, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Orange", expDate: formatter.date(from: "04-06-2020")!, stockLevel: .empty, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Peach", expDate: formatter.date(from: "14-08-2020")!, stockLevel: .half, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Ovomaltine", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .plenty, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Nutella", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .low, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Bread", expDate: formatter.date(from: "04-06-2020")!, stockLevel: .half, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Oreo", expDate: formatter.date(from: "14-08-2020")!, stockLevel: .empty, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Dragon Fruit", expDate: formatter.date(from: "08-04-2020")!, stockLevel: .plenty, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Watermelon", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .low, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Milk", expDate: formatter.date(from: "13-12-2020")!, stockLevel: .half, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Eggs", expDate: formatter.date(from: "13-08-2020")!, stockLevel: .empty, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Tofu", expDate: formatter.date(from: "24-12-2020")!, stockLevel: .plenty, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Spaghetti", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .low, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Cheese", expDate: formatter.date(from: "04-06-2020")!, stockLevel: .low, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Tomatoes", expDate: formatter.date(from: "14-05-2020")!, stockLevel: .half, foodImage: nil, itemNote: ""))
+       
         self.listOfFoods.sort(by: { $0.updatedDate > $1.updatedDate })
     }
+
     
     // sort button tapped
     @IBAction func didTapSort(_ sender: UIButton) {
