@@ -10,7 +10,9 @@ import UIKit
 
 //Used as the medium to pass data back to FoodStockVC
 protocol AddItemVCDelegate {
-    func addToList(newModel : FoodModel)
+//    func addToList(newModel : FoodModel)
+    // UserDefault Model
+    func addToList(newModel : FoodModel, newImage : UIImage)
 }
 
 class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
@@ -227,12 +229,18 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
     
     @IBAction func DoneButton_onClick(_ sender: Any) {
         //Make new model that will be sent back to the list page
-        let newFood = FoodModel(foodName: newItemName, expDate: newItemExpiryDate!, stockLevel: newItemStockLevel, foodImage: itemImageView.image, id: UUID().uuidString, updatedDate: Date(), itemNote: itemNotesTextField.text)
+//        let newFood = FoodModel(foodName: newItemName, expDate: newItemExpiryDate!, stockLevel: newItemStockLevel, foodImage: itemImageView.image, id: UUID().uuidString, updatedDate: Date(), itemNote: itemNotesTextField.text)
+        
+        // UserDefault Model
+        let id = UUID().uuidString
+        let newFood = FoodModel(foodName: newItemName, expDate: newItemExpiryDate!, stockLevel: newItemStockLevel, foodImage: "\(id)-img", id: id, updatedDate: Date(), itemNote: itemNotesTextField.text)
         
 //        print("--New Food--\nName: \(newFood.foodName)\nStockLevel: \(newFood.stockLevel)\nExpDate: \(newFood.expDate)\nNotes: \(newItemNotes)\n")
         
         //Send the new model to the list page
-        delegate?.addToList(newModel: newFood)
+//        delegate?.addToList(newModel: newFood)
+        // UserDefault Model
+        delegate?.addToList(newModel: newFood, newImage: itemImageView.image!)
         dismiss(animated: true, completion: nil)
     }
     

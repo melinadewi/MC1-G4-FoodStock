@@ -62,22 +62,20 @@ class ItemDetailVC: UITableViewController {
     @objc func updateChanges(notification: Notification) {
         guard let changes = notification.userInfo!["editedItem"] as? FoodModel else { return } // if let
     
-        itemName.text = "\(changes.foodName)"
+        itemName.text = changes.foodName
         expDate.text = dateFormat(date: changes.expDate)
-        itemImage.image = changes.foodImage
+//        itemImage.image = changes.foodImage
+        
+        // UserDefault Model
+        guard let changesImage = notification.userInfo!["editedImage"] as? UIImage else { return } // if let
+//        display(key: changes.foodImage) // kalau display, harus lebih cepat dari save gambar di FoodStock
+        itemImage.image = changesImage
         
         stockCategory(item: changes)
-        print(changes.itemNote)
         notesBox.text = "\(changes.itemNote ?? "")"
 //        stockCondition.text = "\(changes.stockLevel)"
         
         selectedItem = changes
-        
-        
-        
-//        print("ini di print dari ItemDetailVC, \(pesan.foodName)")
-//        print("ini di print dari ItemDetailVC, \(pesan.id)")
-//        print("ini di print dari ItemDetailVC, \(pesan.expDate)")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -111,7 +109,9 @@ class ItemDetailVC: UITableViewController {
         
         // stock level color
         stockCategory(item: selectedItem!)
-        itemImage.image = selectedItem?.foodImage
+//        itemImage.image = selectedItem?.foodImage
+        // display image for UserDefault Model
+        display(key: selectedItem!.foodImage)
         notesBox.text = selectedItem?.itemNote
 
     }
@@ -190,6 +190,27 @@ class ItemDetailVC: UITableViewController {
             let nc = segue.destination as? UINavigationController
             let vc = nc?.topViewController as? EditItemVC
             vc?.selectedItem = selectedItem
+            // send image for UserDefault Model
+            vc?.selectedImage = itemImage.image
+        }
+    }
+    
+    // Function to display image for UserDefault Model
+    private func retrieveImage(forKey key: String) -> UIImage? {
+        if let imgData = UserDefaults.standard.object(forKey: key) as? Data, let image = UIImage(data: imgData) {
+            return image
+        }
+        return nil
+    }
+    
+    @objc
+    private func display(key: String) {
+        DispatchQueue.global(qos: .background).async {
+            if let savedImage = self.retrieveImage(forKey: key) {
+                DispatchQueue.main.async {
+                    self.itemImage.image = savedImage
+                }
+            }
         }
     }
 }

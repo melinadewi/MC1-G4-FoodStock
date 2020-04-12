@@ -20,6 +20,8 @@ class FoodStockVC: UIViewController {
     let foodCell = "FoodCell"   // cell identifier
     
     var listOfFoods: [FoodModel] = []       // food data
+    // Add new variable for UserDefault Model
+    var listOfKeys: [String] = []
     var filteredFoods: [FoodModel] = []     // this will hold the foods that the user searches for
     
     var isFiltering: Bool = false   // bool to determine wether it is filtering or not
@@ -54,6 +56,11 @@ class FoodStockVC: UIViewController {
         
         // get the id
         let foodId = foodItem.id
+        
+        // Save data and image for UserDefaultModel
+        setData(item: foodItem)
+        guard let imageItem = notification.userInfo!["editedImage"] as? UIImage else { return }
+        saveImage(key: foodItem.foodImage, image: imageItem)
         
         print(foodId)
         
@@ -165,22 +172,57 @@ class FoodStockVC: UIViewController {
         formatter.dateFormat = "dd-MM-yyyy"
         formatter.timeZone = TimeZone(abbreviation: "PST")
         
-        listOfFoods.append(FoodModel(foodName: "Apple yang sangat enak skali", expDate: formatter.date(from: "24-06-2020")!, stockLevel: .plenty, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Kiwi", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .low, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Orange", expDate: formatter.date(from: "04-06-2020")!, stockLevel: .empty, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Peach", expDate: formatter.date(from: "14-08-2020")!, stockLevel: .half, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Ovomaltine", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .plenty, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Nutella", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .low, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Bread", expDate: formatter.date(from: "04-06-2020")!, stockLevel: .half, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Oreo", expDate: formatter.date(from: "14-08-2020")!, stockLevel: .empty, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Dragon Fruit", expDate: formatter.date(from: "08-04-2020")!, stockLevel: .plenty, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Watermelon", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .low, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Milk", expDate: formatter.date(from: "13-12-2020")!, stockLevel: .half, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Eggs", expDate: formatter.date(from: "13-08-2020")!, stockLevel: .empty, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Tofu", expDate: formatter.date(from: "24-12-2020")!, stockLevel: .plenty, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Spaghetti", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .low, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Cheese", expDate: formatter.date(from: "04-06-2020")!, stockLevel: .low, foodImage: nil, itemNote: ""))
-        listOfFoods.append(FoodModel(foodName: "Tomatoes", expDate: formatter.date(from: "14-05-2020")!, stockLevel: .half, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Apple yang sangat enak skali", expDate: formatter.date(from: "24-06-2020")!, stockLevel: .plenty, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Kiwi", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .low, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Orange", expDate: formatter.date(from: "04-06-2020")!, stockLevel: .empty, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Peach", expDate: formatter.date(from: "14-08-2020")!, stockLevel: .half, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Ovomaltine", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .plenty, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Nutella", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .low, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Bread", expDate: formatter.date(from: "04-06-2020")!, stockLevel: .half, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Oreo", expDate: formatter.date(from: "14-08-2020")!, stockLevel: .empty, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Dragon Fruit", expDate: formatter.date(from: "08-04-2020")!, stockLevel: .plenty, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Watermelon", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .low, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Milk", expDate: formatter.date(from: "13-12-2020")!, stockLevel: .half, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Eggs", expDate: formatter.date(from: "13-08-2020")!, stockLevel: .empty, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Tofu", expDate: formatter.date(from: "24-12-2020")!, stockLevel: .plenty, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Spaghetti", expDate: formatter.date(from: "21-06-2020")!, stockLevel: .low, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Cheese", expDate: formatter.date(from: "04-06-2020")!, stockLevel: .low, foodImage: nil, itemNote: ""))
+//        listOfFoods.append(FoodModel(foodName: "Tomatoes", expDate: formatter.date(from: "14-05-2020")!, stockLevel: .half, foodImage: nil, itemNote: ""))
+        
+        // UserDefault Model
+        if let data = UserDefaults.standard.data(forKey: "allkeys") {
+            do {
+                // Create JSON Decoder
+                let decoder = JSONDecoder()
+                
+                // Decode Note
+                let keys = try decoder.decode([String].self, from: data)
+                print("isi keys: \(keys)")
+                
+                for key in keys {
+                    if let data = UserDefaults.standard.data(forKey: key) {
+                        do {
+                            // Create JSON Decoder
+                            let decoder = JSONDecoder()
+                            
+                            // Decode Note
+                            let item = try decoder.decode(FoodModel.self, from: data)
+                            listOfFoods.append(item)
+                            print(item, "isi item")
+
+                        } catch {
+                            print("Unable to Decode Notes (\(error))")
+                        }
+                    }
+                }
+
+            } catch {
+                print("Unable to Decode Notes (\(error))")
+            }
+        } else {
+            print("No items")
+        }
+
         
         self.listOfFoods.sort(by: { $0.updatedDate > $1.updatedDate })
     }
@@ -266,6 +308,20 @@ class FoodStockVC: UIViewController {
     func filterContent(searchText: String) {
         filteredFoods = listOfFoods.filter { (food: FoodModel) -> Bool in       // loops over all the element and calls the closure.
             return food.foodName.lowercased().contains(searchText.lowercased())     // return true if foodname contains searched text
+        }
+    }
+    
+    // Function save image for UserDefault Model
+    private func store(image: UIImage, forKey key: String) {
+        if let newImg = image.jpegData(compressionQuality: 1.0) {
+                UserDefaults.standard.set(newImg, forKey: key)
+        }
+    }
+    
+    @objc
+    private func saveImage(key: String, image: UIImage) {
+        DispatchQueue.global(qos: .background).async {
+            self.store(image: image, forKey: key)
         }
     }
 }
@@ -512,6 +568,39 @@ extension FoodStockVC {
         
         navigationItem.largeTitleDisplayMode = .automatic
     }
+    
+    // Function tambahan untuk UserDefault Model
+    func setKeys() {
+        do {
+            // Create JSON Encoder
+            let encoder = JSONEncoder()
+            
+            // Encode Note
+            let data = try encoder.encode(listOfKeys)
+            
+            // Write/Set Data
+            UserDefaults.standard.set(data, forKey: "allkeys")
+            
+        } catch {
+            print("Unable to Encode Array of Notes (\(error))")
+        }
+    }
+    
+    func setData(item: FoodModel) {
+        do {
+            // Create JSON Encoder
+            let encoder = JSONEncoder()
+
+            // Encode Note
+            let data = try encoder.encode(item)
+
+            // Write/Set Data
+            UserDefaults.standard.set(data, forKey: item.id)
+
+        } catch {
+            print("Unable to Encode Array of Notes (\(error))")
+        }
+    }
 }
 
 //extension FoodStockVC: AddItemVCDelegate {
@@ -524,14 +613,44 @@ extension FoodStockVC: ItemDetailVCDelegate {
     func deleteItem(id: String) {
         if let index = listOfFoods.firstIndex(where: { $0.id == id}) {
             listOfFoods.remove(at: index)
+            
+            // UserDefault Model
+            listOfKeys.remove(at: index)
+            setKeys()
+            UserDefaults.standard.removeObject(forKey: id) // delete object in userdefault
+            UserDefaults.standard.removeObject(forKey: "\(id)-img") // delete image in userdefault
+            
             tableView.reloadData()
         }
     }
 }
 
 extension FoodStockVC: AddItemVCDelegate {
-    func addToList(newModel: FoodModel) {
+//    func addToList(newModel: FoodModel) {
+//        listOfFoods.append(newModel)
+//
+//        switch selectedSort {
+//        case "dateEdited" :
+//            listOfFoods.sort(by: { $0.updatedDate > $1.updatedDate })
+//        case "lowestStock":
+//            listOfFoods.sort(by: { $0.stockLevel.rawValue < $1.stockLevel.rawValue })
+//        case "expDate":
+//            listOfFoods.sort(by: { $0.expDate < $1.expDate })
+//        default:
+//            listOfFoods.sort(by: { $0.updatedDate > $1.updatedDate })
+//        }
+//
+//        tableView.reloadData()
+//    }
+    
+    // UserDefault Model
+    func addToList(newModel: FoodModel, newImage: UIImage) {
+        listOfKeys.append(newModel.id)
+        setKeys()
+        
         listOfFoods.append(newModel)
+        setData(item: newModel)
+        saveImage(key: newModel.foodImage, image: newImage)
         
         switch selectedSort {
         case "dateEdited" :

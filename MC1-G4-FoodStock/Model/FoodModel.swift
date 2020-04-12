@@ -8,24 +8,55 @@
 
 import UIKit
 
-enum StockLevel: Int {
+//enum StockLevel: Int {
+//    case empty = 0
+//    case low = 1
+//    case half = 2
+//    case plenty = 3
+//}
+//
+//class FoodModel: NSObject {
+//
+//    var foodName = ""
+//    var expDate: Date
+//    var stockLevel:StockLevel
+//    var foodImage: UIImage?
+//    var id = ""
+//    var updatedDate: Date
+//    var itemNote: String?
+//
+//    init(foodName: String, expDate: Date, stockLevel: StockLevel, foodImage: UIImage?, id: String = UUID().uuidString, updatedDate: Date = Date(), itemNote: String? = "") {
+//        self.foodName = foodName
+//        self.expDate = expDate
+//        self.stockLevel = stockLevel
+//        self.foodImage = foodImage
+//        self.id = id
+//        self.updatedDate = updatedDate
+//        self.itemNote = itemNote
+//    }
+//}
+
+
+
+// UserDefault Model
+enum StockLevel: Int, Codable {
     case empty = 0
     case low = 1
     case half = 2
     case plenty = 3
 }
 
-class FoodModel: NSObject {
+class FoodModel: Codable {
     
     var foodName = ""
     var expDate: Date
     var stockLevel:StockLevel
-    var foodImage: UIImage?
+    var foodImage: String
     var id = ""
     var updatedDate: Date
     var itemNote: String?
     
-    init(foodName: String, expDate: Date, stockLevel: StockLevel, foodImage: UIImage?, id: String = UUID().uuidString, updatedDate: Date = Date(), itemNote: String? = "") {
+    init(foodName: String, expDate: Date, stockLevel: StockLevel, foodImage: String = "", id: String = UUID().uuidString, updatedDate: Date = Date(), itemNote: String? = "") {
         self.foodName = foodName
         self.expDate = expDate
         self.stockLevel = stockLevel
@@ -34,4 +65,8 @@ class FoodModel: NSObject {
         self.updatedDate = updatedDate
         self.itemNote = itemNote
     }
+}
+
+class Keys: Codable {
+    var keys: [String]
 }
