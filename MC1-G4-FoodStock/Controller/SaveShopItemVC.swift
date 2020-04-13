@@ -45,6 +45,7 @@ class SaveShopItemVC: UITableViewController {
     func populateData() {
         itemNameField.text = selectedItem?.foodName
 //        expDateField.text = dateFieldFormatter(date: expiryDate!)
+        expiryDate = selectedItem?.expDate
         expDateField.text = dateFieldFormatter(date: (selectedItem?.expDate)!)
         notesField.text = selectedItem?.itemNote
     }
@@ -123,6 +124,7 @@ class SaveShopItemVC: UITableViewController {
     
     
     @IBAction func saveButton(_ sender: UIBarButtonItem) {
+        
         
         let editItem = FoodModel(foodName: itemNameField.text!, expDate: expiryDate!, stockLevel: stockLevel!, foodImage: selectedItem!.foodImage, id: selectedItem!.id, updatedDate: Date(), itemNote: selectedItem?.itemNote)
 

@@ -24,7 +24,20 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         tableView.delegate = self
         tableView.dataSource = self
+        
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        tableView.reloadData()
+//    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        listOfShopItems.removeAll()
+        populateList()
+        tableView.reloadData()
+    }
+    
     
     func populateList() {
 
@@ -131,6 +144,8 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
    //         let alert = UIAlertController(title: nil, message: "Are you sure you want to delete this item?", preferredStyle: .alert)
 
             self.listOfShopItems.remove(at: indexPath.row)
+            //Update userdefaultnya juga
+            
             tableView.deleteRows(at: [indexPath], with: .fade)
             
 //            let id = self.listOfShopItems[indexPath.row].id
@@ -165,15 +180,39 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     }
     
+    // Function save image for UserDefault Model
+    private func store(image: UIImage, forKey key: String) {
+        if let newImg = image.jpegData(compressionQuality: 1.0) {
+                UserDefaults.standard.set(newImg, forKey: key)
+        }
+    }
+    
+    @objc
+    private func saveImage(key: String, image: UIImage) {
+        DispatchQueue.global(qos: .background).async {
+            self.store(image: image, forKey: key)
+        }
+    }
+    
 }
 
 extension ShoppingVC: AddShopItemVCDelegate {
-    func addToList(newModel: FoodModel) {
-        listOfShopItems.append(newModel)
-        tableView.reloadData()
+//    func addToList(newModel: FoodModel) {
+//        listOfShopItems.append(newModel)
+//        tableView.reloadData()
+//
+//        setData(item: newModel)
+//        print(newModel.foodName)
+//    }
+    func addToList(newModel: FoodModel, newImage: UIImage) {
+        listOfKeys.append(newModel.id)
+        setKeys()
         
+        listOfShopItems.append(newModel)
         setData(item: newModel)
-        print(newModel.foodName)
+        saveImage(key: newModel.foodImage, image: newImage)
+        
+        tableView.reloadData()
     }
 }
 

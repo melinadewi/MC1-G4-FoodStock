@@ -9,7 +9,8 @@
 import UIKit
 
 protocol AddShopItemVCDelegate: class {
-    func addToList(newModel : FoodModel)
+    //func addToList(newModel : FoodModel)
+    func addToList(newModel : FoodModel, newImage : UIImage)
 }
 
 class AddShopItemVC: UIViewController {
@@ -34,7 +35,7 @@ class AddShopItemVC: UIViewController {
             let id = UUID().uuidString
             let newFood = FoodModel(foodName: addShopItemTextField.text!, expDate: Date(), stockLevel: .empty, foodImage: "", id: id, updatedDate: Date(), itemNote: "")
 //            let newFood = FoodModel(foodName: addShopItemTextField.text!, expDate: Date(), stockLevel: .empty, id: id )            //Send the new model to the list page
-               delegate?.addToList(newModel: newFood)
+            delegate?.addToList(newModel: newFood,newImage: #imageLiteral(resourceName: "Spoon&Fork"))
                navigationController?.popViewController(animated: true)
            }
     }
