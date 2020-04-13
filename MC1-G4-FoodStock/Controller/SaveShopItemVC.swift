@@ -124,14 +124,18 @@ class SaveShopItemVC: UITableViewController {
     
     
     @IBAction func saveButton(_ sender: UIBarButtonItem) {
-        let editedItem = FoodModel(foodName: itemNameField.text!, expDate: expiryDate!, stockLevel: stockLevel!)
+//        print(itemNameField)
+//        print(expiryDate)
+//        print(stockLevel)
+
+        let editItem = FoodModel(foodName: itemNameField.text!, expDate: Date(), stockLevel: stockLevel!)
                 
         //        NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationKey), object: nil, userInfo: ["editedItem": editedItem])
                 // Notification for UserDefault Model
 //                NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationKey), object: nil, userInfo: ["editedItem": editedItem, "editedImage": imageView.image!])
 //                
 //                NotificationCenter.default.removeObserver(self)
-        delegate?.saveToStock(editItem: editedItem)
+        delegate?.saveToStock(editItem: editItem)
         dismiss(animated: true, completion: nil)
 
     }

@@ -119,21 +119,21 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
    //         let alert = UIAlertController(title: nil, message: "Are you sure you want to delete this item?", preferredStyle: .alert)
 
-//            self.listOfShopItems.remove(at: indexPath.row)
-//            tableView.deleteRows(at: [indexPath], with: .fade)
+            self.listOfShopItems.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
             
-            let id = self.listOfShopItems[indexPath.row].id
-            if let index = self.listOfShopItems.firstIndex(where: { $0.id == id}) {
-                self.listOfShopItems.remove(at: index)
-                
-                // UserDefault Model
-                self.listOfKeys = self.listOfKeys.filter { $0 != id }
-                self.setKeys()
-                UserDefaults.standard.removeObject(forKey: id) // delete object in userdefault
-                UserDefaults.standard.removeObject(forKey: "\(id)-img") // delete image in userdefault
+//            let id = self.listOfShopItems[indexPath.row].id
+//            if let index = self.listOfShopItems.firstIndex(where: { $0.id == id}) {
+//                self.listOfShopItems.remove(at: index)
+//
+//                // UserDefault Model
+//                self.listOfKeys = self.listOfKeys.filter { $0 != id }
+//                self.setKeys()
+//                UserDefaults.standard.removeObject(forKey: id) // delete object in userdefault
+//                UserDefaults.standard.removeObject(forKey: "\(id)-img") // delete image in userdefault
                 
                 tableView.reloadData()
-            }
+            
         }
 
             return UISwipeActionsConfiguration(actions: [delete])
@@ -160,11 +160,4 @@ extension ShoppingVC: AddShopItemVCDelegate {
     }
 }
 
-extension ShoppingVC: SaveShopItemVCDelegate {
-    func saveToStock(editItem: FoodModel) {
-        let index = editItem.id
-     //   listOfShopItems.remove
-        
-    }
 
-}

@@ -275,7 +275,7 @@
                                             <action selector="cancelButton:" destination="ag3-E2-1sY" id="uJ3-b9-3tM"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem key="rightBarButtonItem" title="Save to Stock" id="Op2-TH-cz9">
+                                    <barButtonItem key="rightBarButtonItem" title="Save" id="Op2-TH-cz9">
                                         <connections>
                                             <action selector="saveButton:" destination="ag3-E2-1sY" id="djK-LF-pFa"/>
                                         </connections>

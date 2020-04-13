@@ -701,3 +701,21 @@ extension FoodStockVC: AddItemVCDelegate {
     }
 }
 
+extension FoodStockVC: SaveShopItemVCDelegate {
+    func saveToStock(editItem: FoodModel) {
+        // get the id
+        let foodId = editItem.id
+        
+        // Save data and image for UserDefaultModel
+        setData(item: editItem)
+//        print(foodId)
+        
+        if let index = listOfFoods.firstIndex(where: { $0.id == foodId } ) { // get the index from the original list
+            listOfFoods[index] = editItem      // replace food with new edited food
+//            print(index)
+        }
+        tableView.reloadData()
+        
+    }
+
+}
