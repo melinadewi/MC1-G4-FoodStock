@@ -125,6 +125,8 @@ class SaveShopItemVC: UITableViewController {
         let newItem = FoodModel(foodName: itemNameField.text!, expDate: expiryDate!, stockLevel: stockLevel!, foodImage: imgDefault, updatedDate: Date(), itemNote: notesField.text!)
         delegate?.addToList(newModel: newItem)
         
+//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationKey), object: nil, userInfo: ["addShopItem": newItem])
+//        NotificationCenter.default.removeObserver(self)
         dismiss(animated: true, completion: nil)
     }
     

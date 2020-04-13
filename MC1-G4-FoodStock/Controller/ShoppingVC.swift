@@ -55,9 +55,6 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         performSegue(withIdentifier: "toEditShopItem", sender: self)
     }
     
-
-    
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? SaveShopItemVC {
             destination.selectedItem = listOfShopItems[tableView.indexPathForSelectedRow!.row]
@@ -71,10 +68,16 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete"){(action, view, nil) in
 
-//            let alert = UIAlertController(title: nil, message: "Are you sure you want to delete this item?", preferredStyle: .alert)
-
-            self.listOfShopItems.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            let alert = UIAlertController(title: nil, message: "Are you sure you want to delete this item?", preferredStyle: .alert)
+            
+            let yes = UIAlertAction(title: "Delete", style: .destructive){
+                _ in
+                self.listOfShopItems.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+            alert.addAction(yes)
+            
+            self.present(alert, animated: true, completion: nil)
     }
         return UISwipeActionsConfiguration(actions: [delete])
     
