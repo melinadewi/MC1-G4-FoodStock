@@ -151,25 +151,22 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
     
     // action for choose photo button -> show alert
     @IBAction func choosePhoto(_ sender: Any) {
-//        NSLayoutConstraint.deactivate(view.constraints)
-//        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-//
-//        alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: {(button) in
-//            self.imagePicker.sourceType = .photoLibrary
-//            self.present(self.imagePicker, animated: true, completion: nil)
-//        }))
-//
-//        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: {(button) in
-//            self.imagePicker.sourceType = .camera
-//            self.present(self.imagePicker, animated: true, completion: nil)
-//        }))
-//
-//        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-//
-//        present(alert, animated: true, completion: nil)
-        
-        self.imagePicker.sourceType = .photoLibrary
-        self.present(self.imagePicker, animated: true, completion: nil)
+        NSLayoutConstraint.deactivate(view.constraints)
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+        alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: {(button) in
+            self.imagePicker.sourceType = .photoLibrary
+            self.present(self.imagePicker, animated: true, completion: nil)
+        }))
+
+        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: {(button) in
+            self.imagePicker.sourceType = .camera
+            self.present(self.imagePicker, animated: true, completion: nil)
+        }))
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+        present(alert, animated: true, completion: nil)
     }
     
     // change image view with picked image
