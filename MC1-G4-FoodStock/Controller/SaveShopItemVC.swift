@@ -24,6 +24,8 @@ class SaveShopItemVC: UITableViewController {
     var expiryDate: Date?
     let expiryDatePicker = UIDatePicker()
     
+    var delegate: SaveShopItemVCDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         populateData()

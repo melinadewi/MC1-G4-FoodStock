@@ -70,16 +70,16 @@ class FoodStockVC: UIViewController {
             print(index)
         }
         
-        switch selectedSort {
-        case "dateEdited" :
-            listOfFoods.sort(by: { $0.updatedDate > $1.updatedDate })
-        case "lowestStock":
-            listOfFoods.sort(by: { $0.stockLevel.rawValue < $1.stockLevel.rawValue })
-        case "expDate":
-            listOfFoods.sort(by: { $0.expDate < $1.expDate })
-        default:
-            listOfFoods.sort(by: { $0.updatedDate > $1.updatedDate })
-        }
+//        switch selectedSort {
+//        case "dateEdited" :
+//            listOfFoods.sort(by: { $0.updatedDate > $1.updatedDate })
+//        case "lowestStock":
+//            listOfFoods.sort(by: { $0.stockLevel.rawValue < $1.stockLevel.rawValue })
+//        case "expDate":
+//            listOfFoods.sort(by: { $0.expDate < $1.expDate })
+//        default:
+//            listOfFoods.sort(by: { $0.updatedDate > $1.updatedDate })
+//        }
         tableView.reloadData()
         
     }
@@ -210,6 +210,7 @@ class FoodStockVC: UIViewController {
                 // Decode Note
                 let keys = try decoder.decode([String].self, from: data)
                 listOfKeys = keys
+                print(listOfKeys)
                 
                 for key in keys {
                     if let data = UserDefaults.standard.data(forKey: key) {

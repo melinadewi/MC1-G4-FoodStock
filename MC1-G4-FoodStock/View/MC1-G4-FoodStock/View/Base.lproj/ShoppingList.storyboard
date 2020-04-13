@@ -68,7 +68,7 @@
                         <viewLayoutGuide key="safeArea" id="jbU-qi-viz"/>
                     </view>
                     <navigationItem key="navigationItem" title="Shopping List" id="Xex-Su-HgW">
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="add" id="waO-56-pDQ">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="waO-56-pDQ">
                             <connections>
                                 <action selector="toAdd:" destination="Wx5-5v-we0" id="VZc-Vd-L3C"/>
                                 <segue destination="e5s-2S-0Yt" kind="show" identifier="toAddShopItem" id="aAd-Xe-Q2o"/>
