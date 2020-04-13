@@ -31,13 +31,10 @@ class SaveShopItemVC: UITableViewController {
         populateData()
         setupExpiryDatePicker()
         hideKeyboardWhenTapped()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    
+    
+    
 
     // MARK: - Table view data source
     
@@ -124,11 +121,9 @@ class SaveShopItemVC: UITableViewController {
     
     
     @IBAction func saveButton(_ sender: UIBarButtonItem) {
-        print(itemNameField.text!)
-        print(expiryDate!)
-        print(stockLevel!)
+        
+        let editItem = FoodModel(foodName: itemNameField.text!, expDate: expiryDate!, stockLevel: stockLevel!, foodImage: selectedItem!.foodImage, id: selectedItem!.id, updatedDate: Date(), itemNote: selectedItem?.itemNote)
 
-        let editItem = FoodModel(foodName: itemNameField.text!, expDate: expiryDate!, stockLevel: stockLevel!)
         
         
         

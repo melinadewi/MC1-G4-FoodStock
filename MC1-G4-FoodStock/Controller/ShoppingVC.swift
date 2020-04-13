@@ -99,7 +99,7 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
             // Write/Set Data
             UserDefaults.standard.set(data, forKey: item.id)
-            print(item.stockLevel)
+//            print(item.stockLevel)
 
         } catch {
             print("Unable to Encode Array of Notes (\(error))")
