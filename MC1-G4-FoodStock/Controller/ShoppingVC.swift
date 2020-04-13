@@ -17,7 +17,6 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     
     @IBOutlet weak var tableView: UITableView!
     
-//    let allFoods = FoodData()
     var listOfShopItems: [FoodModel] = []
     var listOfKeys: [String] = []
 
@@ -31,11 +30,7 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     }
     
     func populateList() {
-//        for item in allFoods.listOfFoods {
-//            if item.stockLevel == .empty {
-//                listOfShopItems.append(item)
-//            }
-//        }
+
         if let data = UserDefaults.standard.data(forKey: "allkeys") {
             do {
                 // Create JSON Decoder

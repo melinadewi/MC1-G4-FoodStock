@@ -19,7 +19,6 @@ class FoodStockVC: UIViewController {
     
     let foodCell = "FoodCell"   // cell identifier
     
-    let allFoods = FoodData()
     var listOfFoods: [FoodModel] = []       // food data
     // Add new variable for UserDefault Model
     var listOfKeys: [String] = []
@@ -220,7 +219,9 @@ class FoodStockVC: UIViewController {
                             
                             // Decode Note
                             let item = try decoder.decode(FoodModel.self, from: data)
-                            listOfFoods.append(item)
+                            if item.stockLevel != .empty {
+                                listOfFoods.append(item)
+                            }
 
                         } catch {
                             print("Unable to Decode Notes (\(error))")

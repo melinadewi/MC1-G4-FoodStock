@@ -18,15 +18,12 @@
 		741A24502437412E0005C00E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 741A244F2437412E0005C00E /* Assets.xcassets */; };
 		741A24532437412E0005C00E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 741A24512437412E0005C00E /* LaunchScreen.storyboard */; };
 		742764A0243EFF0800980973 /* ItemDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7427649F243EFF0800980973 /* ItemDetailVC.swift */; };
-		742764A4243EFF3400980973 /* ShoppingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742764A3243EFF3400980973 /* ShoppingModel.swift */; };
-		742764A6243EFF4400980973 /* ShoppingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742764A5243EFF4400980973 /* ShoppingCell.swift */; };
 		74A918A124407CCF001BE238 /* EditItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A918A024407CCF001BE238 /* EditItemVC.swift */; };
 		74DA8563243C842C00749E48 /* ShoppingList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74DA8561243C842C00749E48 /* ShoppingList.storyboard */; };
 		74DA8565243C862F00749E48 /* FoodStock.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74DA8564243C862F00749E48 /* FoodStock.storyboard */; };
 		ADBCF6DF2440B348003080D6 /* AddShopItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBCF6DE2440B348003080D6 /* AddShopItemVC.swift */; };
 		ADBCF6E92441E43E003080D6 /* SaveShopItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBCF6E82441E43E003080D6 /* SaveShopItemVC.swift */; };
 		ADBCF6EB2441F184003080D6 /* ShoppingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBCF6EA2441F184003080D6 /* ShoppingVC.swift */; };
-		EC8C26C3244348EF00F3BC36 /* FoodData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC8C26C2244348EF00F3BC36 /* FoodData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,15 +40,12 @@
 		741A24522437412E0005C00E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		741A24542437412E0005C00E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7427649F243EFF0800980973 /* ItemDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailVC.swift; sourceTree = "<group>"; };
-		742764A3243EFF3400980973 /* ShoppingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingModel.swift; sourceTree = "<group>"; };
-		742764A5243EFF4400980973 /* ShoppingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCell.swift; sourceTree = "<group>"; };
 		74A918A024407CCF001BE238 /* EditItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItemVC.swift; sourceTree = "<group>"; };
 		74DA8562243C842C00749E48 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "MC1-G4-FoodStock/View/Base.lproj/ShoppingList.storyboard"; sourceTree = "<group>"; };
 		74DA8564243C862F00749E48 /* FoodStock.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FoodStock.storyboard; sourceTree = "<group>"; };
 		ADBCF6DE2440B348003080D6 /* AddShopItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddShopItemVC.swift; sourceTree = "<group>"; };
 		ADBCF6E82441E43E003080D6 /* SaveShopItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveShopItemVC.swift; sourceTree = "<group>"; };
 		ADBCF6EA2441F184003080D6 /* ShoppingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingVC.swift; sourceTree = "<group>"; };
-		EC8C26C2244348EF00F3BC36 /* FoodData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,10 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				571F6C202438B20300AB411E /* FoodModel.swift */,
-				EC8C26C2244348EF00F3BC36 /* FoodData.swift */,
 				571F6C242438B37100AB411E /* FoodCell.swift */,
-				742764A3243EFF3400980973 /* ShoppingModel.swift */,
-				742764A5243EFF4400980973 /* ShoppingCell.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -206,10 +197,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				742764A4243EFF3400980973 /* ShoppingModel.swift in Sources */,
-				742764A6243EFF4400980973 /* ShoppingCell.swift in Sources */,
 				742764A0243EFF0800980973 /* ItemDetailVC.swift in Sources */,
-				EC8C26C3244348EF00F3BC36 /* FoodData.swift in Sources */,
 				571F6C212438B20300AB411E /* FoodModel.swift in Sources */,
 				74A918A124407CCF001BE238 /* EditItemVC.swift in Sources */,
 				ADBCF6EB2441F184003080D6 /* ShoppingVC.swift in Sources */,
