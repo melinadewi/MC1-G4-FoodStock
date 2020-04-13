@@ -32,7 +32,8 @@ class AddShopItemVC: UIViewController {
     @IBAction func addAction(_ sender: Any) {
         if addShopItemTextField.text != "" {
             let id = UUID().uuidString
-            let newFood = FoodModel(foodName: addShopItemTextField.text!, expDate: Date(), stockLevel: .empty, id: id )            //Send the new model to the list page
+            let newFood = FoodModel(foodName: addShopItemTextField.text!, expDate: Date(), stockLevel: .empty, foodImage: "", id: id, updatedDate: Date(), itemNote: "")
+//            let newFood = FoodModel(foodName: addShopItemTextField.text!, expDate: Date(), stockLevel: .empty, id: id )            //Send the new model to the list page
                delegate?.addToList(newModel: newFood)
                navigationController?.popViewController(animated: true)
            }

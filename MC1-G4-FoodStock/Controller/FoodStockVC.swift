@@ -49,6 +49,8 @@ class FoodStockVC: UIViewController {
 //        let addVC = AddItemVC()
 //        addVC.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(editListOfItems(notification:)), name: NSNotification.Name(rawValue: notificationKey), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(passedData(notification:)), name: NSNotification.Name(rawValue: passNotifKey), object: nil)
     }
     
 
@@ -81,6 +83,26 @@ class FoodStockVC: UIViewController {
 //        default:
 //            listOfFoods.sort(by: { $0.updatedDate > $1.updatedDate })
 //        }
+        tableView.reloadData()
+        
+    }
+    
+    @objc func passedData(notification: Notification) -> Void{
+        
+        guard let newEdited = notification.userInfo!["newEdited"] as? FoodModel else {return}
+        
+//        setData(item: newEdited)
+       let foodId = newEdited.id
+        setData(item: newEdited)
+        //        print(foodId)
+        
+        if let index = listOfFoods.firstIndex(where: { $0.id == foodId } ) { // get the index from the original list
+            listOfFoods[index] = newEdited      // replace food with new edited food
+            //            print(index)
+        } else {
+            listOfFoods.append(newEdited)
+        }
+        
         tableView.reloadData()
         
     }

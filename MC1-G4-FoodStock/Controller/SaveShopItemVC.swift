@@ -8,6 +8,8 @@
 
 import UIKit
 
+let passNotifKey = "bebas"
+
 protocol SaveShopItemVCDelegate: class {
     func saveToStock(editItem: FoodModel)
 }
@@ -124,10 +126,9 @@ class SaveShopItemVC: UITableViewController {
         
         let editItem = FoodModel(foodName: itemNameField.text!, expDate: expiryDate!, stockLevel: stockLevel!, foodImage: selectedItem!.foodImage, id: selectedItem!.id, updatedDate: Date(), itemNote: selectedItem?.itemNote)
 
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: passNotifKey), object: nil, userInfo: ["newEdited": editItem])
+        NotificationCenter.default.removeObserver(self)
         
-        
-        
-                
         //        NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationKey), object: nil, userInfo: ["editedItem": editedItem])
                 // Notification for UserDefault Model
 //                NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationKey), object: nil, userInfo: ["editedItem": editedItem, "editedImage": imageView.image!])

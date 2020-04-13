@@ -15,13 +15,11 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     
     var listOfShopItems: [FoodModel] = []
-    var listOfAllItems: [FoodModel] = []
     var listOfKeys: [String] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         populateList()
-        emptyItems()
 
         
         tableView.delegate = self
@@ -47,7 +45,9 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             
                             // Decode Note
                             let item = try decoder.decode(FoodModel.self, from: data)
-                                listOfAllItems.append(item)
+                                if item.stockLevel == .empty {
+                                    listOfShopItems.append(item)
+                                }
 
                         } catch {
                             print("Unable to Decode Notes (\(error))")
@@ -63,13 +63,13 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func emptyItems() {
-        for item in listOfAllItems {
-            if item.stockLevel == .empty {
-                listOfShopItems.append(item)
-            }
-        }
-    }
+//    func emptyItems() {
+//        for item in listOfAllItems {
+//            if item.stockLevel == .empty {
+//                listOfShopItems.append(item)
+//            }
+//        }
+//    }
     
     
     
@@ -171,6 +171,9 @@ extension ShoppingVC: AddShopItemVCDelegate {
     func addToList(newModel: FoodModel) {
         listOfShopItems.append(newModel)
         tableView.reloadData()
+        
+        setData(item: newModel)
+        print(newModel.foodName)
     }
 }
 
@@ -181,15 +184,14 @@ extension ShoppingVC: SaveShopItemVCDelegate {
         print(editItem.stockLevel)
         
         let foodId = editItem.id
-        setData(item: editItem)
-        //        print(foodId)
-        
-        if let index = listOfAllItems.firstIndex(where: { $0.id == foodId } ) { // get the index from the original list
-            listOfAllItems[index] = editItem      // replace food with new edited food
-            //            print(index)
+        if let index = listOfShopItems.firstIndex(where: { $0.id == foodId } ){ listOfShopItems.remove(at: index)
         }
+        tableView.reloadData()
+        print("testdelete")
 
+//        if let index = listOfAllItems.firstIndex(where: { $0.id == foodId } ) { // get the index from the original list
+//            listOfAllItems[index] = editItem      // replace food with new edited food
+//            //            print(index)
+//        }
     }
-
 }
-
