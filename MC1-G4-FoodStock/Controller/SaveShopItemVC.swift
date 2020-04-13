@@ -24,7 +24,7 @@ class SaveShopItemVC: UITableViewController {
     var expiryDate: Date?
     let expiryDatePicker = UIDatePicker()
     
-    var delegate: SaveShopItemVCDelegate?
+    var delegate: SaveShopItemVCDelegate? 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,7 +77,7 @@ class SaveShopItemVC: UITableViewController {
         expiryDate = sender.date
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
-        expDateField.text = dateFormatter.string(from: sender.date)
+//        expDateField.text = dateFormatter.string(from: sender.date)
     }
 
     @objc func dismissDatePicker(){
@@ -124,11 +124,14 @@ class SaveShopItemVC: UITableViewController {
     
     
     @IBAction func saveButton(_ sender: UIBarButtonItem) {
-//        print(itemNameField)
-//        print(expiryDate)
-//        print(stockLevel)
+        print(itemNameField.text!)
+        print(expiryDate!)
+        print(stockLevel!)
 
-        let editItem = FoodModel(foodName: itemNameField.text!, expDate: Date(), stockLevel: stockLevel!)
+        let editItem = FoodModel(foodName: itemNameField.text!, expDate: expiryDate!, stockLevel: stockLevel!)
+        
+        
+        
                 
         //        NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationKey), object: nil, userInfo: ["editedItem": editedItem])
                 // Notification for UserDefault Model

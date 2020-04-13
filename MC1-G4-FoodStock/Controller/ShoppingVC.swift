@@ -15,11 +15,13 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     
     var listOfShopItems: [FoodModel] = []
+    var listOfAllItems: [FoodModel] = []
     var listOfKeys: [String] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         populateList()
+        emptyItems()
 
         
         tableView.delegate = self
@@ -45,9 +47,7 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             
                             // Decode Note
                             let item = try decoder.decode(FoodModel.self, from: data)
-                            if item.stockLevel == .empty {
-                                listOfShopItems.append(item)
-                            }
+                                listOfAllItems.append(item)
 
                         } catch {
                             print("Unable to Decode Notes (\(error))")
@@ -62,6 +62,16 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             print("No items")
         }
     }
+    
+    func emptyItems() {
+        for item in listOfAllItems {
+            if item.stockLevel == .empty {
+                listOfShopItems.append(item)
+            }
+        }
+    }
+    
+    
     
     func setKeys() {
         do {
@@ -89,6 +99,7 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
             // Write/Set Data
             UserDefaults.standard.set(data, forKey: item.id)
+            print(item.stockLevel)
 
         } catch {
             print("Unable to Encode Array of Notes (\(error))")
@@ -144,10 +155,13 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? SaveShopItemVC {
             destination.selectedItem = listOfShopItems[tableView.indexPathForSelectedRow!.row]
+            destination.delegate = self
         }
         
          let vc = segue.destination as? AddShopItemVC
             vc?.delegate = self
+        
+     //   let nc = segue.destination as?
 
     }
     
@@ -160,4 +174,22 @@ extension ShoppingVC: AddShopItemVCDelegate {
     }
 }
 
+extension ShoppingVC: SaveShopItemVCDelegate {
+    func saveToStock(editItem: FoodModel) {
+        print(editItem.foodName)
+        print(editItem.expDate)
+        print(editItem.stockLevel)
+        
+        let foodId = editItem.id
+        setData(item: editItem)
+        //        print(foodId)
+        
+        if let index = listOfAllItems.firstIndex(where: { $0.id == foodId } ) { // get the index from the original list
+            listOfAllItems[index] = editItem      // replace food with new edited food
+            //            print(index)
+        }
+
+    }
+
+}
 
