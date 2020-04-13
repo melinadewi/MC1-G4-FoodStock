@@ -8,12 +8,9 @@
 
 import UIKit
 
-class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource, AddShopItemVCDelegate {
+class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    func addToList(newModel: FoodModel) {
-        listOfShopItems.append(newModel)
-        tableView.reloadData()
-    }
+
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -66,6 +63,39 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         }
     }
     
+    func setKeys() {
+        do {
+            // Create JSON Encoder
+            let encoder = JSONEncoder()
+            
+            // Encode Note
+            let data = try encoder.encode(listOfKeys)
+            
+            // Write/Set Data
+            UserDefaults.standard.set(data, forKey: "allkeys")
+            
+        } catch {
+            print("Unable to Encode Array of Notes (\(error))")
+        }
+    }
+    
+    func setData(item: FoodModel) {
+        do {
+            // Create JSON Encoder
+            let encoder = JSONEncoder()
+
+            // Encode Note
+            let data = try encoder.encode(item)
+
+            // Write/Set Data
+            UserDefaults.standard.set(data, forKey: item.id)
+
+        } catch {
+            print("Unable to Encode Array of Notes (\(error))")
+        }
+    }
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return listOfShopItems.count
     }
@@ -89,12 +119,26 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
 
    //         let alert = UIAlertController(title: nil, message: "Are you sure you want to delete this item?", preferredStyle: .alert)
 
-            self.listOfShopItems.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+//            self.listOfShopItems.remove(at: indexPath.row)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            let id = self.listOfShopItems[indexPath.row].id
+            if let index = self.listOfShopItems.firstIndex(where: { $0.id == id}) {
+                self.listOfShopItems.remove(at: index)
+                
+                // UserDefault Model
+                self.listOfKeys = self.listOfKeys.filter { $0 != id }
+                self.setKeys()
+                UserDefaults.standard.removeObject(forKey: id) // delete object in userdefault
+                UserDefaults.standard.removeObject(forKey: "\(id)-img") // delete image in userdefault
+                
+                tableView.reloadData()
+            }
         }
 
             return UISwipeActionsConfiguration(actions: [delete])
     }
+    
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -107,4 +151,20 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
 
     }
     
+}
+
+extension ShoppingVC: AddShopItemVCDelegate {
+    func addToList(newModel: FoodModel) {
+        listOfShopItems.append(newModel)
+        tableView.reloadData()
+    }
+}
+
+extension ShoppingVC: SaveShopItemVCDelegate {
+    func saveToStock(editItem: FoodModel) {
+        let index = editItem.id
+     //   listOfShopItems.remove
+        
+    }
+
 }

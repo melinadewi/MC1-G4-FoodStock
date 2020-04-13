@@ -242,6 +242,7 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
         // UserDefault Model
         delegate?.addToList(newModel: newFood, newImage: itemImageView.image!)
         dismiss(animated: true, completion: nil)
+        
     }
     
     

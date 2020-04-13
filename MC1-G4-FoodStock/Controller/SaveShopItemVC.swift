@@ -8,7 +8,9 @@
 
 import UIKit
 
-//let notificationKey = "com.mc1-g4-foodstock.notificationKey"
+protocol SaveShopItemVCDelegate: class {
+    func saveToStock(editItem: FoodModel)
+}
 
 class SaveShopItemVC: UITableViewController {
     
@@ -26,6 +28,7 @@ class SaveShopItemVC: UITableViewController {
         super.viewDidLoad()
         populateData()
         setupExpiryDatePicker()
+        hideKeyboardWhenTapped()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -79,6 +82,7 @@ class SaveShopItemVC: UITableViewController {
         view.endEditing(true)
     }
     
+    
     //Hide keyboard when an area is tapped
     func hideKeyboardWhenTapped(){
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
@@ -118,7 +122,16 @@ class SaveShopItemVC: UITableViewController {
     
     
     @IBAction func saveButton(_ sender: UIBarButtonItem) {
-        // update item details, send to FoodStockVC
+        let editedItem = FoodModel(foodName: itemNameField.text!, expDate: expiryDate!, stockLevel: stockLevel!)
+                
+        //        NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationKey), object: nil, userInfo: ["editedItem": editedItem])
+                // Notification for UserDefault Model
+//                NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationKey), object: nil, userInfo: ["editedItem": editedItem, "editedImage": imageView.image!])
+//                
+//                NotificationCenter.default.removeObserver(self)
+        delegate?.saveToStock(editItem: editedItem)
+        dismiss(animated: true, completion: nil)
+
     }
     
     

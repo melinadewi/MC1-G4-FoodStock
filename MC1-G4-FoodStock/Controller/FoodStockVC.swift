@@ -219,9 +219,9 @@ class FoodStockVC: UIViewController {
                             
                             // Decode Note
                             let item = try decoder.decode(FoodModel.self, from: data)
-                            if item.stockLevel != .empty {
+                  //          if item.stockLevel != .empty {               // if stock item is empty, do not append?
                                 listOfFoods.append(item)
-                            }
+                   //         }
 
                         } catch {
                             print("Unable to Decode Notes (\(error))")
@@ -699,3 +699,4 @@ extension FoodStockVC: AddItemVCDelegate {
         tableView.reloadData()
     }
 }
+
