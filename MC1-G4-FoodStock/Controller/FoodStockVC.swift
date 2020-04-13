@@ -134,6 +134,14 @@ class FoodStockVC: UIViewController {
             // yes action
             let yesAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
                 
+                // UserDefault Model
+                for index in self.selectedItems {
+                    let id = self.listOfFoods[index].id
+                    self.listOfKeys = self.listOfKeys.filter { $0 != id }
+                    self.setKeys()
+                    UserDefaults.standard.removeObject(forKey: id) // delete object in userdefault
+                    UserDefaults.standard.removeObject(forKey: "\(id)-img") // delete image in userdefault
+                }
                 // delete all the selected items from list of foods
                 self.listOfFoods = self.listOfFoods.enumerated().filter {!self.selectedItems.contains($0.offset) }.map {$0.element}
                 

@@ -17,7 +17,14 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
     @IBOutlet weak var itemNameField: UITextField!
     @IBOutlet weak var stockSC: UISegmentedControl!
     @IBOutlet weak var expDateField: UITextField!
-    @IBOutlet weak var notesField: UITextField!
+    @IBOutlet weak var notesField: UITextField! {
+           didSet {
+               notesField.layer.cornerRadius = 8
+               notesField.layer.masksToBounds = true
+               notesField.layer.borderColor = UIColor.lightGray.cgColor
+               notesField.layer.borderWidth = 1.0
+           }
+       }
     
     let expiryDatePicker = UIDatePicker() // date picker for expiry date
     let imagePicker = UIImagePickerController() // image picker to choose image
@@ -153,7 +160,7 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
         }))
 
         alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: {(button) in
-            self.imagePicker.sourceType = UIImagePickerController.SourceType.camera
+            self.imagePicker.sourceType = .camera
             self.present(self.imagePicker, animated: true, completion: nil)
         }))
 
@@ -206,18 +213,23 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
         case 0:
             stockLevel = .empty
             stockSC.selectedSegmentTintColor = UIColor.systemGray4
+            expDateField.isEnabled = false
         case 1:
             stockLevel = .low
             stockSC.selectedSegmentTintColor = UIColor.systemRed
+            expDateField.isEnabled = true
         case 2:
             stockLevel = .half
             stockSC.selectedSegmentTintColor = UIColor.systemOrange
+            expDateField.isEnabled = true
         case 3:
             stockLevel = .plenty
             stockSC.selectedSegmentTintColor = UIColor.systemGreen
+            expDateField.isEnabled = true
         default:
             stockLevel = .plenty
             stockSC.selectedSegmentTintColor = UIColor.systemGreen
+            expDateField.isEnabled = true
         }
     }
 }
