@@ -22,6 +22,9 @@ class SaveShopItemVC: UITableViewController {
     var expiryDate: Date?
     let expiryDatePicker = UIDatePicker()
     
+    var delegate : AddItemVCDelegate?
+    var imgDefault: UIImage = #imageLiteral(resourceName: "salad")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         populateData()
@@ -119,6 +122,10 @@ class SaveShopItemVC: UITableViewController {
     
     @IBAction func saveButton(_ sender: UIBarButtonItem) {
         // update item details, send to FoodStockVC
+        let newItem = FoodModel(foodName: itemNameField.text!, expDate: expiryDate!, stockLevel: stockLevel!, foodImage: imgDefault, updatedDate: Date(), itemNote: notesField.text!)
+        delegate?.addToList(newModel: newItem)
+        
+        dismiss(animated: true, completion: nil)
     }
     
     
