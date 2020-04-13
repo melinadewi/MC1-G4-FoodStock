@@ -8,21 +8,67 @@
 
 import UIKit
 
-class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource, AddItem {
+class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource, AddShopItemVCDelegate {
+    
+    func addToList(newModel: FoodModel) {
+        listOfShopItems.append(newModel)
+        tableView.reloadData()
+    }
     
     @IBOutlet weak var tableView: UITableView!
     
-    var listOfShopItems: [ShoppingModel] = []
+//    let allFoods = FoodData()
+    var listOfShopItems: [FoodModel] = []
+    var listOfKeys: [String] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        populateList()
 
-        // Do any additional setup after loading the view.
-        listOfShopItems.append(ShoppingModel(itemName: "Apel"))
-        listOfShopItems.append(ShoppingModel(itemName: "Kiwi"))
         
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    func populateList() {
+//        for item in allFoods.listOfFoods {
+//            if item.stockLevel == .empty {
+//                listOfShopItems.append(item)
+//            }
+//        }
+        if let data = UserDefaults.standard.data(forKey: "allkeys") {
+            do {
+                // Create JSON Decoder
+                let decoder = JSONDecoder()
+                
+                // Decode Note
+                let keys = try decoder.decode([String].self, from: data)
+                listOfKeys = keys
+                
+                for key in keys {
+                    if let data = UserDefaults.standard.data(forKey: key) {
+                        do {
+                            // Create JSON Decoder
+                            let decoder = JSONDecoder()
+                            
+                            // Decode Note
+                            let item = try decoder.decode(FoodModel.self, from: data)
+                            if item.stockLevel == .empty {
+                                listOfShopItems.append(item)
+                            }
+
+                        } catch {
+                            print("Unable to Decode Notes (\(error))")
+                        }
+                    }
+                }
+
+            } catch {
+                print("Unable to Decode Notes (\(error))")
+            }
+        } else {
+            print("No items")
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -30,49 +76,40 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "shopCell", for: indexPath) as! ShoppingCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "shopCell", for: indexPath)
         
-        cell.shopItemLabel.text = listOfShopItems[indexPath.row].itemName
-        cell.listOfShopItems = listOfShopItems
+        cell.textLabel?.text = listOfShopItems[indexPath.row].foodName
+        
 
         return cell
-        
-        
+    }
+    
+    // did tap cell
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "toEditShopItem", sender: self)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete"){(action, view, nil) in
-            
-//            let alert = UIAlertController(title: nil, message: "Are you sure you want to delete this item?", preferredStyle: .alert)
-            
+
+   //         let alert = UIAlertController(title: nil, message: "Are you sure you want to delete this item?", preferredStyle: .alert)
+
             self.listOfShopItems.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
+
+            return UISwipeActionsConfiguration(actions: [delete])
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? SaveShopItemVC {
+            destination.selectedItem = listOfShopItems[tableView.indexPathForSelectedRow!.row]
+        }
         
-        return UISwipeActionsConfiguration(actions: [delete])
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let vc = segue.destination as! AddShopItemVC
-        vc.delegate = self
-    }
-    
-    
-    func addItem(itemName: String) {
-        listOfShopItems.append(ShoppingModel(itemName: itemName))
-        tableView.reloadData()
-        print(listOfShopItems)
-    }
-    
+         let vc = segue.destination as? AddShopItemVC
+            vc?.delegate = self
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
-    */
-
+    
 }

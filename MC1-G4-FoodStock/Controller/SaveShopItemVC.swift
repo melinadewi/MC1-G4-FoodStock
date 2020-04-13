@@ -8,10 +8,24 @@
 
 import UIKit
 
-class SaveShopItemVC: UITableViewController {
+//let notificationKey = "com.mc1-g4-foodstock.notificationKey"
 
+class SaveShopItemVC: UITableViewController {
+    
+    @IBOutlet weak var itemNameField: UITextField!
+    @IBOutlet weak var itemStock: UISegmentedControl!
+    @IBOutlet weak var expDateField: UITextField!
+    @IBOutlet weak var notesField: UITextField!
+    
+    var selectedItem: FoodModel?
+    var stockLevel: StockLevel?
+    var expiryDate: Date?
+    let expiryDatePicker = UIDatePicker()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        populateData()
+        setupExpiryDatePicker()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -21,15 +35,90 @@ class SaveShopItemVC: UITableViewController {
     }
 
     // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+    
+    
+    
+    func populateData() {
+        itemNameField.text = selectedItem?.foodName
+//        expDateField.text = dateFieldFormatter(date: expiryDate!)
+        expDateField.text = dateFieldFormatter(date: (selectedItem?.expDate)!)
+        notesField.text = selectedItem?.itemNote
+    }
+    
+    func dateFieldFormatter(date : Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        return dateFormatter.string(from: date)
+    }
+    
+    func setupExpiryDatePicker(){
+        expiryDatePicker.datePickerMode = .date
+        expiryDatePicker.minimumDate = Date()
+        expiryDatePicker.addTarget(self, action: #selector(datePickerChanger), for: .valueChanged)
+        expDateField.inputView = expiryDatePicker
+        
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(dismissDatePicker))
+        
+        toolbar.setItems([doneButton], animated: false)
+        toolbar.isUserInteractionEnabled = true
+        
+        expDateField.inputAccessoryView = toolbar
+    }
+    
+    @objc func datePickerChanger(sender : UIDatePicker) {
+        expiryDate = sender.date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        expDateField.text = dateFormatter.string(from: sender.date)
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+    @objc func dismissDatePicker(){
+        view.endEditing(true)
+    }
+    
+    //Hide keyboard when an area is tapped
+    func hideKeyboardWhenTapped(){
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    
+    @IBAction func updateStock(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex{
+        case 0:
+            stockLevel = .empty
+            itemStock.selectedSegmentTintColor = UIColor.systemGray4
+        case 1:
+            stockLevel = .low
+            itemStock.selectedSegmentTintColor = UIColor.systemRed
+        case 2:
+            stockLevel = .half
+            itemStock.selectedSegmentTintColor = UIColor.systemOrange
+        case 3:
+            stockLevel = .plenty
+            itemStock.selectedSegmentTintColor = UIColor.systemGreen
+        default:
+            stockLevel = .plenty
+            itemStock.selectedSegmentTintColor = UIColor.systemGreen
+        }
+    }
+    
+
+    @IBAction func cancelButton(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func saveButton(_ sender: UIBarButtonItem) {
+        // update item details, send to FoodStockVC
     }
 
     /*

@@ -8,31 +8,54 @@
 
 import UIKit
 
-protocol AddItem {
-    func addItem(itemName: String)
+protocol AddShopItemVCDelegate: class {
+    func addToList(newModel : FoodModel)
+   // func addItem(itemName: String)
 }
 
 class AddShopItemVC: UIViewController {
     
-    @IBAction func addAction(_ sender: Any) {
-        if addShopItemTextField.text != "" {
-            delegate?.addItem(itemName: addShopItemTextField.text!)
-            navigationController?.popViewController(animated: true)
-            print("add")
-        }
-    }
+//    @IBAction func addAction(_ sender: Any) {
+//        if addShopItemTextField.text != "" {
+//            let newFood = FoodModel(foodName: addShopItemTextField.text!, expDate: Date(), stockLevel: .empty, foodImage: nil)
+//            //Send the new model to the list page
+//            delegate?.addToList(newModel: newFood)
+//            navigationController?.popViewController(animated: true)
+// //           dismiss(animated: true, completion: nil)
+//        }
+                
+            
+        
+//        if addShopItemTextField.text != "" {
+//            delegate?.addItem(itemName: addShopItemTextField.text!)
+//            navigationController?.popViewController(animated: true)
+//            print("add")
+//        }
+//    }
+    
     @IBAction func cancel(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }
     
     @IBOutlet weak var addShopItemTextField: UITextField!
     
-    var delegate: AddItem?
+    var delegate : AddShopItemVCDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    //Hide keyboard when an area is tapped
+    func hideKeyboardWhenTapped(){
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 
 }
