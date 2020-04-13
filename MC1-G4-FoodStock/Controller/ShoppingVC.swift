@@ -58,7 +58,7 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                             
                             // Decode Note
                             let item = try decoder.decode(FoodModel.self, from: data)
-                                if item.stockLevel == .empty {
+                            if item.isInShoppingList{ //self.listOfShopItems[indexPath.row]
                                     listOfShopItems.append(item)
                                 }
 
@@ -143,10 +143,16 @@ class ShoppingVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
    //         let alert = UIAlertController(title: nil, message: "Are you sure you want to delete this item?", preferredStyle: .alert)
 
-            self.listOfShopItems.remove(at: indexPath.row)
+            //self.listOfShopItems.remove(at: indexPath.row)
             //Update userdefaultnya juga
+            self.listOfShopItems[indexPath.row].isInShoppingList = false
             
+            //Update userDefault
+            self.setData(item: self.listOfShopItems[indexPath.row])
+            
+            self.listOfShopItems.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            
             
 //            let id = self.listOfShopItems[indexPath.row].id
 //            if let index = self.listOfShopItems.firstIndex(where: { $0.id == id}) {
@@ -218,16 +224,20 @@ extension ShoppingVC: AddShopItemVCDelegate {
 
 extension ShoppingVC: SaveShopItemVCDelegate {
     func saveToStock(editItem: FoodModel) {
-        print(editItem.foodName)
-        print(editItem.expDate)
-        print(editItem.stockLevel)
+//        print(editItem.foodName)
+//        print(editItem.expDate)
+//        print(editItem.stockLevel)
         
-        let foodId = editItem.id
-        if let index = listOfShopItems.firstIndex(where: { $0.id == foodId } ){ listOfShopItems.remove(at: index)
-        }
+        setData(item: editItem)
+        listOfShopItems.removeAll()
+        populateList()
         tableView.reloadData()
-        print("testdelete")
 
+           //let foodId = editItem.id
+//        if let index = listOfShopItems.firstIndex(where: { $0.id == foodId } ){
+//        }
+        
+ 
 //        if let index = listOfAllItems.firstIndex(where: { $0.id == foodId } ) { // get the index from the original list
 //            listOfAllItems[index] = editItem      // replace food with new edited food
 //            //            print(index)

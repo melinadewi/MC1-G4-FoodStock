@@ -191,7 +191,12 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
     @IBAction func doneButton(_ sender: UIBarButtonItem) {
 //        let editedItem = FoodModel(foodName: itemNameField.text!, expDate: expiryDate!, stockLevel: stockLevel!, foodImage: imageView.image, id: selectedItem!.id, updatedDate: Date(), itemNote: notesField.text)
         // UserDefault Model
-        let editedItem = FoodModel(foodName: itemNameField.text!, expDate: expiryDate!, stockLevel: stockLevel!, foodImage: selectedItem!.foodImage, id: selectedItem!.id, updatedDate: Date(), itemNote: notesField.text)
+        var isGoingToShopList: Bool = false
+        if stockLevel == StockLevel.empty {
+            isGoingToShopList = true
+        }
+        
+        let editedItem = FoodModel(foodName: itemNameField.text!, expDate: expiryDate!, stockLevel: stockLevel!, foodImage: selectedItem!.foodImage, id: selectedItem!.id, updatedDate: Date(), itemNote: notesField.text,isInShoppingList: isGoingToShopList, isInFoodStock: !isGoingToShopList)
         
 //        NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationKey), object: nil, userInfo: ["editedItem": editedItem])
         // Notification for UserDefault Model

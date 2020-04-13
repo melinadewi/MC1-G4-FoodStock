@@ -49,6 +49,8 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
     var newItemExpiryDate: Date?
     var newItemFoodImage = ""
     var newItemNotes = ""
+    var newItemGoingToShoppingList: Bool = false
+    var newItemGoingToFoodStock: Bool = true
     
     let expiryDatePicker = UIDatePicker()
     
@@ -206,6 +208,7 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
         switch sender.selectedSegmentIndex{
         case 0:
             newItemStockLevel = .empty
+            newItemGoingToShoppingList = true
             itemStockSegmentedControl.selectedSegmentTintColor = UIColor.systemGray4
         case 1:
             newItemStockLevel = .low
@@ -232,8 +235,9 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
 //        let newFood = FoodModel(foodName: newItemName, expDate: newItemExpiryDate!, stockLevel: newItemStockLevel, foodImage: itemImageView.image, id: UUID().uuidString, updatedDate: Date(), itemNote: itemNotesTextField.text)
         
         // UserDefault Model
+
         let id = UUID().uuidString
-        let newFood = FoodModel(foodName: newItemName, expDate: newItemExpiryDate!, stockLevel: newItemStockLevel, foodImage: "\(id)-img", id: id, updatedDate: Date(), itemNote: itemNotesTextField.text)
+        let newFood = FoodModel(foodName: newItemName, expDate: newItemExpiryDate!, stockLevel: newItemStockLevel, foodImage: "\(id)-img", id: id, updatedDate: Date(), itemNote: itemNotesTextField.text, isInShoppingList: newItemGoingToShoppingList, isInFoodStock: newItemGoingToFoodStock)
         
 //        print("--New Food--\nName: \(newFood.foodName)\nStockLevel: \(newFood.stockLevel)\nExpDate: \(newFood.expDate)\nNotes: \(newItemNotes)\n")
         

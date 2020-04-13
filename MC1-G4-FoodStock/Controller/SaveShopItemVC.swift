@@ -22,7 +22,7 @@ class SaveShopItemVC: UITableViewController {
     @IBOutlet weak var notesField: UITextField!
     
     var selectedItem: FoodModel?
-    var stockLevel: StockLevel?
+    var stockLevel: StockLevel = .empty
     var expiryDate: Date?
     let expiryDatePicker = UIDatePicker()
     
@@ -124,9 +124,14 @@ class SaveShopItemVC: UITableViewController {
     
     
     @IBAction func saveButton(_ sender: UIBarButtonItem) {
+        var isGoingToFoodStock: Bool = false
+        if stockLevel != StockLevel.empty {
+            isGoingToFoodStock = true
+        }
+        
+        let editItem = FoodModel(foodName: itemNameField.text!, expDate: expiryDate!, stockLevel: stockLevel, foodImage: selectedItem!.foodImage, id: selectedItem!.id, updatedDate: Date(), itemNote: selectedItem?.itemNote, isInShoppingList: !isGoingToFoodStock, isInFoodStock: isGoingToFoodStock)
         
         
-        let editItem = FoodModel(foodName: itemNameField.text!, expDate: expiryDate!, stockLevel: stockLevel!, foodImage: selectedItem!.foodImage, id: selectedItem!.id, updatedDate: Date(), itemNote: selectedItem?.itemNote)
 
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: passNotifKey), object: nil, userInfo: ["newEdited": editItem])
         NotificationCenter.default.removeObserver(self)

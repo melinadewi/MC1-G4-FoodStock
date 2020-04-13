@@ -55,8 +55,10 @@ class FoodModel: Codable {
     var id = ""
     var updatedDate: Date
     var itemNote: String?
+    var isInShoppingList: Bool = false
+    var isInFoodStock: Bool = false
     
-    init(foodName: String, expDate: Date, stockLevel: StockLevel, foodImage: String = "", id: String = UUID().uuidString, updatedDate: Date = Date(), itemNote: String? = "") {
+    init(foodName: String, expDate: Date, stockLevel: StockLevel, foodImage: String = "", id: String = UUID().uuidString, updatedDate: Date = Date(), itemNote: String? = "", isInShoppingList: Bool = false, isInFoodStock: Bool = false) {
         self.foodName = foodName
         self.expDate = expDate
         self.stockLevel = stockLevel
@@ -64,6 +66,8 @@ class FoodModel: Codable {
         self.id = id
         self.updatedDate = updatedDate
         self.itemNote = itemNote
+        self.isInShoppingList = isInShoppingList
+        self.isInFoodStock = isInFoodStock
     }
 }
 

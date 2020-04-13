@@ -258,9 +258,10 @@ class FoodStockVC: UIViewController {
                             
                             // Decode Note
                             let item = try decoder.decode(FoodModel.self, from: data)
-                  //          if item.stockLevel != .empty {               // if stock item is empty, do not append?
+                            if item.isInFoodStock {               // if stock item is empty, do not append?
+                                
                                 listOfFoods.append(item)
-                   //         }
+                            }
 
                         } catch {
                             print("Unable to Decode Notes (\(error))")
@@ -567,8 +568,17 @@ extension FoodStockVC: UITableViewDataSource, UITableViewDelegate {
         let addToList = UIContextualAction(style: .normal, title: "Add to List") { (action, view, nil) in
             if self.isFiltering {
                 print("Adding to \(self.filteredFoods[indexPath.row].foodName) list")
+                self.filteredFoods[indexPath.row].isInShoppingList = true
+                
+                //Update userDefault
+                self.setData(item: self.filteredFoods[indexPath.row])
+                
             } else {
                 print("Adding to \(self.listOfFoods[indexPath.row].foodName) list")
+                self.listOfFoods[indexPath.row].isInShoppingList = true
+                
+                //Update userDefault
+                self.setData(item: self.listOfFoods[indexPath.row])
             }
             
             tableView.setEditing(false, animated: true)
