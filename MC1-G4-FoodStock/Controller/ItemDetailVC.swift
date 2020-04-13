@@ -142,8 +142,6 @@ class ItemDetailVC: UITableViewController {
     
     // update "created at" in table view
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        var dateSection = ""
-        
         switch section {
         case 0:
             return ""
@@ -154,14 +152,8 @@ class ItemDetailVC: UITableViewController {
         case 3:
             return "Notes"
         case 4:
-            // check if item has been edited
-            if updated == false {
-                guard let createdDate = selectedItem?.updatedDate else { return nil }
-                dateSection = "Item added on \(dateTimeFormat(date: createdDate))"
-            } else {
-                dateSection = "Last Edited on \(dateTimeFormat(date: updatedDate))"
-            }
-            return dateSection
+            guard let createdDate = selectedItem?.updatedDate else { return nil }
+            return "Last Edited on \(dateTimeFormat(date: createdDate))"
         default:
             return nil
         }

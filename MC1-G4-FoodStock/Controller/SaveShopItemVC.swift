@@ -74,7 +74,7 @@ class SaveShopItemVC: UITableViewController {
         expiryDate = sender.date
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
-//        expDateField.text = dateFormatter.string(from: sender.date)
+        expDateField.text = dateFormatter.string(from: sender.date)
     }
 
     @objc func dismissDatePicker(){
