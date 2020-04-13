@@ -108,7 +108,7 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
     // date formatter for last edite
     func dateEditedFormat(date : Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "dd MMM yyyy HH:mm"
+        formatter.dateFormat = "dd MMM yyyy HH:mm:ss"
         return formatter.string(from: date)
     }
     

@@ -19,10 +19,12 @@ class FoodStockVC: UIViewController {
     
     let foodCell = "FoodCell"   // cell identifier
     
+    let allFoods = FoodData()
     var listOfFoods: [FoodModel] = []       // food data
     // Add new variable for UserDefault Model
     var listOfKeys: [String] = []
     var filteredFoods: [FoodModel] = []     // this will hold the foods that the user searches for
+    var listOfShopFoods: [FoodModel] = []   // this will hold the foods that needs to be pushed to shopping list
     
     var isFiltering: Bool = false   // bool to determine wether it is filtering or not
     
@@ -67,8 +69,20 @@ class FoodStockVC: UIViewController {
         if let index = listOfFoods.firstIndex(where: { $0.id == foodId } ) { // get the index from the original list
             listOfFoods[index] = foodItem      // replace food with new edited food
             print(index)
-            tableView.reloadData()
         }
+        
+        switch selectedSort {
+        case "dateEdited" :
+            listOfFoods.sort(by: { $0.updatedDate > $1.updatedDate })
+        case "lowestStock":
+            listOfFoods.sort(by: { $0.stockLevel.rawValue < $1.stockLevel.rawValue })
+        case "expDate":
+            listOfFoods.sort(by: { $0.expDate < $1.expDate })
+        default:
+            listOfFoods.sort(by: { $0.updatedDate > $1.updatedDate })
+        }
+        tableView.reloadData()
+        
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -111,7 +125,6 @@ class FoodStockVC: UIViewController {
     }
     
     @IBAction func deleteButtonDidTap(_ sender: Any) {
-        
         
         if selectedItems.count != 0 {   // if there is selected item
             
@@ -225,6 +238,7 @@ class FoodStockVC: UIViewController {
         
         self.listOfFoods.sort(by: { $0.updatedDate > $1.updatedDate })
     }
+
     
     // sort button tapped
     @IBAction func didTapSort(_ sender: UIButton) {

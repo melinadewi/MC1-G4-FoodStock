@@ -16,9 +16,7 @@ class ItemDetailVC: UITableViewController {
     
     @IBOutlet weak var itemImage: UIImageView! {
         didSet {
-            //itemImage.layer.borderWidth = 1
             itemImage.layer.masksToBounds = false
-            //itemImage.layer.borderColor = UIColor.black.cgColor
             itemImage.layer.cornerRadius = itemImage.frame.height / 2
             itemImage.clipsToBounds = true
         }
@@ -28,8 +26,6 @@ class ItemDetailVC: UITableViewController {
         didSet {
             stockCondition.layer.cornerRadius = 8
             stockCondition.layer.masksToBounds = true
-       //     stockCondition.layer.borderColor = UIColor.systemGray.cgColor
-       //     stockCondition.layer.borderWidth = 2.0
         }
     }
     @IBOutlet weak var expDate: UILabel!
@@ -43,6 +39,8 @@ class ItemDetailVC: UITableViewController {
     }
     
     var selectedItem: FoodModel?
+    var updated = false
+    var updatedDate = Date()
     
     weak var delegate: ItemDetailVCDelegate?
     
@@ -76,6 +74,7 @@ class ItemDetailVC: UITableViewController {
 //        stockCondition.text = "\(changes.stockLevel)"
         
         selectedItem = changes
+        tableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -92,10 +91,17 @@ class ItemDetailVC: UITableViewController {
         navigationItem.rightBarButtonItems = [deleteButton, editButton]
     }
     
-    // to format date into intended string
+    // format date without time
     func dateFormat(date : Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd MMM yyyy"
+        return formatter.string(from: date)
+    }
+    
+    // format date with time
+    func dateTimeFormat(date : Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM yyyy HH:mm:ss"
         return formatter.string(from: date)
     }
     
@@ -136,6 +142,7 @@ class ItemDetailVC: UITableViewController {
     
     // update "created at" in table view
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        var dateSection = ""
         
         switch section {
         case 0:
@@ -147,10 +154,14 @@ class ItemDetailVC: UITableViewController {
         case 3:
             return "Notes"
         case 4:
-            guard let date = selectedItem?.updatedDate else {
-                return nil
+            // check if item has been edited
+            if updated == false {
+                guard let createdDate = selectedItem?.updatedDate else { return nil }
+                dateSection = "Item added on \(dateTimeFormat(date: createdDate))"
+            } else {
+                dateSection = "Last Edited on \(dateTimeFormat(date: updatedDate))"
             }
-            return "Last Edited at \(dateFormat(date: date))"
+            return dateSection
         default:
             return nil
         }
@@ -181,11 +192,6 @@ class ItemDetailVC: UITableViewController {
     
     // pass item id back to FoodStockVC for deletion
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "unwindBack" {
-            if let destination = segue.destination as? FoodStockVC {
-                destination.removeItem = selectedItem?.id
-            }
-        }
         if segue.identifier == "toEditItem" {
             let nc = segue.destination as? UINavigationController
             let vc = nc?.topViewController as? EditItemVC
