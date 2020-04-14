@@ -20,7 +20,15 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
     @IBOutlet weak var itemImageView: UIImageView!
     @IBOutlet weak var itemNameTextField: UITextField!
     @IBOutlet weak var itemStockSegmentedControl: UISegmentedControl!
-    @IBOutlet weak var itemNotesTextField: UITextField!
+    @IBOutlet weak var itemNotesTextField: UITextField!{
+        didSet {
+            itemNotesTextField.layer.cornerRadius = 8
+            itemNotesTextField.layer.masksToBounds = true
+            itemNotesTextField.layer.borderColor = UIColor.lightGray.cgColor
+            itemNotesTextField.layer.borderWidth = 1.0
+        }
+    }
+    
     @IBOutlet weak var itemExpiryDateTextField: UITextField!
     @IBOutlet weak var addItemButton: UIButton!
     @IBOutlet weak var doneButton: UIBarButtonItem!
@@ -317,3 +325,4 @@ extension AddItemVC : UITextFieldDelegate {
         return true
     }
 }
+ 
