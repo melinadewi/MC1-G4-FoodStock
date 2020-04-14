@@ -196,7 +196,7 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
             isGoingToShopList = true
         }
         
-        let editedItem = FoodModel(foodName: itemNameField.text!, expDate: expiryDate!, stockLevel: stockLevel!, foodImage: selectedItem!.foodImage, id: selectedItem!.id, updatedDate: Date(), itemNote: notesField.text,isInShoppingList: isGoingToShopList, isInFoodStock: !isGoingToShopList)
+        let editedItem = FoodModel(foodName: itemNameField.text!, expDate: expiryDate!, stockLevel: stockLevel!, foodImage: selectedItem!.foodImage, id: selectedItem!.id, updatedDate: Date(), itemNote: notesField.text,isInShoppingList: isGoingToShopList, isInFoodStock: true)
         
 //        NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationKey), object: nil, userInfo: ["editedItem": editedItem])
         // Notification for UserDefault Model

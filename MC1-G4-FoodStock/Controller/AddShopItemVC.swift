@@ -35,7 +35,7 @@ class AddShopItemVC: UIViewController {
             let id = UUID().uuidString
             let newFood = FoodModel(foodName: addShopItemTextField.text!, expDate: Date(), stockLevel: .empty, foodImage: "", id: id, updatedDate: Date(), itemNote: "", isInShoppingList: true, isInFoodStock: false)
 //            let newFood = FoodModel(foodName: addShopItemTextField.text!, expDate: Date(), stockLevel: .empty, id: id )            //Send the new model to the list page
-            delegate?.addToList(newModel: newFood,newImage: #imageLiteral(resourceName: "Spoon&Fork"))
+            delegate?.addToList(newModel: newFood,newImage: #imageLiteral(resourceName: "DefaultImage"))
                navigationController?.popViewController(animated: true)
            }
     }

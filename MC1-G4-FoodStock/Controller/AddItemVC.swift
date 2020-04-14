@@ -51,8 +51,10 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
     var newItemNotes = ""
     var newItemGoingToShoppingList: Bool = false
     var newItemGoingToFoodStock: Bool = true
+    var newPhotoInserted: Bool = false
     
     let expiryDatePicker = UIDatePicker()
+    let imagePicker = UIImagePickerController()
     
     var delegate : AddItemVCDelegate?
     
@@ -68,6 +70,8 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
         
         itemNameTextField.delegate = self
         itemNotesTextField.delegate = self
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
         
         //Move view up when keyboard appear
 //        NotificationCenter.default.addObserver(self, selector: #selector(AddItemVC.keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -124,12 +128,19 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
     
     //Allow user to choose image from the device photos app
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let selectedImage = info[.originalImage] as? UIImage {
-            itemImageView.image = selectedImage
-            print("Image inserted name : \(String(describing: itemImageView.image?.description))")
-        }
+//        if let selectedImage = info[.originalImage] as? UIImage {
+//            itemImageView.image = selectedImage
+//            print("Image inserted name : \(String(describing: itemImageView.image?.description))")
+//            newPhotoInserted = true
+//        }
+//
+//        dismiss(animated: true, completion: nil)
+        guard let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else { return }
+        itemImageView.image = pickedImage
         
         dismiss(animated: true, completion: nil)
+        newPhotoInserted = true
+        
     }
     
     //Store image after its added from the photos gallery
@@ -208,7 +219,6 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
         switch sender.selectedSegmentIndex{
         case 0:
             newItemStockLevel = .empty
-            newItemGoingToShoppingList = true
             itemStockSegmentedControl.selectedSegmentTintColor = UIColor.systemGray4
         case 1:
             newItemStockLevel = .low
@@ -237,25 +247,49 @@ class AddItemVC: UITableViewController, UINavigationControllerDelegate, UIImageP
         // UserDefault Model
 
         let id = UUID().uuidString
+        if newItemStockLevel == .empty{
+            newItemGoingToShoppingList = true
+        }
+        
+        
         let newFood = FoodModel(foodName: newItemName, expDate: newItemExpiryDate!, stockLevel: newItemStockLevel, foodImage: "\(id)-img", id: id, updatedDate: Date(), itemNote: itemNotesTextField.text, isInShoppingList: newItemGoingToShoppingList, isInFoodStock: newItemGoingToFoodStock)
         
-//        print("--New Food--\nName: \(newFood.foodName)\nStockLevel: \(newFood.stockLevel)\nExpDate: \(newFood.expDate)\nNotes: \(newItemNotes)\n")
-        
-        //Send the new model to the list page
-//        delegate?.addToList(newModel: newFood)
         // UserDefault Model
-        delegate?.addToList(newModel: newFood, newImage: itemImageView.image!)
+        if newPhotoInserted{
+            delegate?.addToList(newModel: newFood, newImage: itemImageView.image!)
+        }
+        else {
+            delegate?.addToList(newModel: newFood, newImage: #imageLiteral(resourceName: "DefaultImage"))
+        }
+        
         dismiss(animated: true, completion: nil)
         
     }
     
     
     @IBAction func addPhotoButton_Click(_ sender: Any) {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        imagePicker.allowsEditing = true
-        present(imagePicker, animated: true, completion: nil)
+//        let imagePicker = UIImagePickerController()
+//        imagePicker.delegate = self
+//        imagePicker.sourceType = .photoLibrary
+//        imagePicker.allowsEditing = true
+//        present(imagePicker, animated: true, completion: nil)
+        NSLayoutConstraint.deactivate(view.constraints)
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+        alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: {(button) in
+            self.imagePicker.sourceType = .photoLibrary
+            self.present(self.imagePicker, animated: true, completion: nil)
+        }))
+
+        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: {(button) in
+            self.imagePicker.sourceType = .camera
+            self.present(self.imagePicker, animated: true, completion: nil)
+        }))
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+        present(alert, animated: true, completion: nil)
+        
     }
     
 }
