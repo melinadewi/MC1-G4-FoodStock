@@ -43,6 +43,7 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
         // image picker
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
+        itemNameField.delegate = self
         makeImageCircle()
 
         hideKeyboardWhenTapped() // improve hide keyboard
@@ -236,5 +237,17 @@ class EditItemVC: UITableViewController, UIImagePickerControllerDelegate, UINavi
             stockSC.selectedSegmentTintColor = UIColor.systemGreen
             expDateField.isEnabled = true
         }
+    }
+}
+
+extension EditItemVC : UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print("masuk")
+        textField.resignFirstResponder()
+            self.selectedItem?.foodName = textField.text!
+            print(self.selectedItem?.foodName)
+        
+        return true
     }
 }
